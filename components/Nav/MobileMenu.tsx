@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { navLinks } from '@/content/nav';
 import { divisions } from '@/content/divisions';
+import { BrandMark } from '@/components/BrandMark/BrandMark';
 
 type Props = {
   open: boolean;
@@ -39,8 +40,8 @@ export function MobileMenu({ open, onClose }: Props) {
     >
       {/* Top bar with brand + close */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-hairline">
-        <a href="#top" onClick={onClose} className="font-display font-medium text-[0.85rem] tracking-[0.3em] text-ivory">
-          GAZE <span className="text-rose">▲</span> HOLDINGS
+        <a href="#top" onClick={onClose} aria-label="Gaze Holdings home" className="text-ivory">
+          <BrandMark variant="inline" height={16} />
         </a>
         <button
           type="button"

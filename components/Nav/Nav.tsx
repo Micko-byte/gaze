@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { navLinks } from '@/content/nav';
 import { MobileMenu } from './MobileMenu';
+import { BrandMark } from '@/components/BrandMark/BrandMark';
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,8 +24,8 @@ export function Nav() {
         aria-label="Primary"
       >
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
-          <a href="#top" className="font-display font-medium text-[0.85rem] tracking-[0.3em] text-ivory">
-            GAZE <span className="text-rose">▲</span> HOLDINGS
+          <a href="#top" aria-label="Gaze Holdings home" className="text-ivory hover:text-rose transition-colors">
+            <BrandMark variant="inline" height={16} />
           </a>
 
           {/* Desktop links */}

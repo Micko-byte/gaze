@@ -1,6 +1,7 @@
 import { divisions } from '@/content/divisions';
 import { footerContent } from '@/content/footer';
 import { NewsletterForm } from './NewsletterForm';
+import { BrandMark } from '@/components/BrandMark/BrandMark';
 
 const SHORT: Record<string, string> = {
   furnishings: 'Furnishings',
@@ -15,8 +16,8 @@ export function Footer() {
     <footer className="bg-obsidian border-t border-hairline pt-20 pb-10 px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-[1.4fr_1fr_1fr] gap-12">
         <div>
-          <a href="#top" className="font-display font-medium text-base tracking-[0.3em] text-ivory">
-            GAZE <span className="text-rose">▲</span> HOLDINGS
+          <a href="#top" aria-label="Gaze Holdings home" className="inline-block text-ivory">
+            <BrandMark variant="stacked" height={56} />
           </a>
           <p className="font-serif italic text-ivory/55 text-base mt-4">
             {footerContent.tagline}
