@@ -34,14 +34,14 @@ export function HeroVideo() {
           ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay muted loop playsInline preload="metadata"
-          poster="/video/hero-poster.avif"
+          poster="/video/hero-poster.jpg"
         >
           <source src="/video/hero.webm" type="video/webm" />
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/video/hero-poster.avif" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/video/hero-poster.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
       )}
     </div>
   );
