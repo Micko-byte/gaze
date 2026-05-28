@@ -129,7 +129,7 @@ Together they fulfil the strategy doc requirement while preserving the brief's c
 - Full-viewport (100vh) on desktop, 100svh on mobile to handle iOS Safari chrome.
 - Background: lazy-loaded MP4 + WebM video loop (≤4MB, ≤12s, silent, muted, autoplay, playsinline). Placeholder source: Pexels CC0 luxury interior B-roll until commissioned footage replaces.
 - Mobile / Save-Data / `prefers-reduced-motion`: video is swapped for a high-quality static poster (≤200KB AVIF, blurhash placeholder).
-- Top nav (sticky after hero exit): GAZE ▲ HOLDINGS logo · Group · Vision · Press · Contact.
+- Top nav (sticky after hero exit): GAZE ▲ HOLDINGS logo · The Group · Vision · Press · Contact.
 - Headline: "A group of brands built for *legacy*." — Outfit 200 + Cormorant italic on the word "legacy," letter-reveal on load.
 - Subhead: "Strategic leadership. Brand architecture. Capital allocation. Cross-division synergy."
 - CTA: "Enter the Group" — outlined button in House Rose border, soft fade to §02 on click (scroll-to `#ethos` anchor via Lenis).
