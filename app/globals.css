@@ -3,25 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --obsidian: #0A0A0A;
+  --ink: #141414;
+  --ivory: #F4EFE6;
+  --house-rose: #C99BAF;
+  --rose-deep: #A87286;
+  --champagne: #D9C9A8;
+  --hairline: #2a2a2a;
+  --bronze: #7A5C3E;
+
+  --motion-fast: 200ms;
+  --motion-base: 400ms;
+  --motion-slow: 1200ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--obsidian);
+  color: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
+
+/* Hide cursor on desktop when our custom cursor is active */
+html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
