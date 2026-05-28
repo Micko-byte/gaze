@@ -41,3 +41,9 @@ body {
 
 /* Hide cursor on desktop when our custom cursor is active */
 html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
+
+[data-testid='custom-cursor'].cursor-hover {
+  width: 44px !important;
+  height: 44px !important;
+  border-color: var(--champagne) !important;
+}

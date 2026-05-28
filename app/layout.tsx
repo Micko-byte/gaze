@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Outfit, Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
+import { Cursor } from '@/components/Cursor/Cursor';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -34,7 +35,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${outfit.variable} ${cormorant.variable} ${inter.variable}`}>
       <body className="bg-obsidian text-ivory">
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <Cursor />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
