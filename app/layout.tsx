@@ -4,6 +4,7 @@ import './globals.css';
 import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
 import { Cursor } from '@/components/Cursor/Cursor';
 import { ShopButton } from '@/components/ShopButton/ShopButton';
+import { CookieBanner } from '@/components/CookieBanner/CookieBanner';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Cursor />
           {children}
           <ShopButton />
+          <CookieBanner />
         </SmoothScroll>
       </body>
     </html>
