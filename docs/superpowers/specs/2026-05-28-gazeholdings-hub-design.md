@@ -132,7 +132,7 @@ Together they fulfil the strategy doc requirement while preserving the brief's c
 - Top nav (sticky after hero exit): GAZE ▲ HOLDINGS logo · Group · Vision · Press · Contact.
 - Headline: "A group of brands built for *legacy*." — Outfit 200 + Cormorant italic on the word "legacy," letter-reveal on load.
 - Subhead: "Strategic leadership. Brand architecture. Capital allocation. Cross-division synergy."
-- CTA: "Enter the Group" — outlined button in House Rose border, soft fade to §02 on click (scroll-to anchor with Lenis).
+- CTA: "Enter the Group" — outlined button in House Rose border, soft fade to §02 on click (scroll-to `#ethos` anchor via Lenis).
 - Scroll cue: small Outfit "↓ Scroll" in Champagne at the bottom, slow vertical drift.
 - Custom cursor active here on desktop.
 
@@ -252,7 +252,7 @@ No real video, photography, or non-Furnishings logo files exist yet. Strategy fo
 - **Hero video**: Pexels CC0 luxury interior B-roll, ≤4MB. Replace at launch with commissioned footage.
 - **Division card images**: Unsplash editorial photography per division category, ≤300KB AVIF each.
 - **Ethos background**: Unsplash neutral texture or interior, Ken Burns zoom.
-- **Founder portrait**: Real — Muthoni Ngugi purple-satin-with-book (locked in §5.5). Copy to `public/images/founder/muthoni-ngugi.png`.
+- **Founder portrait**: Real — Muthoni Ngugi purple-satin-with-book (locked in §5.5). Source: `C:\Users\Lucy Wanjau\Documents\SIDUS DIGITAL\3. CLIENT WORK\2. GAZE holdings LTD\Founder Miss Muthoni Ngugi\attachments\54061.png`. Copy to `public/images/founder/muthoni-ngugi.png` during scaffold.
 - **Press logos**: Placeholder gray tiles labeled "Logo 01"–"Logo 08" + the She Millionaire 2024 award badge as real recognition.
 - **Contact backdrop**: Unsplash quiet-luxury interior at dusk.
 - **Brand logo lockup**: Use the existing Gaze Furnishings logo character (geometric "GAZE" wordmark) as a basis, with "HOLDINGS" set in Outfit small-caps below, separated by a House Rose ▲ — to be refined when the holdings-specific logo is commissioned.
@@ -291,6 +291,7 @@ The next implementation plan (writing-plans skill, immediately following this sp
 1. **Wireframes**: Already captured in `.superpowers/brainstorm/564-1779973925/wireframe.html`. ✅
 2. **Design system**: Tailwind config + `globals.css` define every token in §3.2 and §3.3. The hero already uses the tokens.
 3. **Next.js scaffold**:
+   - Node 20 LTS (pin via `.nvmrc` or `engines` field in `package.json`).
    - `npx create-next-app@latest` with TypeScript, Tailwind, App Router, ESLint.
    - Folder structure: `app/` (routes), `components/` (UI), `content/` (typed TS content), `lib/` (utils), `public/` (assets).
    - Lenis installed and initialized in the root layout.
