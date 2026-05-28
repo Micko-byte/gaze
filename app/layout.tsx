@@ -3,6 +3,7 @@ import { Outfit, Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
 import { Cursor } from '@/components/Cursor/Cursor';
+import { ShopButton } from '@/components/ShopButton/ShopButton';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SmoothScroll>
           <Cursor />
           {children}
+          <ShopButton />
         </SmoothScroll>
       </body>
     </html>

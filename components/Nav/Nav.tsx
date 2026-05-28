@@ -23,17 +23,28 @@ export function Nav() {
         <a href="#top" className="font-display font-medium text-[0.85rem] tracking-[0.3em] text-ivory">
           GAZE <span className="text-rose">▲</span> HOLDINGS
         </a>
-        <ul className="hidden md:flex gap-8">
-          {navLinks.map(link => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory/70 hover:text-rose transition-colors"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+        <ul className="hidden md:flex gap-8 items-center">
+          {navLinks.map(link => {
+            const externalProps = link.external
+              ? { target: '_blank' as const, rel: 'noopener noreferrer' }
+              : {};
+            const isAccent = 'accent' in link && link.accent;
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  {...externalProps}
+                  className={
+                    isAccent
+                      ? 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory font-medium border border-rose px-4 py-2 hover:bg-rose hover:text-obsidian transition-colors duration-500 ease-reveal'
+                      : 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory/70 hover:text-rose transition-colors'
+                  }
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </nav>
