@@ -1,3 +1,5 @@
+import { shopConfig } from './shop';
+
 export type Division = {
   id: string;
   number: string;
@@ -7,6 +9,8 @@ export type Division = {
   href: string;
   external: boolean;
   image: string;
+  /** Optional Shopify storefront URL — when set, the card shows an inline 'Shop' chip. */
+  shopHref?: string;
 };
 
 export const divisions: ReadonlyArray<Division> = [
@@ -19,6 +23,7 @@ export const divisions: ReadonlyArray<Division> = [
     href: 'https://furnishings.gaze.co',
     external: true,
     image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=900&q=80',
+    shopHref: `${shopConfig.storefrontUrl}${shopConfig.collectionPath}`,
   },
   {
     id: 'press',
