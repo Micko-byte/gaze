@@ -42,6 +42,17 @@ body {
 /* Hide cursor on desktop when our custom cursor is active */
 html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
 
+.ethos-drift {
+  background:
+    radial-gradient(circle at 25% 35%, rgba(217, 201, 168, 0.10), transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(201, 155, 175, 0.08), transparent 50%);
+  animation: ethos-drift 22s ease-in-out infinite alternate;
+}
+@keyframes ethos-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-30px, 20px) scale(1.06); }
+}
+
 [data-testid='custom-cursor'].cursor-hover {
   width: 44px !important;
   height: 44px !important;
