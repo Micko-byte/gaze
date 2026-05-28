@@ -1549,6 +1549,24 @@ The next session will implement §02 Ethos, §03 Division Gateway, §04 Synergy,
 
 ---
 
+## Verification notes (2026-05-28 session)
+
+All 16 tasks executed and committed on branch `feat/scaffold-and-hero`.
+
+**Verified:**
+- Unit tests: 8 passing across 4 files (Cursor 3, Hero 2, Nav 2, SmoothScroll 1).
+- Production build: clean. Homepage = 121 KB First Load JS (well inside budget). 7 static pages generated including `/robots.txt` and `/sitemap.xml`.
+- Rendered HTML (curl http://localhost:3000/) contains all hero copy: "A group of brands", italic "legacy", "Strategic leadership", "Enter the Group", "Gaze Holdings" eyebrow. Founder name "Muthoni Ngugi" present in JSON-LD payload alongside the 5 sub-organizations.
+- `/robots.txt` returns valid robots with sitemap reference.
+- `/sitemap.xml` returns valid sitemap with 3 URLs (`/`, `/institute`, `/manor`).
+- `prefers-reduced-motion` bypass paths covered by Cursor and SmoothScroll tests.
+
+**Deferred:**
+- Playwright E2E run: spec committed at `tests/e2e/homepage.spec.ts` (3 tests). Actual execution blocked by network — Playwright cannot download Chromium/headless-shell binaries from `cdn.playwright.dev` on this machine. Run `npx playwright install` from a network with CDN access, then `npm run test:e2e`.
+- Lighthouse run: requires a GUI Chrome session. Production build metrics suggest it will pass the spec's targets (Performance ≥85, Accessibility ≥95, SEO ≥95). Run manually in DevTools at next opportunity.
+- Responsive breakpoint walkthrough: requires a browser. CSS uses `100svh`, `min-h-screen`, and `md:` breakpoints throughout. Mobile Hero falls back to poster image; tablet/desktop get video probe + IntersectionObserver pause.
+- Real video assets (`public/video/hero.mp4`, `hero.webm`, `hero-poster.avif`): not committed. HeroVideo gracefully degrades to poster-only via fetch HEAD probe — currently neither poster nor video exist, so the Hero renders with the gradient overlay only. This is intentional until commissioned shoots land.
+
 ## Open questions for the next session
 
 None blocking this plan. Surfaced for awareness:
