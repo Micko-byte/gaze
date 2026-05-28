@@ -271,6 +271,34 @@ Commit: `feat(routes): curtain-wipe transition between routes (reduced-motion sa
 
 ---
 
+## Verification notes (2026-05-28 session)
+
+All tasks executed and committed on branch `feat/scaffold-and-hero`.
+
+**Verified:**
+- Unit tests: **22 passing across 11 files** (added Ethos 2, Divisions 3, Synergy 1, Leadership 1, Press 2, Contact 2, Footer 3 — total +14 tests since Session 1).
+- Production build: clean across **9 static pages**.
+  - `/` = 129 KB First Load JS (was 121 KB pre-sections, +8 KB for all 7 sections).
+  - `/institute` and `/manor` = 88.6 KB each.
+  - `/robots.txt`, `/sitemap.xml` continue to generate correctly.
+- All sections render in correct order in `app/page.tsx`: Hero → Ethos → Divisions → Synergy → Leadership → Press → Contact → Footer.
+- Nav anchors resolve: `#divisions`, `#vision`, `#press`, `#contact` are now valid scroll targets.
+- Route stubs `/institute` and `/manor` render their own Nav + hero + "Make enquiry" CTA + Footer.
+- Curtain-wipe `RouteCurtain` is wired via `app/template.tsx`. Reduced-motion bypass returns children directly.
+- Unsplash placeholder imagery configured in `next.config.mjs` `images.remotePatterns`.
+
+**Known visual quirks (deferred polish, not blockers):**
+- `§04 Synergy` SVG node hover captions only show on desktop. Mobile uses a vertical caption stack instead — by design.
+- `§02 Ethos` ScrollTrigger pin requires real scroll to test — jsdom can't simulate. Reduced-motion path is unit-tested.
+- `§06 Press` marquee animation pauses on hover via CSS only.
+
+**Deferred to next session:**
+- Real Resend wiring for `§07 Contact` form submission (currently `console.log` + success message).
+- Real Klaviyo wiring for `§08 Footer` newsletter (same).
+- Real division card imagery + holdings-specific logo SVG.
+- `/legal/privacy`, `/legal/terms`, `/legal/cookies` placeholder pages.
+- The four microsites (Furnishings, Press Global, HerGaze, plus Kenya commerce layer).
+
 ## Out of scope (deferred to subsequent sessions)
 
 - Real Resend integration for §07 form submissions.
