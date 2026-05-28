@@ -27,8 +27,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Gaze Holdings — A group of brands built for legacy',
+  metadataBase: new URL('https://gazeholdings.com'),
+  title: { default: 'Gaze Holdings — A group of brands built for legacy', template: '%s · Gaze Holdings' },
   description: 'The institutional home of Gaze Holdings Limited — a Kenya-rooted, globally-scaled House of Brands spanning interiors, publishing, leadership, broadcast, and women\'s transformation.',
+  openGraph: {
+    type: 'website',
+    siteName: 'Gaze Holdings',
+    title: 'Gaze Holdings — A group of brands built for legacy',
+    description: 'Five divisions. One signature. Built for legacy.',
+    images: [{ url: '/images/og-default.jpg', width: 1200, height: 630 }],
+  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
