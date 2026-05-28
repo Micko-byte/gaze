@@ -1,11 +1,24 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Hero } from './Hero';
 
+// Force reduced-motion so SplitType doesn't mutate the DOM during tests.
+function mockReducedMotion() {
+  vi.stubGlobal('matchMedia', (q: string) => ({
+    matches: q.includes('reduce'),
+    media: q, onchange: null, addListener: vi.fn(), removeListener: vi.fn(),
+    addEventListener: vi.fn(), removeEventListener: vi.fn(), dispatchEvent: vi.fn(),
+  }));
+}
+
 describe('Hero', () => {
+  beforeEach(() => {
+    vi.unstubAllGlobals();
+    mockReducedMotion();
+  });
+
   it('renders the eyebrow, headline text, and sub', () => {
     const { container } = render(<Hero />);
-    // textContent matchers tolerate SplitType wrapping individual words in spans (added in Task 11)
     expect(container.textContent).toContain('Gaze Holdings');
     expect(container.textContent).toContain('A group of brands');
     expect(container.textContent).toContain('legacy');
