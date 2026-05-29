@@ -3,9 +3,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { prefersReducedMotion } from '@/lib/motion';
 
-type Props = { value: number; suffix?: string; label: string };
+type Props = {
+  value: number;
+  suffix?: string;
+  label: string;
+  /** 'dark' for obsidian backgrounds, 'light' for ivory backgrounds. */
+  tone?: 'dark' | 'light';
+};
 
-export function StatCountUp({ value, suffix = '', label }: Props) {
+export function StatCountUp({ value, suffix = '', label, tone = 'dark' }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [display, setDisplay] = useState(prefersReducedMotion() ? value : 0);
 
@@ -36,12 +42,14 @@ export function StatCountUp({ value, suffix = '', label }: Props) {
     return () => { cleanup?.(); };
   }, [value]);
 
+  const isLight = tone === 'light';
+
   return (
-    <div ref={ref} className="border-t border-hairline pt-3">
-      <div className="font-serif italic font-light text-3xl md:text-4xl text-rose leading-none">
+    <div className={`border-t pt-3 ${isLight ? 'border-obsidian/15' : 'border-hairline'}`}>
+      <div className={`font-serif italic font-light text-3xl md:text-4xl leading-none ${isLight ? 'text-rose-deep' : 'text-rose'}`}>
         {display}{suffix}
       </div>
-      <div className="font-display text-[0.55rem] tracking-[0.35em] uppercase text-ivory/50 mt-2">
+      <div className={`font-display text-[0.55rem] tracking-[0.35em] uppercase mt-2 ${isLight ? 'text-obsidian/50' : 'text-ivory/50'}`}>
         {label}
       </div>
     </div>

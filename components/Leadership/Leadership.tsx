@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { leadershipContent } from '@/content/leadership';
 import { StatCountUp } from './StatCountUp';
+import { Reveal } from '@/components/Reveal/Reveal';
 
 export function Leadership() {
   return (
-    <section id="vision" className="relative py-32 px-6 bg-obsidian">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-        <div className="relative aspect-[4/5] overflow-hidden border border-hairline">
+    <section id="vision" className="relative py-32 px-6 bg-ivory text-obsidian">
+      <Reveal className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <div className="relative aspect-[4/5] overflow-hidden border border-obsidian/10">
           <Image
             src="/images/founder/muthoni-ngugi.png"
             alt={`${leadershipContent.name.first} ${leadershipContent.name.last}`}
@@ -17,21 +18,21 @@ export function Leadership() {
           />
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: 'linear-gradient(180deg, rgba(201,155,175,0.04), rgba(10,10,10,0.25))', mixBlendMode: 'multiply' }}
+            style={{ background: 'linear-gradient(180deg, rgba(168,114,134,0.05), rgba(10,10,10,0.10))', mixBlendMode: 'multiply' }}
           />
         </div>
 
         <div>
-          <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
+          <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose-deep font-medium mb-6">
             {leadershipContent.eyebrow}
           </div>
-          <h2 className="font-display font-extralight text-4xl md:text-6xl leading-none text-ivory mb-3">
-            {leadershipContent.name.first} <em className="font-serif italic font-light text-rose">{leadershipContent.name.last}</em>
+          <h2 className="font-display font-extralight text-4xl md:text-6xl leading-none text-obsidian mb-3">
+            {leadershipContent.name.first} <em className="font-serif italic font-light text-rose-deep">{leadershipContent.name.last}</em>
           </h2>
-          <p className="font-serif italic text-rose text-lg md:text-xl mb-10 font-light">
+          <p className="font-serif italic text-rose-deep text-lg md:text-xl mb-10 font-light">
             {leadershipContent.role}
           </p>
-          <div className="space-y-4 text-ivory/75 font-light text-base md:text-[1.05rem] leading-relaxed max-w-xl">
+          <div className="space-y-4 text-obsidian/75 font-light text-base md:text-[1.05rem] leading-relaxed max-w-xl">
             {leadershipContent.bio.map((line, i) => (
               <p key={i}>{line}</p>
             ))}
@@ -43,11 +44,12 @@ export function Leadership() {
                 value={stat.value}
                 suffix={'suffix' in stat ? stat.suffix : ''}
                 label={stat.label}
+                tone="light"
               />
             ))}
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
