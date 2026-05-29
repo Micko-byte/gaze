@@ -1,48 +1,64 @@
-import { pressItems, pressContent } from '@/content/press';
-
-function PressTile({ item }: { item: typeof pressItems[number] }) {
-  if (item.type === 'award') {
-    return (
-      <div className="shrink-0 px-6 py-4 border border-champagne flex flex-col justify-center min-w-[260px]">
-        <div className="font-display text-[0.6rem] tracking-[0.3em] uppercase text-champagne mb-1">
-          {item.primary}
-        </div>
-        <div className="font-serif italic text-ivory/70 text-sm">{item.secondary}</div>
-      </div>
-    );
-  }
-  return (
-    <div className="shrink-0 px-6 py-4 min-w-[160px] flex items-center justify-center border border-hairline text-ivory/40 hover:text-rose hover:border-rose transition-colors duration-500">
-      <span className="font-display text-[0.7rem] tracking-[0.3em] uppercase">{item.primary}</span>
-    </div>
-  );
-}
+import { pressContent } from '@/content/press';
+import { Reveal } from '@/components/Reveal/Reveal';
 
 export function Press() {
-  // Duplicate the array so the marquee loops seamlessly
-  const loop = [...pressItems, ...pressItems];
+  const { award, media, coverage } = pressContent;
 
   return (
-    <section id="press" className="relative py-24 px-6 bg-obsidian overflow-hidden">
-      <div className="max-w-6xl mx-auto mb-10">
-        <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-4">
+    <section id="press" className="relative py-32 px-6 bg-obsidian overflow-hidden">
+      <Reveal className="max-w-4xl mx-auto text-center">
+        <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
           {pressContent.eyebrow}
         </div>
-        <h2 className="font-display font-extralight text-2xl md:text-3xl text-ivory">
-          {pressContent.heading}
+        <h2 className="font-display font-extralight text-4xl md:text-6xl leading-[0.98] tracking-tight text-ivory mb-6">
+          {pressContent.heading.pre}
+          <em className="font-serif italic font-light text-rose">{pressContent.heading.accent}</em>
+          {pressContent.heading.post}
         </h2>
-      </div>
+        <p className="text-ivory/60 max-w-md mx-auto font-light text-base md:text-lg mb-16">
+          {pressContent.sub}
+        </p>
 
-      <div
-        className="press-marquee relative w-full border-y border-hairline py-6"
-        onMouseEnter={undefined}
-      >
-        <div className="press-marquee-track flex gap-4 hover:[animation-play-state:paused]">
-          {loop.map((item, i) => (
-            <PressTile key={`${item.id}-${i}`} item={item} />
-          ))}
+        {/* The award — one true thing, framed */}
+        <div className="relative max-w-xl mx-auto border border-champagne/60 px-8 py-12 md:px-14 md:py-14">
+          {/* corner ticks */}
+          <span aria-hidden="true" className="absolute top-3 left-3 w-3 h-3 border-t border-l border-champagne" />
+          <span aria-hidden="true" className="absolute top-3 right-3 w-3 h-3 border-t border-r border-champagne" />
+          <span aria-hidden="true" className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-champagne" />
+          <span aria-hidden="true" className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-champagne" />
+
+          <div className="font-display text-[0.55rem] tracking-[0.4em] uppercase text-champagne mb-6">
+            {award.tag}
+          </div>
+          <div className="font-serif italic font-light text-3xl md:text-4xl text-ivory leading-tight mb-5">
+            {award.title}
+          </div>
+          <div className="text-ivory/65 font-light text-sm md:text-base mb-2">{award.detail}</div>
+          <div className="font-display text-[0.6rem] tracking-[0.3em] uppercase text-rose mt-5">
+            {award.holder}
+          </div>
         </div>
-      </div>
+
+        {/* Optional real coverage row (renders only when populated) */}
+        {coverage.length > 0 && (
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {coverage.map(c => (
+              <span key={c.id} className="font-display text-[0.7rem] tracking-[0.3em] uppercase text-ivory/40">
+                {c.name}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-14">
+          <a
+            href={media.href}
+            className="font-display text-[0.6rem] tracking-[0.35em] uppercase text-ivory/55 hover:text-rose transition-colors"
+          >
+            {media.label} · {media.cta} →
+          </a>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -1,22 +1,28 @@
-export type PressItem = {
-  id: string;
-  type: 'logo' | 'award';
-  primary: string;
-  secondary?: string;
-};
-
-export const pressItems: ReadonlyArray<PressItem> = [
-  { id: 'she-millionaire', type: 'award', primary: 'Businesswoman of the Year', secondary: 'She Millionaire Summit · Limpopo · 2024' },
-  { id: 'logo-01', type: 'logo', primary: 'Capital FM' },
-  { id: 'logo-02', type: 'logo', primary: 'Business Daily' },
-  { id: 'logo-03', type: 'logo', primary: 'Nation Media' },
-  { id: 'logo-04', type: 'logo', primary: 'KTN News' },
-  { id: 'logo-05', type: 'logo', primary: 'African Leadership' },
-  { id: 'logo-06', type: 'logo', primary: 'Forbes Africa' },
-  { id: 'logo-07', type: 'logo', primary: 'CNBC Africa' },
-];
+/**
+ * Recognition. We present only what is true.
+ * No fabricated press logos — when real coverage exists, add it to `coverage`
+ * and the section will render a logo row beneath the award.
+ */
 
 export const pressContent = {
-  eyebrow: '06 · Press & Recognition',
-  heading: 'As seen in.',
+  eyebrow: '06 · Recognition',
+  heading: {
+    pre: 'The work, ',
+    accent: 'noticed',
+    post: '.',
+  },
+  sub: 'Recognition follows the work — never the other way around.',
+  award: {
+    tag: 'Award · 2024',
+    title: 'Businesswoman of the Year',
+    detail: 'She Millionaire Business Summit · Limpopo, South Africa',
+    holder: 'Awarded to Muthoni Ngugi, Founder & Director',
+  },
+  media: {
+    label: 'Media & press enquiries',
+    href: '#contact',
+    cta: 'Write to us',
+  },
+  /** Real press logos go here when they exist. Empty = no logo row rendered. */
+  coverage: [] as ReadonlyArray<{ id: string; name: string }>,
 } as const;

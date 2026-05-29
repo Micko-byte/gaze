@@ -19,10 +19,10 @@ describe('Hero', () => {
 
   it('renders the eyebrow, headline text, and sub', () => {
     const { container } = render(<Hero />);
-    expect(container.textContent).toContain('Gaze Holdings');
+    expect(container.textContent).toContain('A House of Brands');
     expect(container.textContent).toContain('A group of brands');
     expect(container.textContent).toContain('legacy');
-    expect(container.textContent).toContain('Strategic leadership');
+    expect(container.textContent).toContain('Five companies');
   });
 
   it('renders the CTA targeting #ethos', () => {
