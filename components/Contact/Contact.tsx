@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { contactContent } from '@/content/contact';
 import { ContactForm } from './ContactForm';
+import { Reveal } from '@/components/Reveal/Reveal';
 
 export function Contact() {
   return (
@@ -16,7 +17,7 @@ export function Contact() {
         <div className="absolute inset-0 bg-gradient-to-b from-obsidian/85 via-obsidian/90 to-obsidian" />
       </div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
+      <Reveal className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
         <div>
           <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
             {contactContent.eyebrow}
@@ -34,7 +35,7 @@ export function Contact() {
         <div>
           <ContactForm />
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

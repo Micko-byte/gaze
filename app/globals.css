@@ -42,15 +42,6 @@ body {
 /* Hide cursor on desktop when our custom cursor is active */
 html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
 
-.press-marquee-track {
-  animation: press-marquee 35s linear infinite;
-  width: max-content;
-}
-@keyframes press-marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
 .ethos-drift {
   background:
     radial-gradient(circle at 25% 35%, rgba(217, 201, 168, 0.10), transparent 45%),
