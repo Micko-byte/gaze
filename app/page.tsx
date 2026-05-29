@@ -7,6 +7,7 @@ import { Leadership } from '@/components/Leadership/Leadership';
 import { Press } from '@/components/Press/Press';
 import { Contact } from '@/components/Contact/Contact';
 import { Footer } from '@/components/Footer/Footer';
+import { Intro } from '@/components/Intro/Intro';
 import { organizationJsonLd } from '@/lib/seo';
 
 export default function Page() {
@@ -16,6 +17,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
       />
+      <Intro />
       <Nav />
       <main>
         <Hero />
