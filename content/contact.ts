@@ -24,5 +24,5 @@ export const contactContent = {
   },
   submit: 'Send enquiry',
   thanks: 'Thank you. We will respond within two working days.',
-  backdrop: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80',
+  backdrop: '/images/contact-backdrop.jpg',
 } as const;

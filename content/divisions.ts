@@ -22,7 +22,7 @@ export const divisions: ReadonlyArray<Division> = [
     tagline: 'Bespoke interiors and luxury residential commissions.',
     href: 'https://furnishings.gaze.co',
     external: true,
-    image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=900&q=80',
+    image: '/images/divisions/furnishings.jpg',
     shopHref: `${shopConfig.storefrontUrl}${shopConfig.collectionPath}`,
   },
   {
@@ -33,7 +33,7 @@ export const divisions: ReadonlyArray<Division> = [
     tagline: 'Books that shape leaders and outlive trends.',
     href: 'https://press.gaze.co',
     external: true,
-    image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=900&q=80',
+    image: '/images/divisions/press.jpg',
   },
   {
     id: 'institute',
@@ -43,7 +43,7 @@ export const divisions: ReadonlyArray<Division> = [
     tagline: 'Training the next generation of African kingdom leaders.',
     href: '/institute',
     external: false,
-    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80',
+    image: '/images/divisions/institute.jpg',
   },
   {
     id: 'manor',
@@ -53,7 +53,7 @@ export const divisions: ReadonlyArray<Division> = [
     tagline: 'Media production, design, broadcast — built on a single estate.',
     href: '/manor',
     external: false,
-    image: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=900&q=80',
+    image: '/images/divisions/manor.jpg',
   },
   {
     id: 'hergaze',
@@ -63,6 +63,6 @@ export const divisions: ReadonlyArray<Division> = [
     tagline: 'Corporate. Ministry. Transformation. For women.',
     href: 'https://hergaze.global',
     external: true,
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80',
+    image: '/images/divisions/hergaze.jpg',
   },
 ];

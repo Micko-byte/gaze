@@ -26,8 +26,11 @@ export function DivisionCard({ division }: { division: Division }) {
           alt={division.name}
           fill
           sizes="(max-width: 768px) 280px, 340px"
-          className="object-cover transition-transform duration-700 ease-reveal group-hover:scale-105"
+          className="object-cover grayscale-[0.55] contrast-[1.05] brightness-90 transition-all duration-[800ms] ease-reveal group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 group-hover:scale-[1.06]"
         />
+        {/* Unifying grade — a faint rose-to-obsidian wash that ties the 5 stock
+            images into one editorial set; recedes on hover as the image blooms */}
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-deep/25 via-transparent to-obsidian/40 mix-blend-multiply opacity-80 group-hover:opacity-40 transition-opacity duration-[800ms] ease-reveal" />
         <div className="absolute inset-0 bg-gradient-to-b from-obsidian/20 via-obsidian/30 to-obsidian/85" />
         <div className="absolute top-4 left-4 font-display text-[0.55rem] tracking-[0.35em] uppercase text-rose">
           {division.number} / {division.category}
