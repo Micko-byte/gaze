@@ -32,7 +32,7 @@ export function HeroVideo() {
       {showVideo ? (
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover brightness-[0.62] saturate-[0.9]"
           autoPlay muted loop playsInline preload="metadata"
           poster="/video/hero-poster.jpg"
         >
@@ -41,7 +41,7 @@ export function HeroVideo() {
         </video>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/video/hero-poster.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/video/hero-poster.jpg" alt="" className="absolute inset-0 w-full h-full object-cover brightness-[0.62] saturate-[0.9]" />
       )}
     </div>
   );
