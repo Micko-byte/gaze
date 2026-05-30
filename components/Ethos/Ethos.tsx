@@ -12,30 +12,36 @@ export function Ethos() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    const sentences = sentenceRefs.current.filter(Boolean) as HTMLElement[];
+    const targets = [...sentences, quoteRef.current].filter(Boolean) as HTMLElement[];
+
     if (prefersReducedMotion()) {
-      sentenceRefs.current.forEach(s => { if (s) s.style.opacity = '1'; });
-      if (quoteRef.current) quoteRef.current.style.opacity = '1';
+      targets.forEach(t => { t.style.opacity = '1'; });
       return;
     }
 
     let cleanup: (() => void) | undefined;
     (async () => {
-      const { gsap, ScrollTrigger } = await import('@/lib/gsap');
+      const { gsap } = await import('@/lib/gsap');
       const ctx = gsap.context(() => {
-        gsap.set([...sentenceRefs.current, quoteRef.current], { opacity: 0, y: 20 });
+        gsap.set(targets, { opacity: 0, y: 24 });
 
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=100%',
-          pin: true,
-          scrub: 1,
-          animation: gsap.timeline()
-            .to(sentenceRefs.current[0], { opacity: 1, y: 0, duration: 1 }, 0)
-            .to(sentenceRefs.current[1], { opacity: 1, y: 0, duration: 1 }, 0.6)
-            .to(sentenceRefs.current[2], { opacity: 1, y: 0, duration: 1 }, 1.2)
-            .to(quoteRef.current, { opacity: 1, y: 0, duration: 1.2 }, 1.5),
+        // Reveal on entry — no pin, no scrub. Scrolls naturally; the content
+        // simply rises in once as the section comes into view.
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', once: true },
         });
+        tl.to(sentences, {
+          opacity: 1,
+          y: 0,
+          duration: 1.1,
+          stagger: 0.22,
+          ease: 'expo.out',
+        }).to(
+          quoteRef.current,
+          { opacity: 1, y: 0, duration: 1.3, ease: 'expo.out' },
+          '-=0.4',
+        );
       }, sectionRef);
       cleanup = () => ctx.revert();
     })();
@@ -47,12 +53,12 @@ export function Ethos() {
     <section
       ref={sectionRef}
       id="ethos"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-obsidian"
+      className="relative flex items-center justify-center overflow-hidden bg-obsidian py-32 md:py-44"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 ethos-drift opacity-40" />
       </div>
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
         <div>
           <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-10">
             02 · {ethosContent.eyebrow}
