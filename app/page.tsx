@@ -5,6 +5,7 @@ import { Divisions } from '@/components/Divisions/Divisions';
 import { Synergy } from '@/components/Synergy/Synergy';
 import { Leadership } from '@/components/Leadership/Leadership';
 import { Press } from '@/components/Press/Press';
+import { InstagramGallery } from '@/components/Instagram/InstagramGallery';
 import { Contact } from '@/components/Contact/Contact';
 import { Footer } from '@/components/Footer/Footer';
 import { Intro } from '@/components/Intro/Intro';
@@ -26,6 +27,7 @@ export default function Page() {
         <Synergy />
         <Leadership />
         <Press />
+        <InstagramGallery />
         <Contact />
       </main>
       <Footer />

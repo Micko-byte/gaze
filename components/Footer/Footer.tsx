@@ -2,6 +2,7 @@ import { divisions } from '@/content/divisions';
 import { footerContent } from '@/content/footer';
 import { NewsletterForm } from './NewsletterForm';
 import { BrandMark } from '@/components/BrandMark/BrandMark';
+import { SocialLinks } from '@/components/Social/SocialLinks';
 
 const SHORT: Record<string, string> = {
   furnishings: 'Furnishings',
@@ -64,6 +65,14 @@ export function Footer() {
           </ul>
           <p className="text-ivory/35 text-xs mt-6">{footerContent.legal.copyright}</p>
         </div>
+      </div>
+
+      {/* Social row */}
+      <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="font-display text-[0.55rem] tracking-[0.35em] uppercase text-ivory/40">
+          Follow the group
+        </div>
+        <SocialLinks size={18} />
       </div>
     </footer>
   );
