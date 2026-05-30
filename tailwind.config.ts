@@ -11,6 +11,7 @@ const config: Config = {
         rose: {
           DEFAULT: 'var(--house-rose)',
           deep: 'var(--rose-deep)',
+          ink: 'var(--rose-ink)',
         },
         champagne: 'var(--champagne)',
         hairline: 'var(--hairline)',

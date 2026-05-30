@@ -23,13 +23,13 @@ export function Leadership() {
         </div>
 
         <div>
-          <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose-deep font-medium mb-6">
+          <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose-ink font-medium mb-6">
             {leadershipContent.eyebrow}
           </div>
           <h2 className="font-display font-extralight text-4xl md:text-6xl leading-none text-obsidian mb-3">
-            {leadershipContent.name.first} <em className="font-serif italic font-light text-rose-deep">{leadershipContent.name.last}</em>
+            {leadershipContent.name.first} <em className="font-serif italic font-light text-rose-ink">{leadershipContent.name.last}</em>
           </h2>
-          <p className="font-serif italic text-rose-deep text-lg md:text-xl mb-10 font-light">
+          <p className="font-serif italic text-rose-ink text-lg md:text-xl mb-10 font-light">
             {leadershipContent.role}
           </p>
           <div className="space-y-4 text-obsidian/75 font-light text-base md:text-[1.05rem] leading-relaxed max-w-xl">
