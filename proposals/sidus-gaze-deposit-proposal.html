@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidus Digital × Gaze Holdings — Phase 1 Deposit Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --emerald-deep:#06150F;
+    --emerald:#0A2A1F;
+    --emerald-mid:#0D3527;
+    --gold:#C9A24B;
+    --gold-bright:#E3C770;
+    --gold-ghost:rgba(201,162,75,0.14);
+    --gold-dim:rgba(201,162,75,0.35);
+    --off-white:#F4EFE3;
+    --off-soft:rgba(244,239,227,0.78);
+    --off-dim:rgba(244,239,227,0.55);
+    --off-faint:rgba(244,239,227,0.32);
+    --font:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  @page{ size:A4; margin:0; }
+
+  html{ background:var(--emerald-deep); }
+  body{
+    font-family:var(--font);
+    background:var(--emerald-deep);
+    color:var(--off-white);
+    font-size:10.2pt;
+    line-height:1.62;
+    letter-spacing:0.005em;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{
+    position:relative;
+    width:210mm;
+    height:297mm;
+    margin:0 auto;
+    padding:13mm 15mm 12mm;
+    background:
+      radial-gradient(ellipse 80% 45% at 50% 0%, rgba(13,53,39,0.85) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 40% at 100% 100%, rgba(13,53,39,0.55) 0%, transparent 60%),
+      radial-gradient(circle at 12% 22%, rgba(201,162,75,0.05) 0%, transparent 26%),
+      var(--emerald-deep);
+    overflow:hidden;
+  }
+  .page + .page{ page-break-before:always; }
+
+  /* ── Brand header ── */
+  .doc-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:11px; border-bottom:1px solid var(--gold-ghost); margin-bottom:20px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-word{
+    font-size:8pt; letter-spacing:0.40em; text-transform:uppercase;
+    color:var(--off-white); font-weight:600;
+  }
+  .doc-tag{
+    font-size:7.2pt; letter-spacing:0.34em; text-transform:uppercase;
+    color:var(--gold); font-weight:600;
+  }
+
+  /* ── Eyebrow ── */
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:7.4pt; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--gold); font-weight:600;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--gold); }
+
+  h1{
+    font-weight:600; line-height:1.04; letter-spacing:-0.03em;
+    font-size:23pt; margin:10px 0 5px; color:var(--off-white);
+  }
+  h1 .accent{ color:var(--gold-bright); }
+  .lede{ color:var(--off-dim); font-size:9.2pt; max-width:155mm; margin-top:6px; }
+
+  /* ── Meta row ── */
+  .meta{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+    margin:18px 0 6px; padding:13px 0; border-top:1px solid var(--gold-ghost); border-bottom:1px solid var(--gold-ghost);
+  }
+  .meta .k{ font-size:6.8pt; letter-spacing:0.2em; text-transform:uppercase; color:var(--off-faint); margin-bottom:4px; }
+  .meta .v{ font-size:9pt; color:var(--off-white); font-weight:500; }
+  .meta .v.gold{ color:var(--gold-bright); }
+
+  /* ── Section ── */
+  section{ margin-top:18px; }
+  .sec-eyebrow{
+    font-size:7.2pt; letter-spacing:0.26em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sec-eyebrow::before{ content:""; width:18px; height:1px; background:var(--gold); }
+
+  .callout{
+    border:1px solid var(--gold-ghost); border-left:2px solid var(--gold);
+    background:linear-gradient(160deg, rgba(13,53,39,0.5), rgba(6,21,15,0.3));
+    padding:11px 15px; border-radius:6px;
+  }
+  .callout p{ color:var(--off-soft); font-size:8.6pt; line-height:1.5; }
+  .callout p + p{ margin-top:5px; }
+  .callout strong{ color:var(--gold-bright); font-weight:600; }
+
+  /* ── Tables ── */
+  table{ width:100%; border-collapse:collapse; margin-top:6px; font-variant-numeric:tabular-nums; }
+  thead th{
+    text-align:left; font-size:6.8pt; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--off-faint); font-weight:600; padding:5px 12px;
+    border-bottom:1px solid var(--gold-ghost);
+  }
+  thead th.num{ text-align:right; }
+  tbody td{
+    padding:4.2px 12px; font-size:8.7pt; color:var(--off-soft);
+    border-bottom:1px solid rgba(201,162,75,0.08);
+  }
+  tbody td.num{ text-align:right; font-variant-numeric:tabular-nums; color:var(--off-white); }
+  tr.group td{
+    background:rgba(10,42,31,0.5); color:var(--off-white); font-weight:600;
+    font-size:8.6pt; letter-spacing:0.04em;
+  }
+  tr.group td.num{ color:var(--gold-bright); }
+  tr.sub td:first-child{ padding-left:24px; color:var(--off-dim); }
+  tr.total td{
+    border-top:1px solid var(--gold-dim); border-bottom:none;
+    font-size:10pt; font-weight:700; color:var(--off-white); padding-top:11px;
+  }
+  tr.total td.num{ color:var(--gold-bright); }
+
+  /* ── Deposit / balance cards ── */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
+  .card{
+    border:1px solid var(--gold-ghost); border-radius:10px; overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,53,39,0.4), rgba(6,21,15,0.25));
+  }
+  .card.deposit{ border-color:var(--gold-dim); }
+  .card-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:14px 16px 12px; border-bottom:1px solid var(--gold-ghost);
+  }
+  .card-head .t{ font-size:7.4pt; letter-spacing:0.22em; text-transform:uppercase; color:var(--off-soft); font-weight:600; }
+  .card-head .amt{ font-size:16pt; font-weight:700; color:var(--gold-bright); letter-spacing:-0.02em; }
+  .card-head .amt .u{ font-size:8pt; color:var(--off-faint); font-weight:500; letter-spacing:0.04em; margin-left:3px; }
+  .card-body{ padding:6px 16px 12px; }
+  .card-body table tbody td{ font-size:8.7pt; padding:7px 0; }
+  .card-body table tbody td.num{ }
+  .card-body tr.total td{ font-size:9pt; }
+  .pct{ font-size:7pt; color:var(--gold); letter-spacing:0.14em; }
+
+  ul.clean{ list-style:none; margin-top:6px; }
+  ul.clean li{
+    position:relative; padding-left:18px; margin-bottom:7px;
+    font-size:9.2pt; color:var(--off-soft);
+  }
+  ul.clean li::before{
+    content:""; position:absolute; left:0; top:7px;
+    width:6px; height:6px; border:1px solid var(--gold); border-radius:50%;
+  }
+  ul.clean li strong{ color:var(--off-white); font-weight:600; }
+
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+
+  /* ── Footer ── */
+  .doc-foot{
+    position:absolute; left:16mm; right:16mm; bottom:12mm;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:12px; border-top:1px solid var(--gold-ghost);
+    font-size:7pt; letter-spacing:0.05em; color:var(--off-faint);
+  }
+  .doc-foot .tagline{ letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); }
+
+  .fine{ font-size:7.4pt; color:var(--off-faint); line-height:1.6; margin-top:14px; }
+</style>
+</head>
+<body>
+
+<!-- ════════ PAGE 1 ════════ -->
+<div class="page">
+  <div class="doc-head">
+    <div class="brand">
+      <svg width="48" height="24" viewBox="0 0 80 40" aria-hidden="true">
+        <g fill="none" stroke="#C9A24B" stroke-width="0.8" stroke-linecap="round">
+          <path d="M 10,20 C 10,6 30,6 40,20 C 50,34 70,34 70,20 C 70,6 50,6 40,20 C 30,34 10,34 10,20 Z" opacity="0.85"/>
+          <path d="M 14,20 C 14,9 30,9 40,20 C 50,31 66,31 66,20 C 66,9 50,9 40,20 C 30,31 14,31 14,20 Z" opacity="0.6"/>
+          <path d="M 18,20 C 18,12 30,12 40,20 C 50,28 62,28 62,20 C 62,12 50,12 40,20 C 30,28 18,28 18,20 Z" opacity="0.35"/>
+        </g>
+        <g fill="#E3C770">
+          <circle cx="10" cy="20" r="1.3"/><circle cx="40" cy="20" r="1.6"/><circle cx="70" cy="20" r="1.3"/>
+        </g>
+      </svg>
+      <span class="brand-word">S I D U S &nbsp; D I G I T A L</span>
+    </div>
+    <span class="doc-tag">Proposal · Phase 1</span>
+  </div>
+
+  <span class="eyebrow">Gaze Holdings Ltd · Digital Ecosystem</span>
+  <h1>Phase 1 Deposit <span class="accent">Breakdown</span></h1>
+  <p class="lede">The Gaze Holdings Hub — gazeholdings.com — with PayOnTime CRM, PayOnTime payment gateway, and the Shopify catalogue connection. This document sets out the full Phase&nbsp;1 budget and the deposit required to commence.</p>
+
+  <div class="meta">
+    <div><div class="k">Prepared for</div><div class="v">Muthoni Ngugi · Gaze Holdings</div></div>
+    <div><div class="k">Prepared by</div><div class="v">Sidus Digital</div></div>
+    <div><div class="k">Date</div><div class="v">30 May 2026</div></div>
+    <div><div class="k">Phase 1 budget</div><div class="v gold">KSh 100,000</div></div>
+  </div>
+
+  <section>
+    <div class="sec-eyebrow">Scope</div>
+    <div class="callout">
+      <p>This <strong>KSh 100,000</strong> covers <strong>Phase 1 — the Gaze Holdings Hub</strong> plus the core integrations. The four microsites (Furnishings store, Press Global, HerGaze, and the Institute / Manor build-out) are later phases with their own budgets.</p>
+      <p>Stack advantage — <strong>PayOnTime is in-house</strong>: no third-party CRM SaaS fee (HubSpot / ActiveCampaign would run KSh 3,000–15,000 per month) and no payment-gateway markup beyond standard M-Pesa / card processing. More of the budget goes to the build.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-eyebrow">Phase 1 — Full breakdown</div>
+    <table>
+      <thead>
+        <tr><th>Item</th><th class="num">KSh</th></tr>
+      </thead>
+      <tbody>
+        <tr class="group"><td>A · Infrastructure &amp; setup (Year 1)</td><td class="num">26,000</td></tr>
+        <tr class="sub"><td>gazeholdings.com domain (1 yr)</td><td class="num">2,500</td></tr>
+        <tr class="sub"><td>gaze.co domain — furnishings. / press. subdomains (1 yr)</td><td class="num">4,500</td></tr>
+        <tr class="sub"><td>hergaze.global domain — premium TLD (1 yr)</td><td class="num">8,000</td></tr>
+        <tr class="sub"><td>Hosting setup &amp; deployment (Vercel)</td><td class="num">6,000</td></tr>
+        <tr class="sub"><td>DNS, SSL, brand email routing (info@gazeholdings.com)</td><td class="num">5,000</td></tr>
+
+        <tr class="group"><td>B · Integrations</td><td class="num">28,000</td></tr>
+        <tr class="sub"><td>PayOnTime CRM — lead capture + division tagging</td><td class="num">8,000</td></tr>
+        <tr class="sub"><td>PayOnTime payment gateway — M-Pesa STK + cards</td><td class="num">10,000</td></tr>
+        <tr class="sub"><td>Shopify catalogue connection + PayOnTime checkout</td><td class="num">10,000</td></tr>
+
+        <tr class="group"><td>C · Design &amp; development</td><td class="num">38,000</td></tr>
+        <tr class="sub"><td>Cinematic hub — design system + 8 sections</td><td class="num">20,000</td></tr>
+        <tr class="sub"><td>Content integration + CMS</td><td class="num">10,000</td></tr>
+        <tr class="sub"><td>QA, testing, launch</td><td class="num">8,000</td></tr>
+
+        <tr class="group"><td>D · Contingency (8%)</td><td class="num">8,000</td></tr>
+
+        <tr class="total"><td>Total — Phase 1</td><td class="num">KSh 100,000</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="doc-foot">
+    <span>Sidus Digital · Nairobi, Kenya</span>
+    <span class="tagline">Paid media, engineered for Africa</span>
+    <span>Page 1 / 2</span>
+  </div>
+</div>
+
+<!-- ════════ PAGE 2 ════════ -->
+<div class="page">
+  <div class="doc-head">
+    <div class="brand">
+      <svg width="48" height="24" viewBox="0 0 80 40" aria-hidden="true">
+        <g fill="none" stroke="#C9A24B" stroke-width="0.8" stroke-linecap="round">
+          <path d="M 10,20 C 10,6 30,6 40,20 C 50,34 70,34 70,20 C 70,6 50,6 40,20 C 30,34 10,34 10,20 Z" opacity="0.85"/>
+          <path d="M 14,20 C 14,9 30,9 40,20 C 50,31 66,31 66,20 C 66,9 50,9 40,20 C 30,31 14,31 14,20 Z" opacity="0.6"/>
+          <path d="M 18,20 C 18,12 30,12 40,20 C 50,28 62,28 62,20 C 62,12 50,12 40,20 C 30,28 18,28 18,20 Z" opacity="0.35"/>
+        </g>
+        <g fill="#E3C770">
+          <circle cx="10" cy="20" r="1.3"/><circle cx="40" cy="20" r="1.6"/><circle cx="70" cy="20" r="1.3"/>
+        </g>
+      </svg>
+      <span class="brand-word">S I D U S &nbsp; D I G I T A L</span>
+    </div>
+    <span class="doc-tag">Proposal · Phase 1</span>
+  </div>
+
+  <section style="margin-top:6px;">
+    <div class="sec-eyebrow">Payment schedule</div>
+    <div class="split">
+      <div class="card deposit">
+        <div class="card-head">
+          <span class="t">Deposit · to commence <span class="pct">50%</span></span>
+          <span class="amt">50,000<span class="u">KSh</span></span>
+        </div>
+        <div class="card-body">
+          <table>
+            <tbody>
+              <tr><td>Domains + DNS / SSL / email (Section A)</td><td class="num">26,000</td></tr>
+              <tr><td>PayOnTime CRM + gateway — setup begins</td><td class="num">16,000</td></tr>
+              <tr><td>Design / dev — Milestone 1 sign-off</td><td class="num">8,000</td></tr>
+              <tr class="total"><td>Deposit</td><td class="num">50,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="t">Balance · on launch <span class="pct">50%</span></span>
+          <span class="amt">50,000<span class="u">KSh</span></span>
+        </div>
+        <div class="card-body">
+          <table>
+            <tbody>
+              <tr><td>Shopify catalogue + PayOnTime checkout</td><td class="num">10,000</td></tr>
+              <tr><td>Design / dev completion + CMS + content</td><td class="num">24,000</td></tr>
+              <tr><td>QA, testing, go-live</td><td class="num">8,000</td></tr>
+              <tr><td>Contingency</td><td class="num">8,000</td></tr>
+              <tr class="total"><td>Balance</td><td class="num">50,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:8.4pt;color:var(--off-faint);margin-top:10px;">The deposit is weighted to cover the hard costs that must be paid upfront — domains cannot be registered on credit — plus the first build milestone.</p>
+  </section>
+
+  <section>
+    <div class="sec-eyebrow">Ongoing costs · Year 2+ (paid directly to providers)</div>
+    <table>
+      <thead><tr><th>Item</th><th class="num">Estimate</th></tr></thead>
+      <tbody>
+        <tr><td>Domain renewals (all three)</td><td class="num">~15,000 / yr</td></tr>
+        <tr><td>Hosting (Vercel) — free to start</td><td class="num">~2,600 / mo if scaled</td></tr>
+        <tr><td>Shopify subscription (Basic) — when Furnishings launches</td><td class="num">~5,000 / mo</td></tr>
+        <tr><td>PayOnTime — in-house</td><td class="num">Processing fees only</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-eyebrow">Open items · confirm before sign-off</div>
+    <ul class="clean">
+      <li><strong>Scope confirmation</strong> — is KSh 100,000 the hub-only Phase 1, or the entire ecosystem? If it is everything, the allocation and payment phasing change.</li>
+      <li><strong>Deposit split</strong> — currently 50 / 50. A 60 / 40 split (heavier upfront) is also common in Kenya to cover the hard domain and setup costs.</li>
+    </ul>
+  </section>
+
+  <p class="fine">Figures are estimates in Kenyan Shillings (KSh) and exclude VAT unless stated. Domain and subscription prices vary by registrar / provider and are passed through at cost. This proposal is valid for 30 days from the date above. Acceptance of the deposit constitutes agreement to commence Phase 1.</p>
+
+  <div class="doc-foot">
+    <span>hello@sidusdigital.co · Nairobi, Kenya</span>
+    <span class="tagline">Paid media, engineered for Africa</span>
+    <span>Page 2 / 2</span>
+  </div>
+</div>
+
+</body>
+</html>

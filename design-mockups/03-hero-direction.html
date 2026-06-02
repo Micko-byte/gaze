@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaze Holdings — Hero Direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400;500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --obsidian:#0A0A0A;--ink:#1A1A1A;--ivory:#F4EFE6;
+    --rose:#C99BAF;--rose-deep:#A87286;--champagne:#D9C9A8;
+    --hairline:#262626;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',sans-serif;background:var(--obsidian);
+    color:var(--ivory);font-weight:300;padding:48px 32px 80px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto}
+  .doc-label{
+    font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.4em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:16px;
+  }
+  h1{
+    font-family:'Outfit',sans-serif;font-weight:200;
+    font-size:clamp(2rem,4.5vw,3.75rem);letter-spacing:-.01em;line-height:1;
+    margin-bottom:12px;
+  }
+  h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--rose);font-weight:300}
+  .lede{font-size:1rem;color:#8c8c8c;max-width:640px;line-height:1.6;margin-bottom:48px}
+
+  .hero-card{
+    margin-bottom:32px;border:1px solid var(--hairline);
+    cursor:pointer;transition:border-color .4s,transform .3s;
+    position:relative;overflow:hidden;
+  }
+  .hero-card:hover{border-color:var(--rose);transform:translateY(-3px)}
+
+  .hero-frame{
+    position:relative;height:480px;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+  }
+  .hero-frame::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,10,10,.3) 0%,rgba(10,10,10,.55) 70%,rgba(10,10,10,.8) 100%);
+    pointer-events:none;
+  }
+  .hero-content{position:relative;z-index:2;padding:0 32px}
+  .hero-label{
+    font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.5em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:28px;
+  }
+  .hero-headline{
+    font-family:'Outfit',sans-serif;font-weight:200;
+    font-size:clamp(2rem,4.5vw,3.5rem);line-height:.98;letter-spacing:-.015em;
+    color:var(--ivory);margin-bottom:20px;
+  }
+  .hero-headline em{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--rose);font-weight:300;
+  }
+  .hero-sub{font-size:.95rem;color:#bcb6a8;max-width:480px;margin:0 auto 28px;font-weight:300}
+  .hero-cta{
+    display:inline-block;font-family:'Outfit',sans-serif;font-size:.7rem;
+    letter-spacing:.35em;text-transform:uppercase;color:var(--ivory);font-weight:500;
+    padding:14px 32px;border:1px solid var(--rose);text-decoration:none;
+  }
+
+  /* OPTION 1 — Video loop (placeholder Pexels) */
+  .frame-video{
+    background:
+      linear-gradient(135deg,rgba(168,114,134,.35),rgba(10,10,10,.7)),
+      url('https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover;
+  }
+  .video-badge{
+    position:absolute;top:20px;left:20px;z-index:3;
+    font-family:'Outfit',sans-serif;font-size:.6rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;
+    background:rgba(10,10,10,.7);padding:6px 12px;border:1px solid var(--rose);
+  }
+
+  /* OPTION 2 — Still cinematic photo */
+  .frame-still{
+    background:
+      linear-gradient(180deg,rgba(10,10,10,.3),rgba(10,10,10,.7)),
+      url('https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover;
+  }
+
+  /* OPTION 3 — Animated abstract */
+  .frame-abstract{
+    background:radial-gradient(ellipse at 30% 40%,#1a1014 0%,#0a0a0a 60%),
+      linear-gradient(180deg,#0a0a0a,#0a0a0a);
+    position:relative;
+  }
+  .frame-abstract::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 25% 35%,rgba(201,155,175,.18),transparent 40%),
+      radial-gradient(circle at 75% 70%,rgba(217,201,168,.12),transparent 45%),
+      radial-gradient(circle at 50% 90%,rgba(168,114,134,.10),transparent 50%);
+    animation:drift 18s ease-in-out infinite alternate;
+  }
+  .frame-abstract::after{
+    background:linear-gradient(180deg,transparent,rgba(10,10,10,.4));
+  }
+  @keyframes drift{
+    0%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(-30px,20px) scale(1.08)}
+    100%{transform:translate(20px,-15px) scale(1)}
+  }
+  .grain{
+    position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.12;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .meta{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;padding:28px 32px;
+    background:var(--ink);border-top:1px solid var(--hairline);
+  }
+  .meta-tag{
+    font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:8px;
+  }
+  .meta-val{font-size:.88rem;color:#bcb6a8;line-height:1.55}
+  .opt-tag{
+    position:absolute;top:20px;right:20px;z-index:3;
+    font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;
+    background:rgba(10,10,10,.7);padding:6px 12px;
+  }
+
+  .ask{
+    margin-top:60px;padding:36px 40px;
+    background:linear-gradient(135deg,rgba(201,155,175,.07),rgba(217,201,168,.03));
+    border:1px solid var(--rose);
+  }
+  .ask h3{font-family:'Outfit',sans-serif;font-weight:300;font-size:1.35rem;margin-bottom:14px}
+  .ask p{font-size:.92rem;color:#bcb6a8;line-height:1.65}
+  .ask strong{color:var(--rose);font-weight:500}
+  .pill{display:inline-block;font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--champagne);color:var(--champagne);margin-left:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-label">Gaze Holdings &mdash; Hero Direction</div>
+  <h1>Three ways to open the <em>film</em>.</h1>
+  <p class="lede">The brief specs a 12&ndash;15 second silent video loop, but real footage doesn't exist yet. These three options give you a path forward regardless &mdash; pick the one we build, and (if video) I'll source a placeholder loop until real assets are commissioned.</p>
+
+  <!-- OPTION 1 -->
+  <div class="hero-card" data-choice="1" onclick="toggleSelect(this)">
+    <div class="hero-frame frame-video">
+      <span class="video-badge">&#9658; Video loop &middot; 12s</span>
+      <span class="opt-tag">Option 1 &mdash; Video loop</span>
+      <div class="hero-content">
+        <div class="hero-label">Gaze Holdings</div>
+        <div class="hero-headline">A group of brands<br>built for <em>legacy</em>.</div>
+        <p class="hero-sub">Strategic leadership. Brand architecture. Capital allocation. Cross-division synergy.</p>
+        <a href="#" class="hero-cta">Enter the Group</a>
+      </div>
+    </div>
+    <div class="meta">
+      <div><div class="meta-tag">Placeholder</div><div class="meta-val">Pexels CC0 luxury interior B-roll. Swap to commissioned footage at launch.</div></div>
+      <div><div class="meta-tag">Performance</div><div class="meta-val">Hero loop ~3&ndash;4MB. Mobile = high-quality still poster + autoload on desktop only.</div></div>
+      <div><div class="meta-tag">Risk</div><div class="meta-val">Stock can look generic. Will only sing if real footage replaces placeholder soon after launch.</div></div>
+    </div>
+  </div>
+
+  <!-- OPTION 2 -->
+  <div class="hero-card" data-choice="2" onclick="toggleSelect(this)">
+    <div class="hero-frame frame-still">
+      <span class="opt-tag">Option 2 &mdash; Still photograph</span>
+      <div class="hero-content">
+        <div class="hero-label">Gaze Holdings</div>
+        <div class="hero-headline">A group of brands<br>built for <em>legacy</em>.</div>
+        <p class="hero-sub">Strategic leadership. Brand architecture. Capital allocation. Cross-division synergy.</p>
+        <a href="#" class="hero-cta">Enter the Group</a>
+      </div>
+    </div>
+    <div class="meta">
+      <div><div class="meta-tag">Placeholder</div><div class="meta-val">Unsplash editorial photography (luxury interior / leadership / textured neutral).</div></div>
+      <div><div class="meta-tag">Performance</div><div class="meta-val">200&ndash;400KB optimized image. Lighthouse Performance ~95+. Instant load.</div></div>
+      <div><div class="meta-tag">Risk</div><div class="meta-val">Less &ldquo;cinematic&rdquo; than video on first impression. Subtle parallax + Ken Burns zoom mitigates this.</div></div>
+    </div>
+  </div>
+
+  <!-- OPTION 3 -->
+  <div class="hero-card" data-choice="3" onclick="toggleSelect(this)">
+    <div class="hero-frame frame-abstract">
+      <div class="grain"></div>
+      <span class="opt-tag">Option 3 &mdash; Animated atmosphere <span class="pill">Recommended</span></span>
+      <div class="hero-content">
+        <div class="hero-label">Gaze Holdings</div>
+        <div class="hero-headline">A group of brands<br>built for <em>legacy</em>.</div>
+        <p class="hero-sub">Strategic leadership. Brand architecture. Capital allocation. Cross-division synergy.</p>
+        <a href="#" class="hero-cta">Enter the Group</a>
+      </div>
+    </div>
+    <div class="meta">
+      <div><div class="meta-tag">Placeholder</div><div class="meta-val">None. Pure CSS/Canvas. House Rose &amp; Champagne radial gradients drifting slowly behind film grain.</div></div>
+      <div><div class="meta-tag">Performance</div><div class="meta-val">&lt;5KB total. Lighthouse 100. Works perfectly on every device. No asset dependency.</div></div>
+      <div><div class="meta-tag">Risk</div><div class="meta-val">None for v1. Becomes the <strong>foundation</strong> &mdash; when real video is ready, it layers behind the gradient as a 30% opacity texture. Best of both.</div></div>
+    </div>
+  </div>
+
+  <div class="ask">
+    <h3>Answer in terminal:</h3>
+    <p>
+      <strong>Q1.</strong> Which hero: <strong>Option 1</strong> (video loop, stock placeholder), <strong>Option 2</strong> (still photograph), or <strong>Option 3</strong> (animated atmosphere &mdash; no asset dependency, my recommendation)?<br><br>
+      <strong>Q2.</strong> Custom gold-ring cursor on desktop &mdash; <strong>yes</strong> (lovely detail) or <strong>no</strong> (keep default, lighter feel)?<br><br>
+      <strong>Q3.</strong> Confirm headline copy: <strong>"A group of brands built for <em>legacy</em>."</strong> &mdash; or do you want a different opening line (the brief used "A Group of Brands Built for Legacy" with title case; I dropped to sentence case for editorial restraint)?
+    </p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaze Holdings — Brand Direction v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --obsidian:#0A0A0A;
+    --ink:#1A1A1A;
+    --ivory:#F4EFE6;
+    --paper:#FAF7F1;
+    --rose:#C99BAF;       /* dusty mauve-pink from logo */
+    --rose-deep:#A87286;  /* deeper variant */
+    --champagne:#D9C9A8;  /* secondary luxe metallic */
+    --charcoal:#3A3A3A;
+    --hairline:#262626;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--obsidian);
+    color:var(--ivory);
+    line-height:1.55;
+    padding:56px 32px 80px;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto}
+  .doc-label{
+    font-family:'Outfit',sans-serif;
+    font-size:.7rem;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--rose);font-weight:400;margin-bottom:16px;
+  }
+  h1{
+    font-family:'Outfit',sans-serif;
+    font-weight:200;
+    font-size:clamp(2rem,4.5vw,3.75rem);
+    letter-spacing:-.01em;
+    line-height:1;
+    color:var(--ivory);
+    margin-bottom:8px;
+  }
+  h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;color:var(--rose)}
+  .lede{font-size:1rem;color:#8c8c8c;max-width:560px;margin-top:16px;line-height:1.6}
+
+  .section{margin-top:72px}
+  .section-num{
+    font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.45em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;
+  }
+  .section-title{
+    font-family:'Outfit',sans-serif;font-weight:300;font-size:1.5rem;
+    letter-spacing:-.005em;margin-top:8px;color:var(--ivory);
+  }
+  .section-rule{height:1px;background:var(--hairline);margin:20px 0 32px}
+
+  /* Palette */
+  .palette{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--hairline)}
+  .swatch{
+    aspect-ratio:1/1.1;display:flex;flex-direction:column;
+    justify-content:space-between;padding:24px;
+    border-right:1px solid var(--hairline);
+    transition:transform .4s ease;position:relative;overflow:hidden;
+  }
+  .swatch:last-child{border-right:none}
+  .swatch:hover{transform:translateY(-2px)}
+  .swatch-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .swatch-num{
+    font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.3em;
+    text-transform:uppercase;opacity:.55;
+  }
+  .swatch-name{
+    font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:400;
+    letter-spacing:.04em;
+  }
+  .swatch-hex{
+    font-family:'Inter',monospace;font-size:.72rem;opacity:.7;margin-top:6px;
+    letter-spacing:.05em;
+  }
+  .sw-obs{background:var(--obsidian);color:var(--ivory)}
+  .sw-ivory{background:var(--ivory);color:var(--obsidian)}
+  .sw-rose{background:var(--rose);color:var(--obsidian)}
+  .sw-champagne{background:var(--champagne);color:var(--obsidian)}
+  .palette-note{
+    margin-top:20px;font-size:.85rem;color:#8c8c8c;font-style:italic;
+    max-width:720px;
+  }
+
+  /* Old palette comparison */
+  .palette-compare{
+    margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:24px;
+    padding:24px;background:var(--ink);border:1px solid var(--hairline);
+  }
+  .pc-col h4{
+    font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.35em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:12px;
+  }
+  .pc-mini{display:flex;gap:4px;height:36px}
+  .pc-mini > div{flex:1;border-radius:1px}
+  .pc-caption{font-size:.78rem;color:#888;margin-top:10px;line-height:1.5}
+
+  /* Type directions */
+  .direction{
+    background:var(--ink);padding:48px;border:1px solid var(--hairline);
+    cursor:pointer;transition:border-color .4s,transform .3s;
+    position:relative;margin-bottom:24px;
+  }
+  .direction:hover{border-color:var(--rose);transform:translateY(-2px)}
+  .dir-tag{
+    position:absolute;top:24px;right:24px;
+    font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;
+  }
+  .dir-cost{
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    color:#666;margin-bottom:24px;
+  }
+  .dir-ref{
+    font-size:.78rem;color:var(--champagne);font-style:italic;margin-top:6px;
+    margin-bottom:24px;
+  }
+
+  /* Direction A — Logo-led sans */
+  .display-outfit{
+    font-family:'Outfit',sans-serif;font-weight:200;
+    font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:.95;letter-spacing:-.015em;
+  }
+  .display-outfit em{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-weight:300;color:var(--rose);
+  }
+
+  /* Direction B — Editorial counterpoint */
+  .display-cormorant{
+    font-family:'Cormorant Garamond',serif;font-weight:300;
+    font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1;letter-spacing:.005em;
+  }
+  .display-cormorant em{
+    font-style:italic;color:var(--rose);font-weight:300;
+  }
+
+  /* Direction C — Manrope minimalist */
+  .display-manrope{
+    font-family:'Manrope',sans-serif;font-weight:200;
+    font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:.95;letter-spacing:-.02em;
+    text-transform:uppercase;
+  }
+  .display-manrope em{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+    color:var(--rose);text-transform:none;letter-spacing:0;
+  }
+
+  .body-inter{
+    font-family:'Inter',sans-serif;font-weight:300;font-size:.92rem;
+    color:#a89f8c;line-height:1.65;
+  }
+  .label-uc{
+    font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;
+    margin-top:32px;margin-bottom:10px;
+  }
+  .dir-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;
+  }
+  .div-rule{height:1px;background:var(--hairline);margin:24px 0}
+
+  /* Hero preview using selected direction */
+  .hero-preview{
+    margin-top:80px;background:var(--obsidian);
+    border:1px solid var(--hairline);
+    padding:80px 48px;text-align:center;
+    background-image:
+      radial-gradient(circle at 30% 50%,rgba(201,155,175,.08),transparent 60%),
+      radial-gradient(circle at 70% 80%,rgba(217,201,168,.05),transparent 60%);
+  }
+  .hero-label{
+    font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.5em;
+    text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:32px;
+  }
+  .hero-headline{
+    font-family:'Outfit',sans-serif;font-weight:200;
+    font-size:clamp(2.5rem,6vw,5rem);line-height:.95;letter-spacing:-.015em;
+    color:var(--ivory);margin-bottom:24px;
+  }
+  .hero-headline em{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--rose);font-weight:300;
+  }
+  .hero-sub{
+    font-size:1.05rem;color:#a89f8c;max-width:560px;margin:0 auto 40px;
+    font-weight:300;
+  }
+  .hero-cta{
+    display:inline-block;
+    font-family:'Outfit',sans-serif;font-size:.75rem;letter-spacing:.35em;
+    text-transform:uppercase;color:var(--ivory);font-weight:400;
+    padding:14px 32px;border:1px solid var(--rose);
+    text-decoration:none;transition:all .3s;
+  }
+
+  .ask-block{
+    margin-top:80px;padding:40px;
+    background:linear-gradient(135deg,rgba(201,155,175,.06),rgba(217,201,168,.03));
+    border:1px solid var(--rose);
+  }
+  .ask-block h3{
+    font-family:'Outfit',sans-serif;font-weight:300;font-size:1.4rem;
+    margin-bottom:16px;color:var(--ivory);
+  }
+  .ask-block p{font-size:.92rem;color:#bcb6a8;line-height:1.65}
+  .ask-block strong{color:var(--rose);font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-label">Gaze Holdings &mdash; Brand Direction &middot; v2 (Logo-led)</div>
+  <h1>Refined for the <em>logo</em> &amp; ultra-luxury read.</h1>
+  <p class="lede">Pivoting away from heritage gold-and-obsidian. New direction draws from the existing Gaze Furnishings logo &mdash; dusty rose accent, obsidian black, geometric sans &mdash; positioned at the editorial end of luxury (closer to Bottega Veneta / The Row / Le Labo than Aman Resorts).</p>
+
+  <!-- PALETTE -->
+  <div class="section">
+    <div class="section-num">01 &middot; Palette</div>
+    <div class="section-title">House colors, drawn from the logo.</div>
+    <div class="section-rule"></div>
+
+    <div class="palette">
+      <div class="swatch sw-obs">
+        <div class="swatch-top"><span class="swatch-num">01</span></div>
+        <div><div class="swatch-name">Obsidian</div><div class="swatch-hex">#0A0A0A</div></div>
+      </div>
+      <div class="swatch sw-ivory">
+        <div class="swatch-top"><span class="swatch-num">02</span></div>
+        <div><div class="swatch-name">Ivory</div><div class="swatch-hex">#F4EFE6</div></div>
+      </div>
+      <div class="swatch sw-rose">
+        <div class="swatch-top"><span class="swatch-num">03</span></div>
+        <div><div class="swatch-name">House Rose</div><div class="swatch-hex">#C99BAF</div></div>
+      </div>
+      <div class="swatch sw-champagne">
+        <div class="swatch-top"><span class="swatch-num">04</span></div>
+        <div><div class="swatch-name">Champagne</div><div class="swatch-hex">#D9C9A8</div></div>
+      </div>
+    </div>
+    <p class="palette-note">Obsidian dominates as the canvas. Ivory carries body copy on dark backgrounds. House Rose &mdash; pulled directly from the Furnishings logo &mdash; is the single saturated accent: used sparingly for italics, division markers, and the gold-ring cursor. Champagne is the quiet metallic for hairlines and division dividers, replacing the original brief's gold without competing with rose.</p>
+
+    <div class="palette-compare">
+      <div class="pc-col">
+        <h4>Old direction (brief)</h4>
+        <div class="pc-mini">
+          <div style="background:#0A0A0A"></div>
+          <div style="background:#C9A86B"></div>
+          <div style="background:#F4EFE6"></div>
+          <div style="background:#7A5C3E"></div>
+        </div>
+        <p class="pc-caption">Heritage gold-and-bronze. Reads as men's-club / private-bank / Aman. No connection to existing logo.</p>
+      </div>
+      <div class="pc-col">
+        <h4>New direction (logo-led)</h4>
+        <div class="pc-mini">
+          <div style="background:#0A0A0A"></div>
+          <div style="background:#F4EFE6"></div>
+          <div style="background:#C99BAF"></div>
+          <div style="background:#D9C9A8"></div>
+        </div>
+        <p class="pc-caption">Editorial-feminine luxury. Inherits the Furnishings logo. Reads as Bottega / The Row / Jacquemus editorial. Aligns with HerGaze (female-led) without becoming overtly feminine.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPE DIRECTIONS -->
+  <div class="section">
+    <div class="section-num">02 &middot; Type</div>
+    <div class="section-title">Three directions. Pick one.</div>
+    <div class="section-rule"></div>
+
+    <!-- A -->
+    <div class="direction" data-choice="a" onclick="toggleSelect(this)">
+      <div class="dir-tag">A &mdash; Logo continuity</div>
+      <div class="dir-cost">Outfit + Cormorant italic accent + Inter &middot; All free, Google Fonts</div>
+      <div class="dir-ref">References: Bottega Veneta, Jacquemus, Le Labo</div>
+
+      <div class="display-outfit">A group of brands<br>built for <em>legacy</em>.</div>
+
+      <div class="dir-grid">
+        <div>
+          <div class="label-uc">The Founding Ethos</div>
+          <p class="body-inter">We build companies that outlive us. Five divisions. One discipline. African excellence on the world stage &mdash; restrained, deliberate, enduring.</p>
+        </div>
+        <div>
+          <div class="label-uc">Why this direction</div>
+          <p class="body-inter">Outfit picks up the geometric sans character of the existing GAZE wordmark. Italic Cormorant on accent words ("legacy", "vision") gives the editorial luxury moment. Inter handles all body. Cohesive with the logo. Most "Bottega" of the three.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="direction" data-choice="b" onclick="toggleSelect(this)">
+      <div class="dir-tag">B &mdash; Editorial counterpoint</div>
+      <div class="dir-cost">Cormorant Garamond + Inter &middot; All free, Google Fonts</div>
+      <div class="dir-ref">References: Aman Resorts, Restoration Hardware, The New York Times T Magazine</div>
+
+      <div class="display-cormorant">A group of brands<br>built for <em>legacy</em>.</div>
+
+      <div class="dir-grid">
+        <div>
+          <div class="label-uc">The Founding Ethos</div>
+          <p class="body-inter">We build companies that outlive us. Five divisions. One discipline. African excellence on the world stage &mdash; restrained, deliberate, enduring.</p>
+        </div>
+        <div>
+          <div class="label-uc">Why this direction</div>
+          <p class="body-inter">Pure editorial serif display. Treats the website as a counterpoint to the logo (sans logo, serif site &mdash; like luxury hospitality). Maximum heritage feel. Slightly less coherent with the existing visual identity but more "ultra-luxury" in the classical sense.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="direction" data-choice="c" onclick="toggleSelect(this)">
+      <div class="dir-tag">C &mdash; Brutalist minimal</div>
+      <div class="dir-cost">Manrope ALL CAPS + Cormorant italic accent + Inter &middot; All free, Google Fonts</div>
+      <div class="dir-ref">References: The Row, Acne Studios, Phoebe Philo</div>
+
+      <div class="display-manrope">A GROUP OF BRANDS<br>BUILT FOR <em>legacy</em>.</div>
+
+      <div class="dir-grid">
+        <div>
+          <div class="label-uc">The Founding Ethos</div>
+          <p class="body-inter">We build companies that outlive us. Five divisions. One discipline. African excellence on the world stage &mdash; restrained, deliberate, enduring.</p>
+        </div>
+        <div>
+          <div class="label-uc">Why this direction</div>
+          <p class="body-inter">Manrope all-caps tracked wide for headlines &mdash; reads as the quietest, most refined sans. Italic serif accent breaks the sans rhythm. Most "fashion luxury" of the three. Strongest for younger high-net-worth aesthetic. Slightly colder.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO PREVIEW -->
+  <div class="section">
+    <div class="section-num">03 &middot; Hero preview</div>
+    <div class="section-title">Direction A applied to the opening film.</div>
+    <div class="section-rule"></div>
+
+    <div class="hero-preview">
+      <div class="hero-label">Gaze Holdings</div>
+      <div class="hero-headline">A group of brands<br>built for <em>legacy</em>.</div>
+      <p class="hero-sub">Strategic leadership. Brand architecture. Capital allocation. Cross-division synergy.</p>
+      <a href="#" class="hero-cta">Enter the Group</a>
+    </div>
+  </div>
+
+  <!-- BLOCKING QUESTIONS -->
+  <div class="ask-block">
+    <h3>Answer in terminal:</h3>
+    <p>
+      <strong>Q1.</strong> Which type direction: <strong>A</strong> (Outfit + serif italic accent, logo-continuous), <strong>B</strong> (Cormorant editorial, hospitality-luxury), or <strong>C</strong> (Manrope all-caps, fashion-luxury)?<br><br>
+      <strong>Q2.</strong> Palette: confirm <strong>Obsidian / Ivory / House Rose / Champagne</strong> &mdash; or do you want me to nudge House Rose deeper (#A87286), drop Champagne, or add a fifth color?<br><br>
+      <strong>Q3.</strong> The strategy doc lists <strong>4 divisions</strong> (Furnishings, Leadership Institute, Her Gaze, Press Global). Your original brief has <strong>5</strong> &mdash; adding <strong>The Gaze Manor</strong>. Is Manor still in, or has it been folded into another division?
+    </p>
+  </div>
+</div>
+</body>
+</html>
