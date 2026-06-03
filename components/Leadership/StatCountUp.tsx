@@ -30,8 +30,8 @@ export function StatCountUp({ value, suffix = '', label, tone = 'dark' }: Props)
         onEnter: () => {
           gsap.to(counter, {
             n: value,
-            duration: 1.4,
-            ease: 'power2.out',
+            duration: 1.8,
+            ease: 'power3.out',
             onUpdate: () => setDisplay(Math.round(counter.n)),
           });
         },
@@ -45,9 +45,9 @@ export function StatCountUp({ value, suffix = '', label, tone = 'dark' }: Props)
   const isLight = tone === 'light';
 
   return (
-    <div className={`border-t pt-3 ${isLight ? 'border-obsidian/15' : 'border-hairline'}`}>
+    <div ref={ref} className={`border-t pt-3 ${isLight ? 'border-obsidian/15' : 'border-hairline'}`}>
       <div className={`font-serif italic font-light text-3xl md:text-4xl leading-none ${isLight ? 'text-rose-ink' : 'text-rose'}`}>
-        {display}{suffix}
+        {display.toLocaleString()}{suffix}
       </div>
       <div className={`font-display text-[0.55rem] tracking-[0.35em] uppercase mt-2 ${isLight ? 'text-obsidian/65' : 'text-ivory/50'}`}>
         {label}

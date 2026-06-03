@@ -276,9 +276,12 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Also handle touch scroll on mobile
+    window.addEventListener('touchmove', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('touchmove', onScroll);
       window.removeEventListener('resize', onScroll);
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
@@ -299,7 +302,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         willChange: 'scroll-position',
       }}
     >
-      <div className="scroll-stack-inner pt-[20vh] px-0 md:px-20 pb-[50rem] min-h-screen">
+      <div className="scroll-stack-inner pt-[10vh] px-0 md:px-12 pb-[16rem] min-h-screen">
         {children}
         <div className="scroll-stack-end w-full h-px" />
       </div>

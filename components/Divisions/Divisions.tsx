@@ -8,7 +8,7 @@ import ScrollStack, { ScrollStackItem } from '@/components/ui/ScrollStack';
 
 export function Divisions() {
   return (
-    <section id="divisions" className="relative overflow-hidden bg-obsidian px-6 py-18 md:py-24">
+    <section id="divisions" className="relative overflow-hidden bg-obsidian px-6 py-10 md:py-14">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ivory/5 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,155,175,0.08),transparent_58%)]" />
@@ -36,10 +36,10 @@ export function Divisions() {
         <ScrollStack
           useWindowScroll
           className="overflow-visible"
-          itemDistance={84}
+          itemDistance={52}
           itemScale={0.018}
-          itemStackDistance={42}
-          stackPosition="28%"
+          itemStackDistance={24}
+          stackPosition="22%"
           scaleEndPosition="10%"
           baseScale={0.94}
           rotationAmount={0}
@@ -48,7 +48,7 @@ export function Divisions() {
           {divisions.map((division, index) => (
             <ScrollStackItem
               key={division.id}
-              itemClassName="!my-8 !p-0 !rounded-[30px] !h-[27rem] md:!h-[31rem] overflow-hidden bg-ink border border-hairline"
+              itemClassName="!my-4 !p-0 !rounded-[24px] !h-[22rem] md:!h-[25rem] overflow-hidden bg-ink border border-hairline"
             >
               <DivisionCard
                 division={division}

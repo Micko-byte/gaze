@@ -26,6 +26,7 @@ html {
   color: var(--ivory);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Native smooth scroll as base — Lenis overrides this on desktop */
   scroll-behavior: smooth;
 }
 
@@ -33,6 +34,18 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 300;
   line-height: 1.6;
+  /* Prevent layout shift from scrollbar appearing/disappearing */
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overscroll-behavior-y: none;
+}
+
+/* ── Mobile: native momentum scroll, no rubber-band on sections ── */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -50,6 +63,9 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   color: var(--ivory);
 }
 
+/* ─────────────────────────────────────────────
+   ETHOS / AMBIENT
+───────────────────────────────────────────── */
 .ethos-drift {
   background:
     radial-gradient(circle at 25% 35%, rgba(217, 201, 168, 0.10), transparent 45%),
@@ -61,11 +77,29 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   100% { transform: translate(-30px, 20px) scale(1.06); }
 }
 
+/* ─────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────── */
+.hero-grain {
+  background-image:
+    radial-gradient(rgba(244, 239, 230, 0.09) 0.8px, transparent 0.8px),
+    radial-gradient(rgba(201, 155, 175, 0.06) 0.8px, transparent 0.8px);
+  background-size: 3px 3px, 4px 4px;
+  background-position: 0 0, 1px 1px;
+  mix-blend-mode: soft-light;
+}
+
+/* ─────────────────────────────────────────────
+   BRANCH / DIVISION NODE FLOAT
+───────────────────────────────────────────── */
 @keyframes branch-float {
   0%, 100% { transform: translateY(0) translateX(0); }
   50% { transform: translateY(-8px) translateX(3px); }
 }
 
+/* ─────────────────────────────────────────────
+   DIVISION MARQUEE
+───────────────────────────────────────────── */
 @keyframes division-marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -76,6 +110,9 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   100% { transform: translateX(-50%); }
 }
 
+/* ─────────────────────────────────────────────
+   DIVISION ORBIT / RING
+───────────────────────────────────────────── */
 @keyframes division-orbit {
   0% {
     transform:
@@ -98,17 +135,59 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   100% { transform: rotate(360deg); }
 }
 
+/* ─────────────────────────────────────────────
+   STATS STRIP — number pulse on enter
+───────────────────────────────────────────── */
+@keyframes stat-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   PREMIUM SHIMMER — for decorative lines
+───────────────────────────────────────────── */
+@keyframes shimmer-line {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 155, 175, 0.6) 45%,
+    rgba(217, 201, 168, 0.8) 50%,
+    rgba(201, 155, 175, 0.6) 55%,
+    transparent 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer-line 3s linear infinite;
+}
+
+/* ─────────────────────────────────────────────
+   CUSTOM CURSOR
+───────────────────────────────────────────── */
 [data-testid='custom-cursor'].cursor-hover {
   width: 44px !important;
   height: 44px !important;
   border-color: var(--champagne) !important;
 }
 
-.hero-grain {
-  background-image:
-    radial-gradient(rgba(244, 239, 230, 0.09) 0.8px, transparent 0.8px),
-    radial-gradient(rgba(201, 155, 175, 0.06) 0.8px, transparent 0.8px);
-  background-size: 3px 3px, 4px 4px;
-  background-position: 0 0, 1px 1px;
-  mix-blend-mode: soft-light;
+/* ─────────────────────────────────────────────
+   SCROLL — ensure full-height sections don't
+   fight Lenis on iOS
+───────────────────────────────────────────── */
+section {
+  position: relative;
+}
+
+/* Prevent momentum-scroll bleed on sticky/fixed nav */
+nav {
+  will-change: transform;
 }
