@@ -4,10 +4,9 @@ import { divisions } from '@/content/divisions';
 import { DivisionCard } from './DivisionCard';
 import { Reveal } from '@/components/Reveal/Reveal';
 import { ScrollFloat } from '@/components/ui/ScrollFloat';
+import ScrollStack, { ScrollStackItem } from '@/components/ui/ScrollStack';
 
 export function Divisions() {
-  const reel = [...divisions, ...divisions];
-
   return (
     <section id="divisions" className="relative overflow-hidden bg-obsidian px-6 py-24 md:py-28">
       <div className="absolute inset-0 pointer-events-none">
@@ -32,27 +31,31 @@ export function Divisions() {
           <div className="mt-10 h-px w-24 bg-rose/30" />
         </Reveal>
 
-        <div className="relative">
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-obsidian via-obsidian/95 to-transparent z-10"
-            aria-hidden="true"
-          />
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-obsidian via-obsidian/95 to-transparent z-10"
-            aria-hidden="true"
-          />
-          <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-            <div className="flex w-max gap-4 md:gap-5 motion-safe:animate-[division-marquee_44s_linear_infinite] hover:[animation-play-state:paused] will-change-transform">
-              {reel.map((division, index) => (
-                <DivisionCard
-                  key={`${division.id}-${index}`}
-                  division={division}
-                  index={index % divisions.length}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        <ScrollStack
+          useWindowScroll
+          className="overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          itemDistance={120}
+          itemScale={0.05}
+          itemStackDistance={60}
+          stackPosition="24%"
+          scaleEndPosition="8%"
+          baseScale={0.9}
+          rotationAmount={0.35}
+          blurAmount={0.45}
+        >
+          {divisions.map((division, index) => (
+            <ScrollStackItem
+              key={division.id}
+              itemClassName="!my-10 !p-0 !rounded-[32px] !h-[34rem] md:!h-[38rem] overflow-hidden bg-ink border border-hairline"
+            >
+              <DivisionCard
+                division={division}
+                index={index}
+                className="!w-full !max-w-none !h-full !aspect-auto"
+              />
+            </ScrollStackItem>
+          ))}
+        </ScrollStack>
       </div>
     </section>
   );

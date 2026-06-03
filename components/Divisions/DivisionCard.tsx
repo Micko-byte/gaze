@@ -6,6 +6,7 @@ import { DivisionNumber } from './DivisionNumber';
 type Props = {
   division: Division;
   index: number;
+  className?: string;
 };
 
 const LABELS: Record<string, string> = {
@@ -16,13 +17,13 @@ const LABELS: Record<string, string> = {
   hergaze: 'Women\'s transformation',
 };
 
-export function DivisionCard({ division, index }: Props) {
+export function DivisionCard({ division, index, className = '' }: Props) {
   return (
     <Link
       href={division.href}
       aria-label={division.name}
       data-cursor="hover"
-      className="group relative block shrink-0 w-[76vw] max-w-[312px] md:w-[300px] aspect-[4/5] border border-hairline overflow-hidden bg-ink shadow-[0_18px_45px_-28px_rgba(0,0,0,0.65)] transition-all duration-700 ease-reveal hover:border-rose/70 hover:-translate-y-1"
+      className={`group relative block shrink-0 w-[76vw] max-w-[312px] md:w-[300px] aspect-[4/5] border border-hairline overflow-hidden bg-ink shadow-[0_18px_45px_-28px_rgba(0,0,0,0.65)] transition-all duration-700 ease-reveal hover:border-rose/70 hover:-translate-y-1 ${className}`.trim()}
     >
       <div className="absolute inset-0">
         <Image

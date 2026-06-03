@@ -24,3 +24,5 @@ export const instagram = {
   handle: '@gazeholdings',
   profileUrl: 'https://instagram.com/gazeholdings',
 } as const;
+
+export const instaProfileUrl = 'https://www.instagram.com/gaze_furnishings_ke/?hl=en';

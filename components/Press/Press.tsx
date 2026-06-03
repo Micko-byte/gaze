@@ -1,5 +1,6 @@
 import { pressContent } from '@/content/press';
 import { Reveal } from '@/components/Reveal/Reveal';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
 export function Press() {
   const { award, media, coverage } = pressContent;
@@ -10,11 +11,14 @@ export function Press() {
         <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
           {pressContent.eyebrow}
         </div>
-        <h2 className="font-display font-extralight text-3xl md:text-5xl leading-[0.98] tracking-tight text-ivory mb-6">
-          {pressContent.heading.pre}
-          <em className="font-serif italic font-light text-rose">{pressContent.heading.accent}</em>
-          {pressContent.heading.post}
-        </h2>
+        <ScrollReveal
+          containerClassName="mb-6"
+          textClassName="font-display font-extralight text-3xl md:text-5xl leading-[0.98] tracking-tight text-ivory"
+          baseRotation={4}
+          blurStrength={6}
+        >
+          The work, noticed.
+        </ScrollReveal>
         <p className="text-ivory/60 max-w-md mx-auto font-light text-base md:text-lg mb-16">
           {pressContent.sub}
         </p>

@@ -1,5 +1,6 @@
 import { divisions } from '@/content/divisions';
 import { footerContent } from '@/content/footer';
+import { instaProfileUrl } from '@/content/social';
 import { NewsletterForm } from './NewsletterForm';
 import { BrandMark } from '@/components/BrandMark/BrandMark';
 import { SocialLinks } from '@/components/Social/SocialLinks';
@@ -75,6 +76,14 @@ export function Footer() {
               Social
             </div>
             <SocialLinks size={18} />
+            <a
+              href={instaProfileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block font-display text-[0.55rem] tracking-[0.28em] uppercase text-ivory/55 hover:text-rose transition-colors"
+            >
+              Insta
+            </a>
             <p className="text-ivory/35 text-xs mt-6 max-w-xs leading-relaxed">
               Follow the group across the channels where the story is unfolding.
             </p>

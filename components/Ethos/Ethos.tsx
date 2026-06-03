@@ -1,19 +1,34 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MutableRefObject } from 'react';
 import { ethosContent } from '@/content/ethos';
 import { prefersReducedMotion } from '@/lib/motion';
 import { ScrollFloat } from '@/components/ui/ScrollFloat';
+import VariableProximity from '@/components/ui/VariableProximity';
+
+function ProximitySentence({ text }: { text: string }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <div ref={containerRef} data-ethos-sentence className="max-w-2xl">
+      <VariableProximity
+        label={text}
+        containerRef={containerRef as unknown as MutableRefObject<HTMLElement | null>}
+        radius={120}
+        className="block text-base md:text-lg leading-relaxed font-light text-ivory/82"
+      />
+    </div>
+  );
+}
 
 export function Ethos() {
   const sectionRef = useRef<HTMLElement>(null);
-  const sentenceRefs = useRef<(HTMLParagraphElement | null)[]>([]);
   const quoteRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const sentences = sentenceRefs.current.filter(Boolean) as HTMLElement[];
+    const sentences = Array.from(sectionRef.current.querySelectorAll('[data-ethos-sentence]')) as HTMLElement[];
     const targets = [...sentences, quoteRef.current].filter(Boolean) as HTMLElement[];
 
     if (prefersReducedMotion()) {
@@ -67,13 +82,7 @@ export function Ethos() {
           </ScrollFloat>
           <div className="space-y-6">
             {ethosContent.manifesto.map((sentence, i) => (
-              <p
-                key={i}
-                ref={el => { sentenceRefs.current[i] = el; }}
-                className="text-ivory/82 text-base md:text-lg leading-relaxed font-light"
-              >
-                {sentence}
-              </p>
+              <ProximitySentence key={i} text={sentence} />
             ))}
           </div>
         </div>
