@@ -35,13 +35,13 @@ export function Divisions() {
           useWindowScroll
           className="overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           itemDistance={120}
-          itemScale={0.05}
+          itemScale={0.03}
           itemStackDistance={60}
           stackPosition="24%"
           scaleEndPosition="8%"
           baseScale={0.9}
-          rotationAmount={0.35}
-          blurAmount={0.45}
+          rotationAmount={0}
+          blurAmount={0}
         >
           {divisions.map((division, index) => (
             <ScrollStackItem

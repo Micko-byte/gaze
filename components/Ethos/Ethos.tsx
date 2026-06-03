@@ -1,23 +1,24 @@
 'use client';
 
-import { useEffect, useRef, type MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import { ethosContent } from '@/content/ethos';
 import { prefersReducedMotion } from '@/lib/motion';
 import { ScrollFloat } from '@/components/ui/ScrollFloat';
-import VariableProximity from '@/components/ui/VariableProximity';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
-function ProximitySentence({ text }: { text: string }) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
+function RevealedSentence({ text }: { text: string }) {
   return (
-    <div ref={containerRef} data-ethos-sentence className="max-w-2xl">
-      <VariableProximity
-        label={text}
-        containerRef={containerRef as unknown as MutableRefObject<HTMLElement | null>}
-        radius={120}
-        className="block text-base md:text-lg leading-relaxed font-light text-ivory/82"
-      />
-    </div>
+    <ScrollReveal
+      containerClassName="max-w-2xl"
+      textClassName="text-base md:text-lg leading-relaxed font-light text-ivory/82 tracking-[0.01em]"
+      baseOpacity={0.18}
+      baseRotation={0}
+      blurStrength={2}
+      rotationEnd="bottom bottom-=5%"
+      wordAnimationEnd="bottom bottom-=5%"
+    >
+      {text}
+    </ScrollReveal>
   );
 }
 
@@ -28,11 +29,12 @@ export function Ethos() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const sentences = Array.from(sectionRef.current.querySelectorAll('[data-ethos-sentence]')) as HTMLElement[];
-    const targets = [...sentences, quoteRef.current].filter(Boolean) as HTMLElement[];
+    const targets = Array.from(sectionRef.current.querySelectorAll('[data-ethos-animated]')) as HTMLElement[];
+    const quote = quoteRef.current;
 
     if (prefersReducedMotion()) {
       targets.forEach(t => { t.style.opacity = '1'; });
+      if (quote) quote.style.opacity = '1';
       return;
     }
 
@@ -40,21 +42,23 @@ export function Ethos() {
     (async () => {
       const { gsap } = await import('@/lib/gsap');
       const ctx = gsap.context(() => {
-        gsap.set(targets, { opacity: 0, y: 24 });
+        gsap.set(targets, { opacity: 0, y: 18 });
+        if (quote) gsap.set(quote, { opacity: 0, y: 18 });
 
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', once: true },
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 62%', once: true },
         });
-        tl.to(sentences, {
+
+        tl.to(targets, {
           opacity: 1,
           y: 0,
-          duration: 1.1,
-          stagger: 0.22,
-          ease: 'expo.out',
+          duration: 0.9,
+          stagger: 0.14,
+          ease: 'power2.out',
         }).to(
-          quoteRef.current,
-          { opacity: 1, y: 0, duration: 1.3, ease: 'expo.out' },
-          '-=0.4',
+          quote,
+          { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' },
+          '-=0.35',
         );
       }, sectionRef);
       cleanup = () => ctx.revert();
@@ -82,7 +86,9 @@ export function Ethos() {
           </ScrollFloat>
           <div className="space-y-6">
             {ethosContent.manifesto.map((sentence, i) => (
-              <ProximitySentence key={i} text={sentence} />
+              <div key={i} data-ethos-animated>
+                <RevealedSentence text={sentence} />
+              </div>
             ))}
           </div>
         </div>

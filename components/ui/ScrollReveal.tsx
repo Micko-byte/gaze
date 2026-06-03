@@ -5,6 +5,7 @@
 import React, { useEffect, useMemo, useRef, type ReactNode, type RefObject } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,6 +51,16 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    if (prefersReducedMotion()) {
+      el.querySelectorAll('.word').forEach(node => {
+        if (node instanceof HTMLElement) {
+          node.style.opacity = '1';
+          node.style.filter = 'none';
+          node.style.transform = 'none';
+        }
+      });
+      return;
+    }
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
 
