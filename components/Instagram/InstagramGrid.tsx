@@ -3,7 +3,6 @@ import { InstagramGlyph } from '@/components/icons/SocialIcons';
 export type GalleryTile = {
   key: string;
   image: string;
-  href: string;
   alt: string;
   caption?: string;
 };
@@ -25,10 +24,10 @@ export function InstagramGrid({ tiles, profileUrl }: Props) {
       {tiles.map(tile => (
         <a
           key={tile.key}
-          href={tile.href}
+          href={profileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={tile.caption ? `Instagram post: ${tile.caption}` : `View on Instagram — ${tile.alt}`}
+          aria-label={tile.caption ? `Open @gazeholdings on Instagram: ${tile.caption}` : `Open @gazeholdings on Instagram — ${tile.alt}`}
           className="group relative aspect-square overflow-hidden bg-ink"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -47,16 +46,6 @@ export function InstagramGrid({ tiles, profileUrl }: Props) {
           </div>
         </a>
       ))}
-      <a
-        href={profileUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-hidden="true"
-        tabIndex={-1}
-        className="sr-only"
-      >
-        {profileUrl}
-      </a>
     </div>
   );
 }

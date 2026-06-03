@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Division } from '@/content/divisions';
+import { DivisionNumber } from './DivisionNumber';
 
 type Props = {
   division: Division;
@@ -20,7 +21,8 @@ export function DivisionCard({ division, index }: Props) {
     <Link
       href={division.href}
       aria-label={division.name}
-      className="group relative block shrink-0 w-[76vw] max-w-[320px] md:w-[300px] aspect-[4/5] border border-hairline overflow-hidden bg-ink shadow-[0_18px_45px_-28px_rgba(0,0,0,0.65)] transition-transform duration-700 ease-reveal hover:border-rose/70 hover:-translate-y-1"
+      data-cursor="hover"
+      className="group relative block shrink-0 w-[76vw] max-w-[312px] md:w-[300px] aspect-[4/5] border border-hairline overflow-hidden bg-ink shadow-[0_18px_45px_-28px_rgba(0,0,0,0.65)] transition-all duration-700 ease-reveal hover:border-rose/70 hover:-translate-y-1"
     >
       <div className="absolute inset-0">
         <Image
@@ -38,9 +40,9 @@ export function DivisionCard({ division, index }: Props) {
         <div className="flex items-start justify-between gap-3">
           <div>
             <div className="font-display text-[0.52rem] tracking-[0.34em] uppercase text-rose mb-2">
-              {division.number} / {division.category}
+              <DivisionNumber value={division.number} className="inline-block min-w-[1.5ch]" /> / {division.category}
             </div>
-            <div className="font-display text-[0.56rem] tracking-[0.28em] uppercase text-champagne/75">
+            <div className="font-display text-[0.56rem] tracking-[0.34em] uppercase text-champagne/70">
               {LABELS[division.id] ?? division.category}
             </div>
           </div>
@@ -50,10 +52,11 @@ export function DivisionCard({ division, index }: Props) {
         </div>
 
         <div className="space-y-2">
-          <div className="font-display font-light text-lg md:text-xl leading-tight text-ivory">
+          <div className="h-px w-16 bg-rose/35" />
+          <div className="font-display font-light text-lg md:text-xl leading-tight tracking-[0.01em] text-ivory">
             {division.name}
           </div>
-          <p className="text-[0.85rem] leading-relaxed text-ivory/78">
+          <p className="text-[0.85rem] leading-relaxed text-ivory/76">
             {division.tagline}
           </p>
           <p className="text-[0.72rem] leading-relaxed text-ivory/52">

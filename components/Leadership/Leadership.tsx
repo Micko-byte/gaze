@@ -10,7 +10,7 @@ export function Leadership() {
       <Reveal className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
         <div className="relative aspect-[4/5] overflow-hidden border border-obsidian/10">
           <Image
-            src="/images/founder/muthoni-ngugi.png"
+            src="/images/founder/muthoni-ngugi-editorial.png"
             alt={`${leadershipContent.name.first} ${leadershipContent.name.last}`}
             fill
             sizes="(max-width: 768px) 100vw, 500px"

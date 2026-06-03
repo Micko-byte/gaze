@@ -20,7 +20,7 @@ export const instagramFallback: ReadonlyArray<FallbackTile> = [
   { key: 'f1', image: '/images/divisions/furnishings.jpg', alt: 'Interiors' },
   { key: 'f2', image: '/images/founder/muthoni-ngugi.png', alt: 'The founder' },
   { key: 'f3', image: '/images/divisions/press.jpg', alt: 'Press' },
-  { key: 'f4', image: '/images/divisions/manor.jpg', alt: 'The Manor' },
+  { key: 'f4', image: '/images/instagram/carousel-4.png', alt: 'The Manor' },
   { key: 'f5', image: '/images/divisions/hergaze.jpg', alt: 'HerGaze' },
   { key: 'f6', image: '/images/contact-backdrop.jpg', alt: 'A quiet moment' },
   { key: 'f7', image: '/images/divisions/institute.jpg', alt: 'The Institute' },

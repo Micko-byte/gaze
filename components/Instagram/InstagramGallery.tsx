@@ -8,17 +8,15 @@ export async function InstagramGallery() {
   const posts = await getInstagramPosts(8);
 
   const tiles: GalleryTile[] = posts
-    ? posts.map(p => ({
+    ? posts.map((p, index) => ({
         key: p.id,
-        image: p.mediaUrl,
-        href: p.permalink,
-        alt: 'Gaze Holdings on Instagram',
-        caption: p.caption,
+        image: index === 3 ? '/images/instagram/carousel-4.png' : p.mediaUrl,
+        alt: index === 3 ? 'The Manor' : 'Gaze Holdings on Instagram',
+        caption: index === 3 ? undefined : p.caption,
       }))
     : instagramFallback.map(t => ({
         key: t.key,
         image: t.image,
-        href: instagram.profileUrl,
         alt: t.alt,
       }));
 

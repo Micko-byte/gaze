@@ -68,7 +68,6 @@ export function XGlyph(props: IconProps) {
 
 export const socialGlyphs = {
   instagram: InstagramGlyph,
-  insta: InstagramGlyph,
   linkedin: LinkedInGlyph,
   facebook: FacebookGlyph,
   youtube: YouTubeGlyph,
