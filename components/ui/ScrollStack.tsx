@@ -64,6 +64,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const lastTransformsRef = useRef(new Map<number, CardTransform>());
   const isUpdatingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
+  const transformSmoothing = 0.18;
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
@@ -158,20 +159,28 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
       }
 
-      const newTransform = {
-        translateY: Math.round(translateY * 100) / 100,
-        scale: Math.round(scale * 1000) / 1000,
-        rotation: Math.round(rotation * 100) / 100,
-        blur: Math.round(blur * 100) / 100,
-      };
+      const previousTransform = lastTransformsRef.current.get(i);
+      const newTransform = previousTransform
+        ? {
+            translateY: previousTransform.translateY + (translateY - previousTransform.translateY) * transformSmoothing,
+            scale: previousTransform.scale + (scale - previousTransform.scale) * transformSmoothing,
+            rotation: previousTransform.rotation + (rotation - previousTransform.rotation) * transformSmoothing,
+            blur: previousTransform.blur + (blur - previousTransform.blur) * transformSmoothing,
+          }
+        : {
+            translateY,
+            scale,
+            rotation,
+            blur,
+          };
 
-      const lastTransform = lastTransformsRef.current.get(i);
+      const lastTransform = previousTransform;
       const hasChanged =
         !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.08 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.08 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.08;
+        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.02 ||
+        Math.abs(lastTransform.scale - newTransform.scale) > 0.0005 ||
+        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.02 ||
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.02;
 
       if (hasChanged) {
         const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
