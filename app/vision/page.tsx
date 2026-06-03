@@ -21,7 +21,7 @@ export default function VisionPage() {
           subtitle={leadershipContent.role}
           body={leadershipContent.bio[0]}
           note="Founder vision, team philosophy, and leadership perspective will continue here as this page expands."
-          image="/images/founder/muthoni-ngugi.png"
+          image="/images/founder/muthoni-ngugi-new.webp"
           imageAlt={`${leadershipContent.name.first} ${leadershipContent.name.last}`}
         />
       </main>

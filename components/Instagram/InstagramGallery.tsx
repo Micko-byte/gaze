@@ -10,14 +10,16 @@ export async function InstagramGallery() {
   const tiles: GalleryTile[] = posts
     ? posts.map((p, index) => ({
         key: p.id,
-        image: index === 3 ? '/images/instagram/carousel-4.png' : p.mediaUrl,
-        alt: index === 3 ? 'The Manor' : 'Gaze Holdings on Instagram',
+        image: index === 3 ? '/images/founder/muthoni-ngugi-new.webp' : p.mediaUrl,
+        alt: index === 3 ? 'The founder' : 'Gaze Holdings on Instagram',
+        href: instagram.profileUrl,
         caption: index === 3 ? undefined : p.caption,
       }))
     : instagramFallback.map(t => ({
         key: t.key,
         image: t.image,
         alt: t.alt,
+        href: instagram.profileUrl,
       }));
 
   return (

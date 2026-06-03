@@ -5,36 +5,35 @@ import { heroContent } from '@/content/hero';
 import { HeroVideo } from './HeroVideo';
 import { HeroHeadline } from './HeroHeadline';
 import { ScrollCue } from '@/components/ui/ScrollCue';
-import { prefersReducedMotion } from '@/lib/motion';
+import { hasFinePointer } from '@/lib/motion';
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const videoWrap = videoWrapRef.current;
-    if (!section || !videoWrap || prefersReducedMotion()) return;
+    if (!section || !hasFinePointer()) return;
 
     let raf = 0;
+    let x = 0;
+    let y = 0;
     let targetX = 0;
     let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
 
-    const apply = () => {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-      videoWrap.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(1.06)`;
-      raf = requestAnimationFrame(apply);
+    const update = () => {
+      x += (targetX - x) * 0.08;
+      y += (targetY - y) * 0.08;
+      section.style.setProperty('--hero-x', `${x}`);
+      section.style.setProperty('--hero-y', `${y}`);
+      raf = requestAnimationFrame(update);
     };
 
-    const onMove = (event: PointerEvent) => {
+    const onMove = (event: MouseEvent) => {
       const rect = section.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      targetX = x * 14;
-      targetY = y * 10;
+      const nx = (event.clientX - rect.left) / rect.width - 0.5;
+      const ny = (event.clientY - rect.top) / rect.height - 0.5;
+      targetX = Math.max(-1, Math.min(1, nx * 2));
+      targetY = Math.max(-1, Math.min(1, ny * 2));
     };
 
     const onLeave = () => {
@@ -42,14 +41,16 @@ export function Hero() {
       targetY = 0;
     };
 
-    section.addEventListener('pointermove', onMove);
-    section.addEventListener('pointerleave', onLeave);
-    raf = requestAnimationFrame(apply);
+    section.addEventListener('mousemove', onMove);
+    section.addEventListener('mouseleave', onLeave);
+    raf = requestAnimationFrame(update);
 
     return () => {
       cancelAnimationFrame(raf);
-      section.removeEventListener('pointermove', onMove);
-      section.removeEventListener('pointerleave', onLeave);
+      section.removeEventListener('mousemove', onMove);
+      section.removeEventListener('mouseleave', onLeave);
+      section.style.removeProperty('--hero-x');
+      section.style.removeProperty('--hero-y');
     };
   }, []);
 
@@ -57,27 +58,17 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="group relative h-[100svh] min-h-[600px] w-full overflow-hidden flex items-center justify-center text-center"
+      className="relative h-[100svh] min-h-[600px] w-full overflow-hidden flex items-center justify-center text-center"
     >
-      <div ref={videoWrapRef} className="absolute inset-0 will-change-transform">
-        <HeroVideo />
-      </div>
-
-      <div className="absolute inset-0 bg-obsidian/35 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-obsidian/45 via-obsidian/32 to-obsidian pointer-events-none" />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.16] mix-blend-soft-light"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E\")",
-          backgroundSize: '180px 180px',
-        }}
-      />
+      <HeroVideo />
+      <div className="absolute inset-0 hero-grain opacity-[0.08] pointer-events-none" />
+      {/* Readability scrims - flat darken + bottom gradient + centered vignette */}
+      <div className="absolute inset-0 bg-obsidian/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-obsidian/50 via-obsidian/35 to-obsidian pointer-events-none" />
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 72% 56% at 50% 44%, rgba(10,10,10,0.58), transparent 76%)' }}
+        style={{ background: 'radial-gradient(ellipse 72% 56% at 50% 44%, rgba(10,10,10,0.62), transparent 76%)' }}
       />
-
       <div
         className="relative z-10 px-6 max-w-3xl"
         style={{ textShadow: '0 2px 28px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)' }}

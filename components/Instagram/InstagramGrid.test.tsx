@@ -17,6 +17,6 @@ describe('InstagramGrid', () => {
       expect(a).toHaveAttribute('target', '_blank');
       expect(a).toHaveAttribute('rel', 'noopener noreferrer');
     });
-    expect(document.querySelectorAll('img')).toHaveLength(2);
+    expect(document.querySelectorAll('img')).toHaveLength(4);
   });
 });

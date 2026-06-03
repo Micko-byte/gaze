@@ -32,16 +32,26 @@ export function HeroVideo() {
       {showVideo ? (
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover brightness-[0.62] saturate-[0.9]"
+          className="absolute inset-0 h-full w-full object-cover brightness-[0.62] saturate-[0.9] transition-transform duration-700 ease-out"
           autoPlay muted loop playsInline preload="metadata"
           poster="/video/hero-poster.jpg"
+          style={{
+            transform: 'translate3d(calc(var(--hero-x, 0) * 12px), calc(var(--hero-y, 0) * 10px), 0) scale(1.08)',
+          }}
         >
           <source src="/video/hero.webm" type="video/webm" />
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/video/hero-poster.jpg" alt="" className="absolute inset-0 w-full h-full object-cover brightness-[0.62] saturate-[0.9]" />
+        <img
+          src="/video/hero-poster.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover brightness-[0.62] saturate-[0.9] transition-transform duration-700 ease-out"
+          style={{
+            transform: 'translate3d(calc(var(--hero-x, 0) * 12px), calc(var(--hero-y, 0) * 10px), 0) scale(1.08)',
+          }}
+        />
       )}
     </div>
   );

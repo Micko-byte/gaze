@@ -71,6 +71,11 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   100% { transform: translateX(-50%); }
 }
 
+@keyframes instagram-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @keyframes division-orbit {
   0% {
     transform:
@@ -97,4 +102,13 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   width: 44px !important;
   height: 44px !important;
   border-color: var(--champagne) !important;
+}
+
+.hero-grain {
+  background-image:
+    radial-gradient(rgba(244, 239, 230, 0.09) 0.8px, transparent 0.8px),
+    radial-gradient(rgba(201, 155, 175, 0.06) 0.8px, transparent 0.8px);
+  background-size: 3px 3px, 4px 4px;
+  background-position: 0 0, 1px 1px;
+  mix-blend-mode: soft-light;
 }
