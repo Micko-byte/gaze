@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Hero } from './Hero';
 
@@ -23,11 +23,5 @@ describe('Hero', () => {
     expect(container.textContent).toContain('A group of brands');
     expect(container.textContent).toContain('legacy');
     expect(container.textContent).toContain('Five companies');
-  });
-
-  it('renders the CTA targeting #ethos', () => {
-    render(<Hero />);
-    const cta = screen.getByRole('link', { name: /Enter the Group/i });
-    expect(cta).toHaveAttribute('href', '#ethos');
   });
 });

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { leadershipContent } from '@/content/leadership';
 import { StatCountUp } from './StatCountUp';
 import { Reveal } from '@/components/Reveal/Reveal';
+import { ScrollFloat } from '@/components/ui/ScrollFloat';
 
 export function Leadership() {
   return (
@@ -23,12 +24,18 @@ export function Leadership() {
         </div>
 
         <div>
-          <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose-ink font-medium mb-6">
+          <ScrollFloat
+            containerClassName="mb-6"
+            textClassName="font-display text-[0.55rem] md:text-[0.62rem] tracking-[0.45em] uppercase text-rose-ink font-medium"
+          >
             {leadershipContent.eyebrow}
-          </div>
-          <h2 className="font-display font-extralight text-4xl md:text-6xl leading-none text-obsidian mb-3">
-            {leadershipContent.name.first} <em className="font-serif italic font-light text-rose-ink">{leadershipContent.name.last}</em>
-          </h2>
+          </ScrollFloat>
+          <ScrollFloat
+            containerClassName="mb-3"
+            textClassName="font-display font-extralight text-3xl md:text-5xl leading-none text-obsidian"
+          >
+            Muthoni Ngugi
+          </ScrollFloat>
           <p className="font-serif italic text-rose-ink text-lg md:text-xl mb-10 font-light">
             {leadershipContent.role}
           </p>
@@ -37,7 +44,7 @@ export function Leadership() {
               <p key={i}>{line}</p>
             ))}
           </div>
-          <div className="mt-12 grid grid-cols-3 gap-6 max-w-md">
+          <div className="mt-12 grid grid-cols-2 gap-6 max-w-2xl">
             {leadershipContent.stats.map(stat => (
               <StatCountUp
                 key={stat.label}

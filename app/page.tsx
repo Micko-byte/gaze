@@ -2,7 +2,6 @@ import { Nav } from '@/components/Nav/Nav';
 import { Hero } from '@/components/Hero/Hero';
 import { Ethos } from '@/components/Ethos/Ethos';
 import { Divisions } from '@/components/Divisions/Divisions';
-import { Synergy } from '@/components/Synergy/Synergy';
 import { Leadership } from '@/components/Leadership/Leadership';
 import { Press } from '@/components/Press/Press';
 import { InstagramGallery } from '@/components/Instagram/InstagramGallery';
@@ -24,7 +23,6 @@ export default function Page() {
         <Hero />
         <Ethos />
         <Divisions />
-        <Synergy />
         <Leadership />
         <Press />
         <InstagramGallery />

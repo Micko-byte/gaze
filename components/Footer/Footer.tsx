@@ -15,15 +15,15 @@ const SHORT: Record<string, string> = {
 export function Footer() {
   return (
     <footer className="bg-obsidian border-t border-hairline pt-20 pb-10 px-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[1.4fr_1fr_1fr] gap-12">
+      <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-[1.25fr_0.95fr_0.95fr_0.8fr]">
         <div>
           <a href="#top" aria-label="Gaze Holdings home" className="inline-block text-ivory">
             <BrandMark variant="stacked" height={56} />
           </a>
-          <p className="font-serif italic text-ivory/55 text-base mt-4">
+          <p className="font-serif italic text-ivory/55 text-base mt-4 max-w-sm">
             {footerContent.tagline}
           </p>
-          <div className="flex flex-wrap gap-2 mt-8">
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-xl">
             {divisions.map(d => {
               const linkProps = d.external
                 ? { target: '_blank' as const, rel: 'noopener noreferrer' }
@@ -33,7 +33,7 @@ export function Footer() {
                   key={d.id}
                   href={d.href}
                   {...linkProps}
-                  className="px-3 py-2 border border-hairline hover:border-rose hover:text-rose transition-colors font-display text-[0.55rem] tracking-[0.25em] uppercase text-ivory/60"
+                  className="px-3 py-2 border border-hairline hover:border-rose hover:text-rose transition-colors font-display text-[0.55rem] tracking-[0.25em] uppercase text-ivory/60 text-center"
                 >
                   {SHORT[d.id] ?? d.name}
                 </a>
@@ -65,14 +65,25 @@ export function Footer() {
           </ul>
           <p className="text-ivory/35 text-xs mt-6">{footerContent.legal.copyright}</p>
         </div>
+
+        <div>
+          <div className="font-display text-[0.55rem] tracking-[0.35em] uppercase text-rose mb-4 font-medium">
+            Social
+          </div>
+          <SocialLinks size={18} />
+          <p className="text-ivory/35 text-xs mt-6 max-w-xs">
+            Follow the group across the channels where the story is unfolding.
+          </p>
+        </div>
       </div>
 
-      {/* Social row */}
-      <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="font-display text-[0.55rem] tracking-[0.35em] uppercase text-ivory/40">
-          Follow the group
+          Nairobi, Kenya. Global scale.
         </div>
-        <SocialLinks size={18} />
+        <div className="text-ivory/30 text-xs">
+          {footerContent.legal.copyright}
+        </div>
       </div>
     </footer>
   );

@@ -7,6 +7,5 @@ export const heroContent = {
     ],
   },
   sub: 'Five companies. One standard. Built in Nairobi, made for the world.',
-  cta: { label: 'Enter the Group', href: '#ethos' },
   scrollCue: 'Scroll',
 } as const;

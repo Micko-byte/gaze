@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { ethosContent } from '@/content/ethos';
 import { prefersReducedMotion } from '@/lib/motion';
+import { ScrollFloat } from '@/components/ui/ScrollFloat';
 
 export function Ethos() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -26,8 +27,6 @@ export function Ethos() {
       const ctx = gsap.context(() => {
         gsap.set(targets, { opacity: 0, y: 24 });
 
-        // Reveal on entry — no pin, no scrub. Scrolls naturally; the content
-        // simply rises in once as the section comes into view.
         const tl = gsap.timeline({
           scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', once: true },
         });
@@ -60,15 +59,18 @@ export function Ethos() {
       </div>
       <div className="relative z-10 max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
         <div>
-          <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-10">
-            02 · {ethosContent.eyebrow}
-          </div>
+          <ScrollFloat
+            containerClassName="mb-8"
+            textClassName="font-display text-[0.48rem] md:text-[0.55rem] tracking-[0.5em] uppercase text-champagne font-medium"
+          >
+            {ethosContent.eyebrow}
+          </ScrollFloat>
           <div className="space-y-6">
             {ethosContent.manifesto.map((sentence, i) => (
               <p
                 key={i}
                 ref={el => { sentenceRefs.current[i] = el; }}
-                className="text-ivory/85 text-lg md:text-xl leading-relaxed font-light"
+                className="text-ivory/82 text-base md:text-lg leading-relaxed font-light"
               >
                 {sentence}
               </p>
@@ -78,7 +80,7 @@ export function Ethos() {
         <div>
           <p
             ref={quoteRef}
-            className="font-serif italic font-light text-3xl md:text-5xl leading-tight text-ivory"
+            className="font-serif italic font-light text-xl md:text-3xl leading-tight text-ivory"
           >
             {ethosContent.pullquote.pre}
             <span className="text-rose">{ethosContent.pullquote.accent}</span>

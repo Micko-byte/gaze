@@ -1,67 +1,66 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import type { Division } from '@/content/divisions';
 
-export function DivisionCard({ division }: { division: Division }) {
-  const linkProps = division.external
-    ? { target: '_blank' as const, rel: 'noopener noreferrer' }
-    : {};
+type Props = {
+  division: Division;
+  index: number;
+};
 
+const LABELS: Record<string, string> = {
+  furnishings: 'Private commissions',
+  press: 'Editorial house',
+  institute: 'Cohort-led formation',
+  manor: 'Broadcast estate',
+  hergaze: 'Women\'s transformation',
+};
+
+export function DivisionCard({ division, index }: Props) {
   return (
-    <div
-      className="group relative flex flex-col snap-center shrink-0 w-[280px] md:w-[340px] aspect-[3/4] border border-hairline hover:border-rose transition-colors duration-500 ease-reveal overflow-hidden bg-ink"
+    <Link
+      href={division.href}
+      aria-label={division.name}
+      className="group relative block shrink-0 w-[76vw] max-w-[320px] md:w-[300px] aspect-[4/5] border border-hairline overflow-hidden bg-ink shadow-[0_18px_45px_-28px_rgba(0,0,0,0.65)] transition-transform duration-700 ease-reveal hover:border-rose/70 hover:-translate-y-1"
     >
-      {/* Primary 'Step inside' link covers the full card */}
-      <a
-        href={division.href}
-        {...linkProps}
-        aria-label={`Step inside ${division.name}`}
-        className="absolute inset-0 z-10"
-      >
-        <span className="sr-only">Step inside {division.name}</span>
-      </a>
-
-      <div className="relative flex-1 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0">
         <Image
           src={division.image}
           alt={division.name}
           fill
-          sizes="(max-width: 768px) 280px, 340px"
-          className="object-cover grayscale-[0.55] contrast-[1.05] brightness-90 transition-all duration-[800ms] ease-reveal group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 group-hover:scale-[1.06]"
+          sizes="(max-width: 768px) 76vw, 300px"
+          className="object-cover grayscale-[0.16] contrast-[1.02] brightness-[0.9] transition-transform duration-700 ease-reveal group-hover:scale-[1.05]"
         />
-        {/* Unifying grade — a faint rose-to-obsidian wash that ties the 5 stock
-            images into one editorial set; recedes on hover as the image blooms */}
-        <div className="absolute inset-0 bg-gradient-to-br from-rose-deep/25 via-transparent to-obsidian/40 mix-blend-multiply opacity-80 group-hover:opacity-40 transition-opacity duration-[800ms] ease-reveal" />
-        <div className="absolute inset-0 bg-gradient-to-b from-obsidian/20 via-obsidian/30 to-obsidian/85" />
-        <div className="absolute top-4 left-4 font-display text-[0.55rem] tracking-[0.35em] uppercase text-rose">
-          {division.number} / {division.category}
-        </div>
-        <div className="absolute top-0 left-0 h-px bg-rose w-0 group-hover:w-full transition-[width] duration-700 ease-reveal" />
+        <div className="absolute inset-0 bg-gradient-to-b from-obsidian/8 via-obsidian/28 to-obsidian/88" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-rose-deep/12 via-transparent to-transparent mix-blend-screen" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-5 pointer-events-none">
-        <div className="font-display font-light text-base md:text-lg text-ivory leading-tight mb-2">
-          {division.name}
-        </div>
-        <div className="font-sans text-xs text-ivory/60 leading-snug mb-3 line-clamp-2">
-          {division.tagline}
-        </div>
-        <div className="flex items-center justify-between gap-3">
-          <div className="font-display text-[0.55rem] tracking-[0.3em] uppercase text-champagne group-hover:text-rose transition-colors">
-            Step inside →
+      <div className="relative z-10 flex h-full flex-col justify-between p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <div className="font-display text-[0.52rem] tracking-[0.34em] uppercase text-rose mb-2">
+              {division.number} / {division.category}
+            </div>
+            <div className="font-display text-[0.56rem] tracking-[0.28em] uppercase text-champagne/75">
+              {LABELS[division.id] ?? division.category}
+            </div>
           </div>
-          {division.shopHref && (
-            <a
-              href={division.shopHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Shop ${division.name} on Shopify`}
-              className="relative z-20 pointer-events-auto font-display text-[0.55rem] tracking-[0.3em] uppercase text-obsidian bg-rose hover:bg-champagne px-3 py-1.5 transition-colors duration-300"
-            >
-              ▲ Shop
-            </a>
-          )}
+          <div className="rounded-full border border-rose/60 px-3 py-1 text-[0.52rem] tracking-[0.28em] uppercase text-ivory/80">
+            {index + 1}
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <div className="font-display font-light text-lg md:text-xl leading-tight text-ivory">
+            {division.name}
+          </div>
+          <p className="text-[0.85rem] leading-relaxed text-ivory/78">
+            {division.tagline}
+          </p>
+          <p className="text-[0.72rem] leading-relaxed text-ivory/52">
+            {division.detail}
+          </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

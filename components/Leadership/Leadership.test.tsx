@@ -23,8 +23,9 @@ describe('Leadership', () => {
     expect(container.textContent).toContain('Founder & Director');
     expect(container.textContent).toContain('African enterprise');
     expect(container.textContent).toContain('Businesswoman of the Year');
-    expect(container.textContent).toContain('Divisions');
-    expect(container.textContent).toContain('Countries');
-    expect(container.textContent).toContain('Years in market');
+    expect(container.textContent).toContain('Years Experience');
+    expect(container.textContent).toContain('Furnitures Delivered');
+    expect(container.textContent).toContain('Countries Served');
+    expect(container.textContent).toContain('Leaders Trained');
   });
 });

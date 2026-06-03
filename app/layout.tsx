@@ -1,29 +1,19 @@
 import type { Metadata } from 'next';
-import { Outfit, Cormorant_Garamond, Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
 import { Cursor } from '@/components/Cursor/Cursor';
 import { ShopButton } from '@/components/ShopButton/ShopButton';
 import { CookieBanner } from '@/components/CookieBanner/CookieBanner';
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600'],
+const outfit = localFont({
+  src: './fonts/GeistVF.woff',
   variable: '--font-outfit',
   display: 'swap',
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['300', '400'],
-  style: ['italic', 'normal'],
-  variable: '--font-cormorant',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['200', '300', '400', '500'],
+const inter = localFont({
+  src: './fonts/GeistMonoVF.woff',
   variable: '--font-inter',
   display: 'swap',
 });
@@ -45,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${cormorant.variable} ${inter.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${inter.variable}`}>
       <body className="bg-obsidian text-ivory">
         <SmoothScroll>
           <Cursor />

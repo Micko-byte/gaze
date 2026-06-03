@@ -1,17 +1,17 @@
 /**
  * Recognition. We present only what is true.
- * No fabricated press logos — when real coverage exists, add it to `coverage`
+ * No fabricated press logos - when real coverage exists, add it to `coverage`
  * and the section will render a logo row beneath the award.
  */
 
 export const pressContent = {
-  eyebrow: '06 · Recognition',
+  eyebrow: '05 · Recognition',
   heading: {
     pre: 'The work, ',
     accent: 'noticed',
     post: '.',
   },
-  sub: 'Recognition follows the work — never the other way around.',
+  sub: 'Recognition follows the work - never the other way around.',
   award: {
     tag: 'Award · 2024',
     title: 'Businesswoman of the Year',
@@ -23,6 +23,5 @@ export const pressContent = {
     href: '#contact',
     cta: 'Write to us',
   },
-  /** Real press logos go here when they exist. Empty = no logo row rendered. */
   coverage: [] as ReadonlyArray<{ id: string; name: string }>,
 } as const;

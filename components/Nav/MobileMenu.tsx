@@ -8,10 +8,10 @@ import { BrandMark } from '@/components/BrandMark/BrandMark';
 type Props = {
   open: boolean;
   onClose: () => void;
+  theme?: 'auto' | 'light';
 };
 
-export function MobileMenu({ open, onClose }: Props) {
-  // Lock body scroll while open + ESC to close
+export function MobileMenu({ open, onClose, theme = 'auto' }: Props) {
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
@@ -28,26 +28,27 @@ export function MobileMenu({ open, onClose }: Props) {
     };
   }, [open, onClose]);
 
+  const isLight = theme === 'light';
+
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-label="Mobile menu"
       aria-hidden={!open}
-      className={`fixed inset-0 z-50 bg-obsidian transition-all duration-500 ease-reveal ${
-        open ? 'opacity-100 visible' : 'opacity-0 invisible'
-      }`}
+      className={`fixed inset-0 z-50 transition-all duration-500 ease-reveal ${
+        isLight ? 'bg-ivory text-obsidian' : 'bg-obsidian text-ivory'
+      } ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
     >
-      {/* Top bar with brand + close */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-hairline">
-        <a href="#top" onClick={onClose} aria-label="Gaze Holdings home" className="text-ivory">
+      <div className={`flex items-center justify-between px-6 py-5 border-b ${isLight ? 'border-black/10' : 'border-hairline'}`}>
+        <a href="#top" onClick={onClose} aria-label="Gaze Holdings home" className={isLight ? 'text-obsidian' : 'text-ivory'}>
           <BrandMark variant="inline" height={16} />
         </a>
         <button
           type="button"
           onClick={onClose}
           aria-label="Close menu"
-          className="text-ivory hover:text-rose transition-colors p-2 -mr-2"
+          className={`${isLight ? 'text-obsidian hover:text-rose-ink' : 'text-ivory hover:text-rose'} transition-colors p-2 -mr-2`}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -56,7 +57,6 @@ export function MobileMenu({ open, onClose }: Props) {
         </button>
       </div>
 
-      {/* Primary links */}
       <nav aria-label="Primary mobile" className="px-6 py-12 flex flex-col gap-7">
         {navLinks.map((link, i) => {
           const externalProps = link.external
@@ -70,9 +70,15 @@ export function MobileMenu({ open, onClose }: Props) {
               {...externalProps}
               onClick={onClose}
               style={{ transitionDelay: open ? `${i * 60 + 200}ms` : '0ms' }}
-              className={`font-display font-extralight text-3xl tracking-tight text-ivory leading-none transition-all duration-700 ease-reveal ${
+              className={`font-display font-extralight text-3xl tracking-tight leading-none transition-all duration-700 ease-reveal ${
                 open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              } ${isAccent ? 'inline-flex items-center gap-2 self-start text-rose' : 'hover:text-rose'}`}
+              } ${
+                isAccent
+                  ? 'inline-flex items-center gap-2 self-start text-rose'
+                  : isLight
+                    ? 'text-obsidian hover:text-rose-ink'
+                    : 'text-ivory hover:text-rose'
+              }`}
             >
               {isAccent && <span aria-hidden="true">▲</span>}
               {link.label}
@@ -81,8 +87,7 @@ export function MobileMenu({ open, onClose }: Props) {
         })}
       </nav>
 
-      {/* Divisions strip */}
-      <div className="px-6 mt-auto py-8 border-t border-hairline">
+      <div className={`px-6 mt-auto py-8 border-t ${isLight ? 'border-black/10' : 'border-hairline'}`}>
         <div className="font-display text-[0.55rem] tracking-[0.35em] uppercase text-rose font-medium mb-4">
           The Group
         </div>
@@ -97,7 +102,11 @@ export function MobileMenu({ open, onClose }: Props) {
                   href={d.href}
                   {...externalProps}
                   onClick={onClose}
-                  className="block px-3 py-2 border border-hairline hover:border-rose hover:text-rose transition-colors font-display text-[0.55rem] tracking-[0.25em] uppercase text-ivory/65"
+                  className={`block px-3 py-2 border transition-colors font-display text-[0.55rem] tracking-[0.25em] uppercase ${
+                    isLight
+                      ? 'border-black/10 text-obsidian/70 hover:border-rose-ink hover:text-rose-ink'
+                      : 'border-hairline text-ivory/65 hover:border-rose hover:text-rose'
+                  }`}
                 >
                   {d.name}
                 </a>

@@ -6,6 +6,7 @@
   --obsidian: #0A0A0A;
   --ink: #141414;
   --ivory: #F4EFE6;
+  --font-cormorant: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --house-rose: #C99BAF;
   --rose-deep: #A87286;
   --rose-ink: #8C5468; /* AA-safe rose for light (ivory) backgrounds — 5.1:1 */
@@ -52,6 +53,38 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
 @keyframes ethos-drift {
   0%   { transform: translate(0, 0) scale(1); }
   100% { transform: translate(-30px, 20px) scale(1.06); }
+}
+
+@keyframes branch-float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-8px) translateX(3px); }
+}
+
+@keyframes division-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes division-orbit {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--orbit-start))
+      translateX(var(--orbit-radius))
+      rotate(calc(-1 * var(--orbit-start)));
+  }
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(calc(var(--orbit-start) + 360deg))
+      translateX(var(--orbit-radius))
+      rotate(calc(-1 * (var(--orbit-start) + 360deg)));
+  }
+}
+
+@keyframes division-ring {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 [data-testid='custom-cursor'].cursor-hover {

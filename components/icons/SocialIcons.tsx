@@ -18,6 +18,14 @@ function base(props: IconProps) {
   };
 }
 
+export function TikTokGlyph(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M16.7 2c.4 2.8 2 4.4 4.8 4.7v3.2c-1.8.1-3.4-.4-4.8-1.4v6.6c0 4.4-3.3 7.4-7.4 7.4S2 19.5 2 15.1 5.3 8 9.4 8c.4 0 .8 0 1.1.1v3.5c-.3-.1-.7-.2-1.1-.2-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4V2h3.2z" />
+    </svg>
+  );
+}
+
 export function InstagramGlyph(props: IconProps) {
   return (
     <svg {...base(props)}>
@@ -60,8 +68,10 @@ export function XGlyph(props: IconProps) {
 
 export const socialGlyphs = {
   instagram: InstagramGlyph,
+  insta: InstagramGlyph,
   linkedin: LinkedInGlyph,
   facebook: FacebookGlyph,
   youtube: YouTubeGlyph,
   x: XGlyph,
+  tiktok: TikTokGlyph,
 } as const;

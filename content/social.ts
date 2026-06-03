@@ -3,7 +3,7 @@
  * Gaze Holdings accounts. Order here = display order in the footer.
  */
 
-export type SocialId = 'instagram' | 'linkedin' | 'facebook' | 'youtube' | 'x';
+export type SocialId = 'instagram' | 'insta' | 'tiktok' | 'linkedin' | 'facebook' | 'youtube' | 'x';
 
 export type SocialLink = {
   id: SocialId;
@@ -13,6 +13,8 @@ export type SocialLink = {
 
 export const socialLinks: ReadonlyArray<SocialLink> = [
   { id: 'instagram', label: 'Instagram', href: 'https://instagram.com/gazeholdings' },
+  { id: 'insta', label: 'Insta', href: 'https://www.instagram.com/gaze_furnishings_ke/?hl=en' },
+  { id: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@gazefurnishingske' },
   { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/gaze-holdings' },
   { id: 'facebook', label: 'Facebook', href: 'https://facebook.com/gazeholdings' },
   { id: 'youtube', label: 'YouTube', href: 'https://youtube.com/@gazeholdings' },

@@ -10,7 +10,7 @@ export function Press() {
         <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
           {pressContent.eyebrow}
         </div>
-        <h2 className="font-display font-extralight text-4xl md:text-6xl leading-[0.98] tracking-tight text-ivory mb-6">
+        <h2 className="font-display font-extralight text-3xl md:text-5xl leading-[0.98] tracking-tight text-ivory mb-6">
           {pressContent.heading.pre}
           <em className="font-serif italic font-light text-rose">{pressContent.heading.accent}</em>
           {pressContent.heading.post}

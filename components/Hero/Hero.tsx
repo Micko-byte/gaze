@@ -1,7 +1,6 @@
 import { heroContent } from '@/content/hero';
 import { HeroVideo } from './HeroVideo';
 import { HeroHeadline } from './HeroHeadline';
-import { HeroCTA } from './HeroCTA';
 import { ScrollCue } from '@/components/ui/ScrollCue';
 
 export function Hero() {
@@ -29,7 +28,6 @@ export function Hero() {
         <p className="mt-6 text-ivory/80 max-w-xl mx-auto font-light text-base md:text-lg">
           {heroContent.sub}
         </p>
-        <HeroCTA label={heroContent.cta.label} href={heroContent.cta.href} />
       </div>
       <ScrollCue label={heroContent.scrollCue} />
     </section>

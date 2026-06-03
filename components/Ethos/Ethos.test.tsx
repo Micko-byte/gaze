@@ -18,10 +18,10 @@ describe('Ethos', () => {
 
   it('renders the eyebrow and manifesto sentences', () => {
     const { container } = render(<Ethos />);
-    expect(container.textContent).toContain('Founding Ethos');
-    expect(container.textContent).toContain('We started in interiors');
-    expect(container.textContent).toContain('Five disciplines');
-    expect(container.textContent).toContain('African enterprise');
+    expect(container.textContent).toMatch(/Philosophy/);
+    expect(container.textContent).toContain('great brands do not merely sell');
+    expect(container.textContent).toContain('spaces where people live, learn, lead');
+    expect(container.textContent).toContain('architects of influence');
   });
 
   it('renders the pullquote with the accented word', () => {

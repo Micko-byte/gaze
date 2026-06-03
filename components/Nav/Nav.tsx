@@ -5,10 +5,15 @@ import { navLinks } from '@/content/nav';
 import { MobileMenu } from './MobileMenu';
 import { BrandMark } from '@/components/BrandMark/BrandMark';
 
-export function Nav() {
+type Props = {
+  theme?: 'auto' | 'light';
+};
+
+export function Nav({ theme = 'auto' }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState('');
+  const isLight = theme === 'light';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
@@ -43,11 +48,17 @@ export function Nav() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-reveal
-          ${scrolled ? 'bg-obsidian/85 backdrop-blur-md border-b border-hairline py-3' : 'bg-transparent py-5'}`}
+          ${
+            isLight
+              ? 'bg-ivory/90 backdrop-blur-md border-b border-black/10 py-3'
+              : scrolled
+                ? 'bg-obsidian/85 backdrop-blur-md border-b border-hairline py-3'
+                : 'bg-transparent py-5'
+          }`}
         aria-label="Primary"
       >
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
-          <a href="#top" aria-label="Gaze Holdings home" className="text-ivory hover:text-rose transition-colors">
+          <a href="#top" aria-label="Gaze Holdings home" className={`${isLight ? 'text-obsidian hover:text-rose-ink' : 'text-ivory hover:text-rose'} transition-colors`}>
             <BrandMark variant="inline" height={16} />
           </a>
 
@@ -67,8 +78,12 @@ export function Nav() {
                     aria-current={isActive ? 'true' : undefined}
                     className={
                       isAccent
-                        ? 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory font-medium border border-rose px-4 py-2 hover:bg-rose hover:text-obsidian transition-colors duration-500 ease-reveal'
-                        : `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose ${isActive ? 'text-rose' : 'text-ivory/70'}`
+                        ? isLight
+                          ? 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-obsidian font-medium border border-rose-ink px-4 py-2 hover:bg-rose-ink hover:text-ivory transition-colors duration-500 ease-reveal'
+                          : 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory font-medium border border-rose px-4 py-2 hover:bg-rose hover:text-obsidian transition-colors duration-500 ease-reveal'
+                        : isLight
+                          ? `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose-ink ${isActive ? 'text-rose-ink' : 'text-obsidian/70'}`
+                          : `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose ${isActive ? 'text-rose' : 'text-ivory/70'}`
                     }
                   >
                     {link.label}
@@ -85,7 +100,7 @@ export function Nav() {
             aria-label="Open menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className="md:hidden text-ivory hover:text-rose transition-colors p-2 -mr-2"
+            className={`${isLight ? 'text-obsidian hover:text-rose-ink' : 'text-ivory hover:text-rose'} md:hidden transition-colors p-2 -mr-2`}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
               <line x1="4" y1="8" x2="20" y2="8" />
@@ -96,7 +111,7 @@ export function Nav() {
       </nav>
 
       <div id="mobile-menu" className="md:hidden">
-        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} theme={theme} />
       </div>
     </>
   );

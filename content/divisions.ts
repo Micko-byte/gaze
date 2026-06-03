@@ -6,10 +6,11 @@ export type Division = {
   category: string;
   name: string;
   tagline: string;
+  detail: string;
   href: string;
   external: boolean;
   image: string;
-  /** Optional Shopify storefront URL — when set, the card shows an inline 'Shop' chip. */
+  /** Optional Shopify storefront URL - when set, the card shows an inline 'Shop' chip. */
   shopHref?: string;
 };
 
@@ -19,9 +20,10 @@ export const divisions: ReadonlyArray<Division> = [
     number: '01',
     category: 'Lifestyle',
     name: 'Gaze Furnishings',
-    tagline: 'Bespoke interiors and luxury residential commissions.',
-    href: 'https://furnishings.gaze.co',
-    external: true,
+    tagline: 'Bespoke interiors and residential commissions.',
+    detail: 'Interiors, styling, material direction, and home environments with restraint.',
+    href: '/lifestyle',
+    external: false,
     image: '/images/divisions/furnishings.jpg',
     shopHref: `${shopConfig.storefrontUrl}${shopConfig.collectionPath}`,
   },
@@ -30,9 +32,10 @@ export const divisions: ReadonlyArray<Division> = [
     number: '02',
     category: 'Publishing',
     name: 'Gaze Press Global',
-    tagline: 'Books that shape leaders and outlive trends.',
-    href: 'https://press.gaze.co',
-    external: true,
+    tagline: 'Books, editorials, and long-form thought.',
+    detail: 'Publishing work shaped to outlive the moment.',
+    href: '/publishing',
+    external: false,
     image: '/images/divisions/press.jpg',
   },
   {
@@ -40,8 +43,9 @@ export const divisions: ReadonlyArray<Division> = [
     number: '03',
     category: 'Leadership',
     name: 'Gaze Leadership Institute',
-    tagline: 'Training the next generation of African kingdom leaders.',
-    href: '/institute',
+    tagline: 'Training the next generation of African leaders.',
+    detail: 'Formation, mentorship, and executive discipline for cohorts and leaders.',
+    href: '/leadership',
     external: false,
     image: '/images/divisions/institute.jpg',
   },
@@ -50,8 +54,9 @@ export const divisions: ReadonlyArray<Division> = [
     number: '04',
     category: 'Broadcast',
     name: 'The Gaze Manor',
-    tagline: 'Media production, design, broadcast — built on a single estate.',
-    href: '/manor',
+    tagline: 'Media, design, and broadcast under one estate.',
+    detail: 'Film, production, and the group visual voice.',
+    href: '/broadcasting',
     external: false,
     image: '/images/divisions/manor.jpg',
   },
@@ -60,9 +65,10 @@ export const divisions: ReadonlyArray<Division> = [
     number: '05',
     category: 'Transformation',
     name: 'HerGaze Global',
-    tagline: 'Corporate. Ministry. Transformation. For women.',
-    href: 'https://hergaze.global',
-    external: true,
+    tagline: 'Corporate, ministry, and transformation for women.',
+    detail: 'Women-led convenings and enterprise leadership across markets.',
+    href: '/hergaze',
+    external: false,
     image: '/images/divisions/hergaze.jpg',
   },
 ];

@@ -1,37 +1,54 @@
+'use client';
+
 import { divisions } from '@/content/divisions';
 import { DivisionCard } from './DivisionCard';
 import { Reveal } from '@/components/Reveal/Reveal';
+import { ScrollFloat } from '@/components/ui/ScrollFloat';
 
 export function Divisions() {
   return (
-    <section id="divisions" className="relative py-32 px-6 bg-obsidian">
-      <Reveal className="max-w-6xl mx-auto mb-8">
-        <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
-          03 · The Group
-        </div>
-        <h2 className="font-display font-extralight text-4xl md:text-6xl leading-[0.98] tracking-tight text-ivory mb-6">
-          A house of <em className="font-serif italic font-light text-rose">five</em> divisions.
-        </h2>
-        <p className="text-ivory/60 max-w-xl font-light text-base md:text-lg">
-          Parent: Gaze Holdings Ltd. Each division operates with its own discipline, its own catalogue, its own audience &mdash; under one signature.
-        </p>
-      </Reveal>
-
-      {/* Scroll affordance */}
-      <div className="max-w-6xl mx-auto mb-6 flex items-center gap-3 text-champagne/60">
-        <span className="font-display text-[0.55rem] tracking-[0.35em] uppercase">Drag to explore</span>
-        <span aria-hidden="true" className="h-px w-10 bg-champagne/40" />
-        <span aria-hidden="true" className="text-sm">→</span>
+    <section id="divisions" className="relative min-h-[100svh] overflow-hidden bg-obsidian px-6 py-24 md:py-28 flex items-center">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ivory/5 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,155,175,0.08),transparent_58%)]" />
       </div>
 
-      <div className="relative px-6 -mx-6">
-        <div className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 pl-[max(1.5rem,calc((100vw-72rem)/2))] pr-6 scrollbar-none">
-          {divisions.map(d => (
-            <DivisionCard key={d.id} division={d} />
-          ))}
+      <div className="relative z-10 max-w-6xl mx-auto w-full grid gap-16 md:grid-cols-[0.88fr_1.12fr] items-center">
+        <Reveal className="max-w-xl">
+          <div className="font-display text-[0.62rem] tracking-[0.45em] uppercase text-rose font-medium mb-6">
+            03 · The Group
+          </div>
+          <ScrollFloat
+            containerClassName="mb-6"
+            textClassName="font-display font-extralight text-3xl md:text-5xl leading-[0.98] tracking-tight text-ivory"
+          >
+            A house of five divisions.
+          </ScrollFloat>
+          <p className="text-ivory/60 max-w-lg font-light text-sm md:text-base leading-relaxed">
+            Parent: Gaze Holdings Ltd. Five disciplines, one signature.
+          </p>
+        </Reveal>
+
+        <div className="relative flex h-[540px] items-center justify-center">
+          <div className="absolute inset-0 motion-safe:animate-[division-ring_42s_linear_infinite] will-change-transform">
+            {divisions.map((division, index) => {
+              const angle = (360 / divisions.length) * index - 90;
+              const radius = 165 + (index % 2) * 18;
+
+              return (
+                <div
+                  key={division.id}
+                  className="absolute left-1/2 top-1/2"
+                  style={{
+                    transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(${radius}px) rotate(${-angle}deg)`,
+                  }}
+                >
+                  <DivisionCard division={division} index={index} />
+                </div>
+              );
+            })}
+          </div>
         </div>
-        {/* Right-edge fade hinting more cards */}
-        <div className="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-obsidian to-transparent hidden md:block" />
       </div>
     </section>
   );
