@@ -93,16 +93,17 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     };
   }, [useWindowScroll]);
 
-  const getElementOffset = useCallback(
-    (element: HTMLElement) => {
-      if (useWindowScroll) {
-        const rect = element.getBoundingClientRect();
-        return rect.top + window.scrollY;
-      }
-      return element.offsetTop;
-    },
-    [useWindowScroll],
-  );
+  const getElementOffset = useCallback((element: HTMLElement) => {
+    let offset = 0;
+    let node: HTMLElement | null = element;
+
+    while (node) {
+      offset += node.offsetTop;
+      node = node.offsetParent instanceof HTMLElement ? node.offsetParent : null;
+    }
+
+    return offset;
+  }, []);
 
   const updateCardTransforms = useCallback(() => {
     if (!cardsRef.current.length || isUpdatingRef.current) return;
@@ -278,7 +279,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
   return (
     <div
-      className={`relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim()}
+      className={`relative w-full ${useWindowScroll ? 'overflow-visible' : 'h-full overflow-y-auto overflow-x-visible'} ${className}`.trim()}
       ref={scrollerRef}
       style={{
         overscrollBehavior: 'contain',
