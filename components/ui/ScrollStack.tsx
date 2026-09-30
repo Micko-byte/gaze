@@ -64,7 +64,6 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const lastTransformsRef = useRef(new Map<number, CardTransform>());
   const isUpdatingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
-  const transformSmoothing = 0.18;
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
@@ -121,10 +120,14 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
     const endElementTop = endElement ? getElementOffset(endElement) : 0;
 
+    // Read every layout value up front. Measuring inside the write loop below
+    // would force a reflow per card per frame.
+    const cardTops = cardsRef.current.map(card => (card ? getElementOffset(card) : 0));
+
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
 
-      const cardTop = getElementOffset(card);
+      const cardTop = cardTops[i];
       const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
       const triggerEnd = cardTop - scaleEndPositionPx;
       const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
@@ -139,8 +142,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       if (blurAmount) {
         let topCardIndex = 0;
         for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = getElementOffset(cardsRef.current[j]);
-          const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
+          const jTriggerStart = cardTops[j] - stackPositionPx - itemStackDistance * j;
           if (scrollTop >= jTriggerStart) topCardIndex = j;
         }
 
@@ -159,22 +161,12 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
       }
 
-      const previousTransform = lastTransformsRef.current.get(i);
-      const newTransform = previousTransform
-        ? {
-            translateY: previousTransform.translateY + (translateY - previousTransform.translateY) * transformSmoothing,
-            scale: previousTransform.scale + (scale - previousTransform.scale) * transformSmoothing,
-            rotation: previousTransform.rotation + (rotation - previousTransform.rotation) * transformSmoothing,
-            blur: previousTransform.blur + (blur - previousTransform.blur) * transformSmoothing,
-          }
-        : {
-            translateY,
-            scale,
-            rotation,
-            blur,
-          };
+      // Drive the transform straight off the scroll position. Easing toward the
+      // target here only updates while scroll events fire, so the card is left
+      // short of its target the moment scrolling stops.
+      const newTransform = { translateY, scale, rotation, blur };
 
-      const lastTransform = previousTransform;
+      const lastTransform = lastTransformsRef.current.get(i);
       const hasChanged =
         !lastTransform ||
         Math.abs(lastTransform.translateY - newTransform.translateY) > 0.02 ||
