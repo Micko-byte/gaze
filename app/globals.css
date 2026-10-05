@@ -259,3 +259,9 @@ h1.font-display.type-strong {
     0 0.005em 0 currentColor,
     0 2px 28px rgba(0, 0, 0, 0.5);
 }
+
+/* Furnishings hero: slide indicator fill */
+@keyframes furnfill {
+  from { width: 0; }
+  to { width: 100%; }
+}
