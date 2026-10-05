@@ -5,7 +5,7 @@ import { divisions } from '@/content/divisions';
 import { footerContent } from '@/content/footer';
 import { instaProfileUrl } from '@/content/social';
 import { NewsletterForm } from './NewsletterForm';
-import { BrandMark } from '@/components/BrandMark/BrandMark';
+import { HouseLogo } from '@/components/Logo/HouseLogo';
 import { SocialLinks } from '@/components/Social/SocialLinks';
 import VariableProximity from '@/components/ui/VariableProximity';
 
@@ -36,7 +36,7 @@ export function Footer() {
         <div className="mb-16 pb-16 border-b border-hairline flex flex-col md:flex-row md:items-end justify-between gap-10">
           <div>
             <a href="#top" aria-label="Gaze Holdings home" className="inline-block text-ivory mb-6">
-              <BrandMark variant="stacked" height={60} />
+              <HouseLogo id="holdings" title="Gaze Holdings" className="h-[64px] w-auto" />
             </a>
             <div
               ref={taglineRef}

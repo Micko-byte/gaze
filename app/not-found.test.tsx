@@ -12,10 +12,9 @@ describe('NotFound', () => {
     expect(container.textContent).toContain('Or get in touch');
   });
 
-  it('renders the BrandMark', () => {
-    const { container } = render(<NotFound />);
-    // BrandMark SVG contains GAZE + HOLDINGS as <text> nodes
-    expect(container.textContent).toContain('GAZE');
-    expect(container.textContent).toContain('HOLDINGS');
+  it('renders the Gaze Holdings logo', () => {
+    const { getByRole } = render(<NotFound />);
+    // the logo is traced artwork (paths, no <text>), exposed by its accessible name
+    expect(getByRole('img', { name: 'Gaze Holdings' })).toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { shopConfig, shopHref } from '@/content/shop';
 
 /**
@@ -8,8 +9,12 @@ import { shopConfig, shopHref } from '@/content/shop';
  * Hidden during the Hero so it doesn't compete with the primary CTA;
  * fades in after the visitor has scrolled past ~50% of the viewport.
  */
+/** Only where shopping belongs: the group home and Gaze Furnishings. */
+const SHOP_PATHS = ['/', '/furnishings'];
+
 export function ShopButton() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.5);
@@ -18,6 +23,8 @@ export function ShopButton() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  if (pathname && !SHOP_PATHS.includes(pathname)) return null;
+
   return (
     <a
       href={shopHref}
@@ -25,7 +32,7 @@ export function ShopButton() {
       rel="noopener noreferrer"
       aria-label={shopConfig.ariaLabel}
       data-cursor="hover"
-      className={`fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 inline-flex items-center gap-2 px-5 py-3 bg-rose text-obsidian font-display text-[0.65rem] tracking-[0.3em] uppercase font-medium shadow-[0_8px_28px_-12px_rgba(201,155,175,0.55)] transition-all duration-500 ease-reveal hover:bg-champagne ${
+      className={`fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 inline-flex items-center gap-2 px-5 py-3 bg-rose text-obsidian font-display text-[0.65rem] tracking-[0.3em] uppercase font-medium shadow-[0_8px_28px_-12px_rgba(222,186,120,0.55)] transition-all duration-500 ease-reveal hover:bg-champagne ${
         visible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-3 pointer-events-none'
       }`}
     >

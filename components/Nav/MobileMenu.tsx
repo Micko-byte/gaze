@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { navLinks } from '@/content/nav';
 import { divisions } from '@/content/divisions';
-import { BrandMark } from '@/components/BrandMark/BrandMark';
+import { HouseLogo } from '@/components/Logo/HouseLogo';
 
 type Props = {
   open: boolean;
@@ -42,7 +42,7 @@ export function MobileMenu({ open, onClose, theme = 'auto' }: Props) {
     >
       <div className={`flex items-center justify-between px-6 py-5 border-b ${isLight ? 'border-black/10' : 'border-hairline'}`}>
         <a href="#top" onClick={onClose} aria-label="Gaze Holdings home" className={isLight ? 'text-obsidian' : 'text-ivory'}>
-          <BrandMark variant="inline" height={16} />
+          <HouseLogo id="holdings" tone="mono" title="Gaze Holdings" className="h-[30px] w-auto" />
         </a>
         <button
           type="button"

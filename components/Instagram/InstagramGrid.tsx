@@ -30,7 +30,7 @@ function Tile({ tile, profileUrl, hidden = false }: { tile: GalleryTile; profile
         className="absolute inset-0 h-full w-full object-cover grayscale-[0.22] brightness-[0.92] transition duration-700 ease-reveal group-hover:scale-[1.04] group-hover:grayscale-0"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-obsidian/5 via-obsidian/25 to-obsidian/78" />
-      <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[linear-gradient(135deg,rgba(244,239,230,0.08),transparent_35%,transparent_65%,rgba(201,155,175,0.10))]" />
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[linear-gradient(135deg,rgba(244,239,230,0.08),transparent_35%,transparent_65%,rgba(222,186,120,0.10))]" />
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 text-ivory">
         <div>
           <div className="font-display text-[0.52rem] tracking-[0.35em] uppercase text-champagne/70">

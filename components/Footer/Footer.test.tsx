@@ -4,8 +4,8 @@ import { Footer } from './Footer';
 
 describe('Footer', () => {
   it('renders the brand lockup, tagline, and copyright', () => {
-    const { container } = render(<Footer />);
-    expect(container.textContent).toContain('HOLDINGS');
+    const { container, getByRole } = render(<Footer />);
+    expect(getByRole('img', { name: 'Gaze Holdings' })).toBeInTheDocument();
     expect(container.textContent).toContain('Nairobi');
     expect(container.textContent).toContain('Global scale');
     expect(container.textContent).toContain('© 2026 Gaze Holdings Ltd.');

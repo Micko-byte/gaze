@@ -1,0 +1,152 @@
+/* Holdings loader: construction → typed wordmark → nested-colour collapse onto the hero headline. */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  cursor: pointer;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 0);
+}
+
+.loader {
+  background: var(--gaze-parchment);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  transform-origin: 50% 50%;
+}
+
+.logo {
+  display: block;
+  width: min(80vw, 1100px);
+  height: auto;
+  overflow: visible;
+}
+
+@media (max-width: 640px) {
+  .logo { width: 94vw; }
+}
+
+/* ── build ── */
+.draw {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.9s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+  animation-duration: var(--dur, 0.9s);
+  animation-delay: var(--d, 0s);
+}
+
+.guide {
+  stroke: var(--gaze-deep);
+  stroke-opacity: 0.22;
+  stroke-width: 2;
+}
+
+.outline {
+  stroke: var(--gaze-deep);
+  stroke-width: 3.5;
+}
+
+.guides {
+  animation: fadeOut 0.5s ease 1.5s forwards;
+}
+
+.outlines {
+  animation: fadeOut 0.3s ease 1.6s forwards;
+}
+
+.fill {
+  fill: var(--gaze-deep);
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out 1.35s forwards;
+}
+
+.mark {
+  transform: translateX(603.5px);
+  animation: slideHome 0.45s cubic-bezier(0.7, 0, 0.2, 1) 1.9s forwards;
+}
+
+.letter {
+  fill: var(--gaze-deep);
+  opacity: 0;
+  animation: fadeIn 0.01s linear forwards;
+  animation-delay: var(--d);
+}
+
+.caret {
+  fill: var(--gaze-deep);
+  opacity: 0;
+  animation: on 0.14s steps(1);
+  animation-duration: var(--dur);
+  animation-delay: var(--d);
+}
+
+.subtitle {
+  fill: var(--gaze-deep);
+  opacity: 0;
+  animation: fadeIn 0.5s ease 2.75s forwards;
+}
+
+/* ── collapse ── */
+.root[data-phase='collapse'] .layer {
+  animation:
+    collapse 0.8s cubic-bezier(0.75, 0, 0.2, 1) forwards,
+    fadeOut 0.25s ease forwards;
+  animation-delay: var(--d), calc(0.95s + var(--d));
+}
+
+.root[data-phase='collapse'] .content {
+  animation: intoSlot 0.8s cubic-bezier(0.75, 0, 0.2, 1) forwards;
+}
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; } }
+@keyframes on { 0%, 100% { opacity: 1; } }
+@keyframes slideHome { to { transform: translateX(0); } }
+@keyframes collapse {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(var(--ci)); }
+}
+@keyframes intoSlot {
+  to { transform: translate(var(--tx), var(--ty)) scale(var(--ts)); }
+}
+
+/* "Sound" offer, when the browser blocked the music */
+.soundOn {
+  position: absolute;
+  left: 50%;
+  bottom: 7vh;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1px solid rgba(10, 22, 49, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gaze-deep);
+  font-family: var(--font-metropolis), system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 0.6s ease 0.6s forwards;
+}
+.soundOn:hover { border-color: var(--gaze-antique); color: var(--gaze-antique); }
+.soundOn:focus-visible { outline: 2px solid var(--gaze-antique); outline-offset: 3px; }
+.bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.bars i { display: block; width: 2px; height: 4px; background: currentColor; animation: bar 0.9s ease-in-out infinite alternate; }
+.bars i:nth-child(2) { animation-delay: 0.2s; }
+.bars i:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bar { to { height: 12px; } }

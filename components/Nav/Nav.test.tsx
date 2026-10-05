@@ -5,8 +5,8 @@ import { Nav } from './Nav';
 describe('Nav', () => {
   it('renders the brand lockup', () => {
     render(<Nav />);
-    // Brand appears in both desktop bar and (hidden) mobile overlay header
-    const brands = screen.getAllByText(/HOLDINGS/i);
+    // the logo is traced artwork (paths, no <text>), exposed by its accessible name
+    const brands = screen.getAllByRole('img', { name: 'Gaze Holdings' });
     expect(brands.length).toBeGreaterThan(0);
   });
 

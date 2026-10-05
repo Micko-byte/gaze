@@ -19,7 +19,7 @@ export function Leadership() {
           />
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: 'linear-gradient(180deg, rgba(168,114,134,0.05), rgba(10,10,10,0.10))', mixBlendMode: 'multiply' }}
+            style={{ background: 'linear-gradient(180deg, rgba(174,132,72,0.05), rgba(6,18,42,0.10))', mixBlendMode: 'multiply' }}
           />
         </div>
 

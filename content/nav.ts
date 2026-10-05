@@ -1,7 +1,7 @@
 import { shopConfig } from './shop';
 
 export const navLinks = [
-  { label: 'The Group', href: '#divisions', external: false },
+  { label: 'The Group', href: '#houses', external: false },
   { label: 'Vision', href: '#vision', external: false },
   { label: 'Press', href: '#press', external: false },
   { label: 'Contact', href: '#contact', external: false },

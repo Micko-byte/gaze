@@ -1,7 +1,7 @@
 import { Nav } from '@/components/Nav/Nav';
 import { Hero } from '@/components/Hero/Hero';
 import { Ethos } from '@/components/Ethos/Ethos';
-import { Divisions } from '@/components/Divisions/Divisions';
+import { HouseShowcase } from '@/components/Houses/HouseShowcase';
 import { Leadership } from '@/components/Leadership/Leadership';
 import { StatsStrip } from '@/components/StatsStrip/StatsStrip';
 import { Press } from '@/components/Press/Press';
@@ -22,8 +22,8 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
+        <HouseShowcase />
         <Ethos />
-        <Divisions />
         <Leadership />
         <StatsStrip />
         <Press />

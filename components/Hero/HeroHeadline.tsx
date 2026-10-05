@@ -37,13 +37,13 @@ export function HeroHeadline({ lines }: { lines: ReadonlyArray<Line> }) {
   return (
     <h1
       ref={ref}
-      className="font-display font-extralight text-5xl md:text-7xl leading-[0.95] tracking-tight text-ivory"
+      className="type-strong font-display text-[clamp(84px,15vw,260px)] leading-[0.84] tracking-[-0.01em] text-ivory"
     >
       {lines.map((line, i) => (
         <span key={i} className="h-line block overflow-hidden">
           {line.parts.map((p, j) =>
             p.accent ? (
-              <em key={j} className="font-serif italic font-light text-rose ml-[0.25em]">{p.text}</em>
+              <em key={j} className="font-serif text-rose ml-[0.22em]">{p.text}</em>
             ) : (
               <span key={j}>{p.text}</span>
             )

@@ -13,7 +13,10 @@ type Props = {
 
 export function StatCountUp({ value, suffix = '', label, tone = 'dark' }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [display, setDisplay] = useState(prefersReducedMotion() ? value : 0);
+  // Must not depend on a media query: the server cannot read one, so seeding
+  // from it renders 0 on the server and `value` on a reduced-motion client,
+  // which is a hydration mismatch. The effect below settles the real value.
+  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!ref.current) return;

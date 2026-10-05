@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, type ReactNode } from 'react';
-import { createLenis } from '@/lib/lenis';
+import { createLenis, setActiveLenis } from '@/lib/lenis';
+import { prefersReducedMotion } from '@/lib/motion';
 
 /**
  * Lenis smooth scroll, integrated with GSAP so ScrollTrigger stays in sync.
@@ -17,7 +18,7 @@ import { createLenis } from '@/lib/lenis';
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (prefersReducedMotion()) return;
 
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
@@ -48,6 +49,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
       // ── Desktop path ────────────────────────────────────────────
       const lenis = createLenis();
+      setActiveLenis(lenis);
 
       // Keep ScrollTrigger's virtual scroll position synced to Lenis.
       lenis.on('scroll', ScrollTrigger.update);
@@ -66,6 +68,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         lenis.off('scroll', ScrollTrigger.update);
         gsap.ticker.remove(tick);
         lenis.destroy();
+        setActiveLenis(null);
       };
     })();
 

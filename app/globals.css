@@ -3,16 +3,49 @@
 @tailwind utilities;
 
 :root {
-  --obsidian: #0A0A0A;
-  --ink: #141414;
-  --ivory: #F4EFE6;
-  --font-cormorant: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --house-rose: #C99BAF;
-  --rose-deep: #A87286;
-  --rose-ink: #8C5468; /* AA-safe rose for light (ivory) backgrounds — 5.1:1 */
-  --champagne: #D9C9A8;
-  --hairline: #2a2a2a;
-  --bronze: #7A5C3E;
+  /* Site-wide roles, now on the Gaze Holdings brand kit (navy · antique gold · champagne · parchment).
+     The old names are kept so every existing component re-themes without edits. */
+  --obsidian: #06122A;
+  --ink: #0A1631;
+  --ivory: #F3EFE6;
+  --house-rose: #DEBA78;
+  --rose-deep: #AE8448;
+  --rose-ink: #8A6A30; /* AA-safe gold for parchment backgrounds */
+  --champagne: #DEBA78;
+  --hairline: #1E2B48;
+  --bronze: #AE8448;
+
+  /* Agreed faces behind the old font roles: labels/UI + body → Metropolis, accents → Thegralke */
+  --font-outfit: var(--font-metropolis), system-ui, sans-serif;
+  --font-inter: var(--font-metropolis), system-ui, sans-serif;
+  --font-cormorant: var(--font-thegralke), 'Arial Narrow', sans-serif;
+
+  /* Brand system — Leadership Institute */
+  --inst-midnight: #0B1A40;
+  --inst-maroon: #7A1F2E;
+  --inst-sky: #4C88F0;
+  --inst-paper: #F6F4EE;
+  /* Brand system — Her Gaze Global */
+  --her-magenta: #C8186F;
+  --her-terracotta: #C25530;
+  --her-blush: #F1E4D6;
+  --her-noir: #1A1A1A;
+  /* Brand system — Gaze Press Global */
+  --press-ink: #111111;
+  --press-paper: #ECE7DF;
+  --press-rose: #B5776F;
+
+  /* Brand system — Gaze Holdings */
+  --gaze-navy: #06122A;
+  --gaze-deep: #0A1631;
+  --gaze-antique: #AE8448;
+  --gaze-champagne: #DEBA78;
+  --gaze-parchment: #F3EFE6;
+  /* Brand system — Gaze Furnishings */
+  --furn-lilac: #C99DC2;
+  --furn-ink: #1E1E22;
+  --furn-linen: #EEE7DF;
+  --furn-walnut: #7B5232;
 
   --motion-fast: 200ms;
   --motion-base: 400ms;
@@ -49,7 +82,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  :root:not([data-motion='full']) *,
+  :root:not([data-motion='full']) *::before,
+  :root:not([data-motion='full']) *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
@@ -59,9 +94,20 @@ body {
 html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
 
 ::selection {
-  background: rgba(201, 155, 175, 0.28);
+  background: rgba(222, 186, 120, 0.3);
   color: var(--ivory);
 }
+
+/* Holdings headlines are set in Thegralke; small labels sharing `font-display` stay in Metropolis. */
+h1.font-display,
+h2.font-display,
+h3.font-display {
+  font-family: var(--font-thegralke), 'Arial Narrow', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+/* Thegralke has no italic; accents read as champagne Thegralke rather than a faux slant. */
+.font-serif { font-style: normal !important; }
 
 /* ─────────────────────────────────────────────
    ETHOS / AMBIENT
@@ -69,7 +115,7 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
 .ethos-drift {
   background:
     radial-gradient(circle at 25% 35%, rgba(217, 201, 168, 0.10), transparent 45%),
-    radial-gradient(circle at 75% 70%, rgba(201, 155, 175, 0.08), transparent 50%);
+    radial-gradient(circle at 75% 70%, rgba(222,186,120, 0.08), transparent 50%);
   animation: ethos-drift 22s ease-in-out infinite alternate;
 }
 @keyframes ethos-drift {
@@ -83,7 +129,7 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
 .hero-grain {
   background-image:
     radial-gradient(rgba(244, 239, 230, 0.09) 0.8px, transparent 0.8px),
-    radial-gradient(rgba(201, 155, 175, 0.06) 0.8px, transparent 0.8px);
+    radial-gradient(rgba(222,186,120, 0.06) 0.8px, transparent 0.8px);
   background-size: 3px 3px, 4px 4px;
   background-position: 0 0, 1px 1px;
   mix-blend-mode: soft-light;
@@ -161,9 +207,9 @@ html[data-custom-cursor='on'], html[data-custom-cursor='on'] * { cursor: none; }
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(201, 155, 175, 0.6) 45%,
+    rgba(222,186,120, 0.6) 45%,
     rgba(217, 201, 168, 0.8) 50%,
-    rgba(201, 155, 175, 0.6) 55%,
+    rgba(222,186,120, 0.6) 55%,
     transparent 100%
   );
   background-size: 200% auto;
@@ -190,4 +236,26 @@ section {
 /* Prevent momentum-scroll bleed on sticky/fixed nav */
 nav {
   will-change: transform;
+}
+
+/* Sound toggle bars */
+@keyframes soundbar {
+  from { height: 3px; }
+  to { height: 12px; }
+}
+
+/* Thegralke ships in one light weight. Offset copies of each glyph thicken its stems; unlike a stroke this adds
+   no lines inside the letters. Stronger on the hero, which also keeps its soft shadow over the photograph. */
+h1.font-display,
+h2.font-display,
+h3.font-display,
+.font-headline {
+  text-shadow: 0.007em 0 0 currentColor, -0.007em 0 0 currentColor;
+}
+h1.font-display.type-strong {
+  text-shadow:
+    0.014em 0 0 currentColor,
+    -0.014em 0 0 currentColor,
+    0 0.005em 0 currentColor,
+    0 2px 28px rgba(0, 0, 0, 0.5);
 }

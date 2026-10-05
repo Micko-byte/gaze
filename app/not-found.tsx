@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { BrandMark } from '@/components/BrandMark/BrandMark';
+import { HouseLogo } from '@/components/Logo/HouseLogo';
 
 export const metadata: Metadata = {
   title: 'Not in the catalogue',
@@ -16,7 +16,7 @@ export default function NotFound() {
 
       <div className="relative z-10 max-w-2xl">
         <div className="mb-12 flex justify-center text-ivory">
-          <BrandMark variant="stacked" height={72} />
+          <HouseLogo id="holdings" title="Gaze Holdings" className="h-[80px] w-auto" />
         </div>
 
         <div className="font-display text-[0.65rem] tracking-[0.5em] uppercase text-rose font-medium mb-8">

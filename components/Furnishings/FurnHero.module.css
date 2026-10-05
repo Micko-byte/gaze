@@ -1,0 +1,38 @@
+/* Natuzzi-style hero: full-bleed interiors crossfading under a slow push-in, one large light headline. */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation:
+    crossfade 21s linear infinite,
+    pushIn 21s linear infinite;
+  animation-delay: var(--d), var(--d);
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide:first-child {
+  opacity: 1;
+}
+
+@keyframes crossfade {
+  0% { opacity: 0; }
+  6% { opacity: 1; }
+  33% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes pushIn {
+  0% { transform: scale(1.12); }
+  40% { transform: scale(1.0); }
+  100% { transform: scale(1.0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) .slide { animation: none; }
+}

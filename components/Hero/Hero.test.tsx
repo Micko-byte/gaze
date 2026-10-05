@@ -19,9 +19,11 @@ describe('Hero', () => {
 
   it('renders the eyebrow, headline text, and sub', () => {
     const { container } = render(<Hero />);
-    expect(container.textContent).toContain('A House of Brands');
-    expect(container.textContent).toContain('A group of brands');
-    expect(container.textContent).toContain('legacy');
-    expect(container.textContent).toContain('Five companies');
+    expect(container.textContent).toContain('Gaze Holdings');
+    // The headline parts are separate elements, so textContent has no space
+    // between them; the gap is a margin on the accent.
+    expect(container.textContent).toContain('A House');
+    expect(container.textContent).toContain('Brands');
+    expect(container.textContent).toContain('Four houses');
   });
 });

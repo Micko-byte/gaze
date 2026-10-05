@@ -131,7 +131,7 @@ export function Synergy() {
               ))}
             </svg>
 
-            <div className="relative z-10 h-[26rem] w-[26rem] rounded-full border border-rose/30 bg-obsidian/95 shadow-[0_0_0_1px_rgba(201,155,175,0.12),0_0_120px_rgba(201,155,175,0.10)]">
+            <div className="relative z-10 h-[26rem] w-[26rem] rounded-full border border-rose/30 bg-obsidian/95 shadow-[0_0_0_1px_rgba(222,186,120,0.12),0_0_120px_rgba(222,186,120,0.10)]">
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-10">
                 <div className="font-display text-[0.7rem] tracking-[0.45em] uppercase text-rose mb-4">
                   Gaze Holdings

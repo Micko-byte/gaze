@@ -1,0 +1,64 @@
+/* House-to-house page transition. Cover: the destination house's colours open out from the link as nested
+   frames, its logo draws itself. Reveal: the frames close in onto the new page's hero (after House of Corto). */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 9996;
+  pointer-events: all;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 0);
+}
+
+.ground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo {
+  width: min(62vw, 560px);
+  max-height: 46vh;
+  height: auto;
+}
+
+.content {
+  transform-origin: 50% 50%;
+}
+
+/* opening out from the clicked link: outermost colour first, the house ground last */
+.root[data-phase='cover'] .layer {
+  clip-path: inset(var(--from));
+  animation: open 0.4s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+  animation-delay: var(--d);
+}
+
+/* closing in onto the hero of the new page: the ground first, the outer colours a beat behind */
+.root[data-phase='reveal'] .layer {
+  animation:
+    close 0.62s cubic-bezier(0.75, 0, 0.2, 1) forwards,
+    fade 0.16s ease forwards;
+  animation-delay: var(--r), calc(0.6s + var(--r));
+}
+
+.root[data-phase='reveal'] .content {
+  animation: intoSlot 0.62s cubic-bezier(0.75, 0, 0.2, 1) forwards;
+}
+
+@keyframes open {
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes close {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(var(--to)); }
+}
+@keyframes fade {
+  to { opacity: 0; }
+}
+@keyframes intoSlot {
+  to { transform: translate(var(--tx), var(--ty)) scale(var(--ts)); }
+}

@@ -67,10 +67,11 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-obsidian/50 via-obsidian/35 to-obsidian pointer-events-none" />
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 72% 56% at 50% 44%, rgba(10,10,10,0.62), transparent 76%)' }}
+        style={{ background: 'radial-gradient(ellipse 72% 56% at 50% 44%, rgba(6,18,42,0.62), transparent 76%)' }}
       />
       <div
-        className="relative z-10 px-6 max-w-3xl"
+        data-loader-target
+        className="relative z-10 px-6"
         style={{ textShadow: '0 2px 28px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.5)' }}
       >
         <div className="font-display text-[0.7rem] tracking-[0.5em] uppercase text-rose mb-8 font-medium">

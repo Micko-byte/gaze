@@ -26,7 +26,7 @@ export function Divisions() {
     <section id="divisions" className="relative overflow-clip bg-obsidian px-6 py-24 md:py-32">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ivory/5 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,155,175,0.08),transparent_58%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(222,186,120,0.08),transparent_58%)]" />
       </div>
 
       <Reveal className="relative z-10 mx-auto w-full max-w-4xl text-center">

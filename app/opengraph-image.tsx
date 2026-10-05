@@ -51,7 +51,7 @@ export default async function OpengraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          backgroundColor: '#0A0A0A',
+          backgroundColor: '#06122A',
           color: '#F4EFE6',
           padding: '72px 88px',
           fontFamily: 'Outfit, sans-serif',
@@ -67,7 +67,7 @@ export default async function OpengraphImage() {
             width: 600,
             height: 600,
             borderRadius: 9999,
-            background: 'radial-gradient(circle, rgba(201,155,175,0.22), rgba(10,10,10,0) 70%)',
+            background: 'radial-gradient(circle, rgba(222,186,120,0.22), rgba(6,18,42,0) 70%)',
           }}
         />
         {/* Champagne glow, bottom-right */}
@@ -79,7 +79,7 @@ export default async function OpengraphImage() {
             width: 700,
             height: 700,
             borderRadius: 9999,
-            background: 'radial-gradient(circle, rgba(217,201,168,0.14), rgba(10,10,10,0) 70%)',
+            background: 'radial-gradient(circle, rgba(217,201,168,0.14), rgba(6,18,42,0) 70%)',
           }}
         />
 
@@ -96,7 +96,7 @@ export default async function OpengraphImage() {
             GAZE
           </div>
           <svg width="22" height="20" viewBox="0 0 22 20" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="11,2 21,18 1,18" fill="#C99BAF" />
+            <polygon points="11,2 21,18 1,18" fill="#DEBA78" />
           </svg>
           <div
             style={{
@@ -116,7 +116,7 @@ export default async function OpengraphImage() {
             style={{
               fontSize: 18,
               letterSpacing: '0.45em',
-              color: '#C99BAF',
+              color: '#DEBA78',
               fontWeight: 500,
               textTransform: 'uppercase',
             }}
@@ -140,7 +140,7 @@ export default async function OpengraphImage() {
                 fontFamily: 'Cormorant, serif',
                 fontStyle: 'italic',
                 fontWeight: 300,
-                color: '#C99BAF',
+                color: '#DEBA78',
               }}
             >
               legacy
