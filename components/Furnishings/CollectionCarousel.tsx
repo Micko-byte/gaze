@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { collections } from '@/content/furnishings';
+import { collections, pieces } from '@/content/furnishings';
 import { FurnitureDrawing } from './FurnitureDrawing';
 
 /** "Explore the collection", after Natuzzi: a sliding row of rooms with round arrow buttons; swipe or drag on touch. */
@@ -22,22 +22,25 @@ export function CollectionCarousel() {
         ref={track}
         className="flex snap-x snap-mandatory scroll-px-5 gap-6 overflow-x-auto scroll-smooth px-5 pb-6 md:scroll-px-[6vw] [scrollbar-width:none] md:px-[6vw] [&::-webkit-scrollbar]:hidden"
       >
-        {collections.map((c) => (
-          <li key={c.name} className="w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[27vw] xl:w-[22vw]">
-            <a href="#consultation" data-no-transition className="group block">
-              <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2]">
-                <FurnitureDrawing
-                  kind={c.drawing}
-                  className="w-[72%] text-furn-ink transition-transform duration-[900ms] ease-reveal group-hover:scale-[1.06]"
-                />
-                {c.piece && (
-                  <span className="absolute left-4 top-4 rounded-full bg-furn-lilac px-3 py-1 font-text text-[11px] text-furn-ink">{c.piece}</span>
-                )}
-              </div>
-              <p className="mt-4 font-text text-[15px]">{c.name}</p>
-            </a>
-          </li>
-        ))}
+        {collections.map((c) => {
+          const signature = pieces.find((p) => p.room === c.id && p.decided);
+          return (
+            <li key={c.name} className="w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[27vw] xl:w-[22vw]">
+              <a href={`#${c.id}`} data-no-transition className="group block">
+                <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2]">
+                  <FurnitureDrawing
+                    kind={c.drawing}
+                    className="w-[72%] text-furn-ink transition-transform duration-[900ms] ease-reveal group-hover:scale-[1.06]"
+                  />
+                  {signature && (
+                    <span className="absolute left-4 top-4 rounded-full bg-furn-lilac px-3 py-1 font-text text-[11px] text-furn-ink">{signature.name}</span>
+                  )}
+                </div>
+                <p className="mt-4 font-text text-[15px]">{c.name}</p>
+              </a>
+            </li>
+          );
+        })}
       </ul>
       <div className="pointer-events-none absolute inset-y-0 left-0 right-0 hidden items-center justify-between px-[2vw] md:flex">
         {([-1, 1] as const).map((dir) => (

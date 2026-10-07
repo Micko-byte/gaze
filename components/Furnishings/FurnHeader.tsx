@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { furnRooms } from '@/content/furnishings';
+import { furnRooms, pieces } from '@/content/furnishings';
 import { HouseLogo } from '@/components/Logo/HouseLogo';
 import { SoundToggle } from '@/components/Sound/SoundToggle';
 
@@ -12,9 +12,15 @@ const Icon = ({ d }: { d: string }) => (
   </svg>
 );
 
-/** Furnishings bar, after Natuzzi Italia: a solid linen bar, round menu button, lowercase room links, icons. */
+/**
+ * Furnishings bar, after Natuzzi Italia: a solid linen bar, round menu button, lowercase room links, icons.
+ * On desktop, hovering or focusing a room drops a white panel under the bar with that room's two columns.
+ */
 export function FurnHeader() {
   const [open, setOpen] = useState(false);
+  const [room, setRoom] = useState<string | null>(null);
+  const [navLeft, setNavLeft] = useState(0);
+  const navList = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -23,9 +29,27 @@ export function FurnHeader() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!room) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setRoom(null);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [room]);
+
+  const show = (label: string) => {
+    if (navList.current) setNavLeft(navList.current.getBoundingClientRect().left);
+    setRoom(label);
+  };
+
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-[rgba(30,30,34,0.12)] bg-furn-linen text-furn-ink">
+      <header
+        onMouseLeave={() => setRoom(null)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setRoom(null);
+        }}
+        className="fixed inset-x-0 top-0 z-40 border-b border-[rgba(30,30,34,0.12)] bg-furn-linen text-furn-ink"
+      >
         <div className="mx-auto flex h-[72px] max-w-[1600px] items-center gap-6 px-5 md:px-8">
           <button
             type="button"
@@ -44,12 +68,22 @@ export function FurnHeader() {
             <HouseLogo id="furnishings" className="h-9 w-auto" />
           </Link>
           <nav aria-label="Rooms" className="hidden flex-1 xl:block">
-            <ul className="flex items-center gap-6 font-text text-[14px]">
+            <ul ref={navList} className="flex items-center gap-6 font-text text-[14px]">
               {furnRooms.map((r) => (
-                <li key={r.label}>
-                  <a href={r.href} data-no-transition className="relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-500 hover:text-furn-walnut hover:after:w-full">
+                <li key={r.label} onMouseEnter={() => show(r.label)}>
+                  <Link
+                    href={r.href}
+                    data-no-transition
+                    onFocus={() => show(r.label)}
+                    onClick={() => setRoom(null)}
+                    aria-expanded={room === r.label}
+                    aria-controls="furn-rooms-panel"
+                    className={`relative py-[26px] transition-colors after:absolute after:bottom-[20px] after:left-0 after:h-px after:bg-current after:transition-all after:duration-500 ${
+                      room === r.label ? 'after:w-full' : 'after:w-0'
+                    }`}
+                  >
                     {r.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -58,17 +92,58 @@ export function FurnHeader() {
             <a href="#search" data-no-transition aria-label="Search the collection" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
               <Icon d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Zm5.3-2.2L21 21" />
             </a>
-            <a href="#showroom" data-no-transition aria-label="Visit the showroom" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
+            <Link href="/furnishings#showroom" data-no-transition aria-label="Visit the showroom" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
               <Icon d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-            </a>
-            <a href="#consultation" data-no-transition aria-label="Your account" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
+            </Link>
+            <Link href="/furnishings#consultation" data-no-transition aria-label="Your account" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
               <Icon d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm-8 9a8 8 0 0 1 16 0" />
-            </a>
+            </Link>
             <SoundToggle light />
             <Link href="/" className="hidden items-center gap-2 border-l border-[rgba(30,30,34,0.15)] pl-4 font-text text-[11px] uppercase tracking-[0.22em] md:flex">
               <HouseLogo id="holdings" tone="mono" className="h-4 w-auto" /> Gaze Holdings
             </Link>
           </div>
+        </div>
+
+        {/* room panel: drops under the bar, and cross-fades between rooms while it stays open */}
+        <div
+          id="furn-rooms-panel"
+          className={`absolute inset-x-0 top-full hidden h-[300px] border-b border-[rgba(30,30,34,0.12)] bg-white transition-[opacity,transform,visibility] duration-300 ease-out xl:block ${
+            room ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
+          }`}
+        >
+          {furnRooms.map((r) => (
+            <div
+              key={r.label}
+              aria-hidden={room !== r.label}
+              className={`absolute inset-0 flex gap-24 pt-12 transition-opacity duration-300 ${room === r.label ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+              style={{ paddingLeft: navLeft }}
+            >
+              {r.columns.map((col, i) => (
+                <ul key={i} className="grid content-start gap-3 font-text text-[15px] text-[#8A847A]">
+                  {col.map((item) => (
+                    <li key={item}>
+                      <Link href={r.href} data-no-transition tabIndex={room === r.label ? 0 : -1} onClick={() => setRoom(null)} className="transition-colors hover:text-furn-ink">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+              {r.feature && (
+                <Link
+                  href={`/furnishings/${pieces.find((p) => p.name === r.feature)?.slug ?? ''}`}
+                  data-no-transition
+                  tabIndex={room === r.label ? 0 : -1}
+                  onClick={() => setRoom(null)}
+                  className="self-start font-text text-[13px] text-furn-ink"
+                >
+                  <span className="block text-[11px] uppercase tracking-[0.22em] text-[#8A847A]">signature</span>
+                  <span className="mt-2 inline-block rounded-full bg-furn-lilac px-4 py-1.5 transition-colors hover:bg-furn-ink hover:text-furn-linen">{r.feature}</span>
+                </Link>
+              )}
+            </div>
+          ))}
         </div>
       </header>
 
@@ -86,9 +161,9 @@ export function FurnHeader() {
           <ul className="mt-16 grid gap-x-16 gap-y-4 font-furn text-[clamp(36px,5vw,72px)] leading-[1.05] md:grid-cols-2">
             {furnRooms.map((r) => (
               <li key={r.label}>
-                <a href={r.href} data-no-transition onClick={() => setOpen(false)} className="transition-colors hover:text-furn-lilac">
+                <Link href={r.href} data-no-transition onClick={() => setOpen(false)} className="transition-colors hover:text-furn-lilac">
                   {r.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

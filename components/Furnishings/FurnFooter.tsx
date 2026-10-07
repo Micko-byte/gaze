@@ -53,7 +53,7 @@ export function FurnFooter() {
             <p className="text-sm font-medium">Gaze Furnishings</p>
             <ul className="mt-4 grid gap-2 text-[13px] text-[#4A4640]">
               {furnRooms.map((r) => (
-                <li key={r.label}><a href={r.href} data-no-transition className="hover:text-furn-walnut">{r.label}</a></li>
+                <li key={r.label}><Link href={r.href} data-no-transition className="hover:text-furn-walnut">{r.label}</Link></li>
               ))}
             </ul>
           </div>
@@ -69,8 +69,8 @@ export function FurnFooter() {
           <div>
             <p className="text-sm font-medium">Service</p>
             <ul className="mt-4 grid gap-2 text-[13px] text-[#4A4640]">
-              <li><a href="#ordering" data-no-transition className="hover:text-furn-walnut">ordering &amp; delivery</a></li>
-              <li><a href="#consultation" data-no-transition className="hover:text-furn-walnut">consultations</a></li>
+              <li><Link href="/furnishings#ordering" data-no-transition className="hover:text-furn-walnut">ordering &amp; delivery</Link></li>
+              <li><Link href="/furnishings#consultation" data-no-transition className="hover:text-furn-walnut">consultations</Link></li>
               <li><Link href="/legal/privacy" className="hover:text-furn-walnut">privacy policy</Link></li>
               <li><Link href="/legal/terms" className="hover:text-furn-walnut">terms &amp; conditions</Link></li>
             </ul>

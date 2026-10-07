@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { orderingSteps, payments } from '@/content/furnishings';
 import { FurnHeader } from '@/components/Furnishings/FurnHeader';
 import { FurnHero } from '@/components/Furnishings/FurnHero';
 import { CollectionCarousel } from '@/components/Furnishings/CollectionCarousel';
+import { Catalogue } from '@/components/Furnishings/Catalogue';
 import { FurnFooter } from '@/components/Furnishings/FurnFooter';
 import { Reveal } from '@/components/Reveal/Reveal';
 
@@ -26,7 +28,7 @@ export default function FurnishingsPage() {
         <section id="collection" className="scroll-mt-[72px] bg-white py-24 md:py-32">
           <Reveal className="mb-12 text-center">
             <h2 className="inline-block border-b border-furn-ink pb-1 font-furn text-[clamp(30px,3vw,48px)] leading-none">explore the collection</h2>
-            <p className="mx-auto mt-5 max-w-md px-5 text-sm font-light text-[#6F6A62]">Seven rooms, each piece named for an animal of the plains and made for the room it will live in.</p>
+            <p className="mx-auto mt-5 max-w-md px-5 text-sm font-light text-[#6F6A62]">Seven rooms. Choose one to open its chapter of the catalogue.</p>
           </Reveal>
           <CollectionCarousel />
         </section>
@@ -39,14 +41,29 @@ export default function FurnishingsPage() {
               'repeating-linear-gradient(92deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 9px), repeating-linear-gradient(88deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 23px), linear-gradient(180deg, #7B5232, #5E3D24)',
           }}
         >
+          {/* the client's Maison Profile (5 Oct 2026) */}
           <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="font-furn text-[clamp(30px,3.6vw,60px)] leading-[1.15]">
-              Our work is driven by one idea: luxury, without ornament. Every line earns its place, and every piece is made
-              for the room it will live in.
+            <p className="text-[12px] text-furn-lilac">the maison · founded in Nairobi, 2017</p>
+            <p className="mt-8 font-furn text-[clamp(30px,3.6vw,60px)] leading-[1.15]">
+              We do not manufacture inventory; we materialize legacy.
             </p>
+            <div className="mx-auto mt-10 flex max-w-2xl flex-col gap-5 text-base font-light leading-relaxed text-[rgba(238,231,223,0.85)] md:text-lg">
+              <p>
+                Gaze Furnishings is an exclusive house of bespoke interior curation and rare furniture manufacturing. We exist for
+                a singular purpose: to craft the physical sanctuaries of those who shape the world.
+              </p>
+              <p>
+                Operating entirely outside the constraints of mass production, every silhouette is custom-commissioned,
+                structurally absolute, and finished by master artisans. For a decade, our ateliers have quietly defined the
+                standard for elite private residences and presidential boardrooms across the region.
+              </p>
+              <p>To inhabit a Gaze environment is to command absolute space, requiring no introduction and yielding to no equal.</p>
+            </div>
             <a href="#craft" data-no-transition className={`${pill} mt-12 bg-furn-linen text-furn-ink hover:bg-furn-lilac`}>learn about our craft</a>
           </Reveal>
         </section>
+
+        <Catalogue />
 
         {/* ── interior design & consultation ── */}
         <section id="consultation" className="relative scroll-mt-[72px] overflow-hidden">
@@ -94,7 +111,7 @@ export default function FurnishingsPage() {
                 Named for the cheetah: a table and chairs drawn with speed and restraint, made to your room&apos;s measurements
                 and finished in the fabric you choose.
               </p>
-              <a href="#consultation" data-no-transition className={`${pill} mt-10 bg-furn-lilac text-furn-ink hover:bg-furn-linen`}>enquire about the duma</a>
+              <Link href="/furnishings/duma-dining-set" data-no-transition className={`${pill} mt-10 bg-furn-lilac text-furn-ink hover:bg-furn-linen`}>commission the duma</Link>
             </Reveal>
             <Reveal delay={0.1} className="aspect-[16/10] overflow-hidden">
               <img src="/video/hero-poster.jpg" alt="An open-plan dining and living space" className="h-full w-full object-cover" />
