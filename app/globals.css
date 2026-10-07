@@ -265,3 +265,9 @@ h1.font-display.type-strong {
   from { width: 0; }
   to { width: 100%; }
 }
+
+/* Press bar items rise into place one after another, as Matthieu Givelet's do. */
+@keyframes pressnav {
+  from { opacity: 0; transform: translateY(70%); }
+  to { opacity: 1; transform: none; }
+}
