@@ -42,6 +42,26 @@ export function PageTransition() {
   const timers = useRef<number[]>([]);
 
   const later = (fn: () => void, ms: number) => timers.current.push(window.setTimeout(fn, ms));
+  const settling = useRef(0);
+
+  /*
+   * Run `fn` once the page underneath has settled: the new route sets up its images and scroll animations in the
+   * first few hundred milliseconds, and a reveal started during that work stutters. Wait (behind the still cover)
+   * for a run of ordinary frames, but never longer than `maxMs`.
+   */
+  const whenSettled = (fn: () => void, maxMs = 700) => {
+    cancelAnimationFrame(settling.current);
+    const start = performance.now();
+    let last = start;
+    let calm = 0;
+    const tick = (now: number) => {
+      calm = now - last < 34 ? calm + 1 : 0;
+      last = now;
+      if (calm >= 6 || now - start > maxMs) fn();
+      else settling.current = requestAnimationFrame(tick);
+    };
+    settling.current = requestAnimationFrame(tick);
+  };
 
   const reveal = useCallback(() => {
     const root = rootRef.current;
@@ -108,7 +128,7 @@ export function PageTransition() {
     // land at the top instantly: an eased scroll here reads as a lag at the end of the transition
     activeLenis?.scrollTo(0, { immediate: true, force: true });
     window.scrollTo(0, 0);
-    later(reveal, 90);
+    whenSettled(reveal);
   }, [pathname, reveal]);
 
   // 3 · a division opened directly plays its build once per session (the home page has its own loader)
@@ -135,7 +155,13 @@ export function PageTransition() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+  useEffect(
+    () => () => {
+      timers.current.forEach(clearTimeout);
+      cancelAnimationFrame(settling.current);
+    },
+    [],
+  );
 
   // decode the house cues once the page is idle, so the first transition has its music ready
   useEffect(() => {

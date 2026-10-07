@@ -18,16 +18,15 @@ describe('Ethos', () => {
 
   it('renders the eyebrow and manifesto sentences', () => {
     const { container } = render(<Ethos />);
-    expect(container.textContent).toMatch(/Philosophy/);
-    expect(container.textContent).toContain('great brands do not merely sell');
-    expect(container.textContent).toContain('spaces where people live, learn, lead');
-    expect(container.textContent).toContain('architects of influence');
+    expect(container.textContent).toMatch(/The Architecture of Influence/);
+    expect(container.textContent).toContain('apex parent enterprise rooted in Nairobi');
+    expect(container.textContent).toContain('anchor institutions of enduring power');
+    expect(container.textContent).toContain('the ultimate ecosystem');
   });
 
   it('renders the pullquote with the accented word', () => {
     const { container } = render(<Ethos />);
-    expect(container.textContent).toContain('We build companies that');
-    expect(container.textContent).toContain('outlive');
-    expect(container.textContent).toContain('us.');
+    expect(container.textContent).toContain('Excellence is not an aspiration');
+    expect(container.textContent).toContain('native standard');
   });
 });

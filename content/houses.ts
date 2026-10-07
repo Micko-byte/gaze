@@ -2,7 +2,7 @@ import type { LogoId } from '@/components/Logo/logos';
 
 /**
  * The houses of Gaze Holdings: routes, logos and brand-kit colours. The showcase, the page transitions and the
- * division pages all read from here. Copy follows the client's discovery answers (3 Oct 2026).
+ * division pages all read from here. Lines are the client's Master Ecosystem Profile (5 Oct 2026).
  */
 export type HouseId = 'holdings' | 'furnishings' | 'institute' | 'hergaze' | 'press';
 
@@ -37,7 +37,7 @@ export const houses: ReadonlyArray<House> = [
     id: 'furnishings',
     logo: 'furnishings',
     name: 'Gaze Furnishings',
-    line: 'Bespoke furniture, made in Nairobi and delivered worldwide.',
+    line: 'The art of bespoke spatial architecture and rare luxury manufacturing.',
     href: '/furnishings',
     ground: '#EEE7DF',
     ink: '#1E1E22',
@@ -48,7 +48,7 @@ export const houses: ReadonlyArray<House> = [
     id: 'institute',
     logo: 'institute',
     name: 'Gaze Leadership Institute',
-    line: 'Programmes for leaders, with fixed intakes and enrolment online.',
+    line: 'An apex academy forging kingdom-minded executives and architects of global influence.',
     href: '/institute',
     ground: '#F6F4EE',
     ink: '#0B1A40',
@@ -59,7 +59,7 @@ export const houses: ReadonlyArray<House> = [
     id: 'hergaze',
     logo: 'hergaze',
     name: 'Her Gaze Global',
-    line: 'Summits and retreats. We do not host events; we assemble power.',
+    line: 'A sovereign convening house orchestrating international summits and high-impact cultural milestones.',
     href: '/hergaze',
     ground: '#F1E4D6',
     ink: '#1A1A1A',
@@ -70,7 +70,7 @@ export const houses: ReadonlyArray<House> = [
     id: 'press',
     logo: 'press',
     name: 'Gaze Press Global',
-    line: 'Books and archives that carry the voice of the house.',
+    line: 'A premier publishing house archiving foundational literature and permanent philosophy.',
     href: '/press',
     ground: '#ECE7DF',
     ink: '#111111',
