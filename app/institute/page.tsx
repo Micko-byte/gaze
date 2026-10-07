@@ -3,16 +3,16 @@ import type { Metadata } from 'next';
 import { houses } from '@/content/houses';
 import { HouseHeader } from '@/components/House/HouseHeader';
 import { HouseFooter } from '@/components/House/HouseFooter';
-import { HouseLogo } from '@/components/Logo/HouseLogo';
 import { Reveal } from '@/components/Reveal/Reveal';
 
 export const metadata: Metadata = {
   title: 'Gaze Leadership Institute',
-  description: 'Training kingdom leaders for global influence. Programmes with fixed intakes; enrol and pay online.',
+  description: 'An apex academy dedicated to unshakeable executive composure, strategic intellect, and kingdom-mandated authority. We do not teach management. We forge leaders.',
 };
 
 const house = houses.find((h) => h.id === 'institute')!;
 const nav = [
+  { label: 'The Institute', href: '#institute' },
   { label: 'Programmes', href: '#programmes' },
   { label: 'How it works', href: '#how' },
   { label: 'Mentorship Circle', href: '#mentorship' },
@@ -34,24 +34,19 @@ export default function InstitutePage() {
       <main>
         {/* ── Hero ── */}
         <section id="top" className="relative overflow-hidden px-5 pb-20 pt-36 md:px-10 md:pb-28 md:pt-44">
-          <div className="mx-auto grid max-w-[1440px] items-center gap-14 md:grid-cols-[1.25fr_1fr]">
-            <div data-loader-target>
+          <div className="mx-auto max-w-[1440px]">
+            <div data-loader-target className="max-w-[1100px]">
               <p className="text-[11px] font-medium uppercase tracking-[0.42em] text-inst-maroon">Gaze Leadership Institute · Nairobi</p>
-              <h1 className="mt-6 font-inst text-[clamp(44px,6.2vw,108px)] font-bold uppercase leading-[0.96] tracking-[-0.01em]">
-                Training kingdom leaders for global influence.
+              <h1 className="mt-6 font-inst text-[clamp(48px,7.4vw,132px)] font-bold uppercase leading-[0.96] tracking-[-0.01em]">
+                We do not teach management. <span className="text-inst-maroon">We forge leaders.</span>
               </h1>
               <p className="mt-8 max-w-lg text-lg font-light leading-relaxed text-[#2B3656]">
-                Programmes with fixed intakes. Enrol and pay online, with no approval to wait on.
+                Founded to shape the architects of global influence: an apex academy dedicated to unshakeable executive
+                composure, strategic intellect, and kingdom-mandated authority.
               </p>
               <div className="mt-10 flex flex-wrap gap-3 text-[12px] font-semibold uppercase tracking-[0.22em]">
                 <a href="#enrol" className="bg-inst-maroon px-7 py-4 text-inst-paper transition-colors hover:bg-inst-midnight">Enrol</a>
                 <a href="#how" className="border border-inst-midnight px-7 py-4 transition-colors hover:bg-inst-midnight hover:text-inst-paper">How it works</a>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-6 bg-inst-midnight md:-inset-10" aria-hidden="true" />
-              <div className="relative flex aspect-square items-center justify-center bg-inst-paper p-10">
-                <HouseLogo id="institute" title="Gaze Leadership Institute crest" className="h-full w-auto" />
               </div>
             </div>
           </div>
@@ -62,9 +57,31 @@ export default function InstitutePage() {
           <img src="/images/divisions/institute.jpg" alt="A cohort in session at the Institute" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,26,64,0.88),rgba(11,26,64,0.35))]" />
           <Reveal className="relative mx-auto flex h-full max-w-[1440px] flex-col justify-center px-5 text-inst-paper md:px-10">
-            <p className="font-inst text-[clamp(40px,5.6vw,96px)] font-bold uppercase leading-[0.98]">
-              Clear.<br />Composed.<br /><span className="text-inst-sky">Built for leaders.</span>
+            <p className="max-w-[18ch] font-inst text-[clamp(36px,5vw,88px)] font-bold uppercase leading-[0.98]">
+              True leadership is not a performance; <span className="text-inst-sky">it is a sovereign state of being.</span>
             </p>
+          </Reveal>
+        </section>
+
+        {/* ── The Institute (the client's Institutional Profile, 5 Oct 2026) ── */}
+        <section id="institute" className="px-5 pt-28 md:px-10 md:pt-36">
+          <Reveal className="mx-auto grid max-w-[1440px] gap-12 md:grid-cols-[1fr_1.3fr]">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.42em] text-inst-maroon">The Institute</p>
+              <h2 className="mt-4 font-inst text-[clamp(36px,4.4vw,72px)] font-bold uppercase leading-[1]">For those who refuse to be ordinary.</h2>
+            </div>
+            <div className="flex flex-col gap-6 self-end text-lg font-light leading-relaxed text-[#2B3656]">
+              <p>
+                Operating at the intersection of divine purpose, cognitive mastery, and high-stakes marketplace execution, the
+                Institute serves those who carry the weight of nations, enterprises, and enduring legacy.
+              </p>
+              <p>
+                Grounded in unyielding spiritual and intellectual truth, our cohorts, masterclasses, and executive training
+                programmes strip away friction, instilling the deep psychological fortitude and strategic communication required
+                to command rooms before a word is spoken.
+              </p>
+              <p>For those who refuse to be ordinary, the Institute provides the ultimate internal architecture.</p>
+            </div>
           </Reveal>
         </section>
 
