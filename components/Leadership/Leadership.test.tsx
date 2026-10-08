@@ -28,4 +28,12 @@ describe('Leadership', () => {
     expect(container.textContent).toContain('Countries Served');
     expect(container.textContent).toContain('Leaders Trained');
   });
+
+  it('keeps the leadership eyebrow at its requested small size', () => {
+    const { container } = render(<Leadership />);
+    const eyebrow = container.querySelector('h2 > span');
+
+    expect(eyebrow?.className).toContain('text-[12px]');
+    expect(eyebrow?.className).not.toContain('text-[clamp');
+  });
 });
