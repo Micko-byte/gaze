@@ -4,6 +4,7 @@ import { houses } from '@/content/houses';
 import { HouseFooter } from '@/components/House/HouseFooter';
 import { HerGazeBar } from '@/components/HerGaze/HerGazeBar';
 import { HerGazeHero } from '@/components/HerGaze/HerGazeHero';
+import { HerGazeScrapbook } from '@/components/HerGaze/HerGazeScrapbook';
 import { Reveal } from '@/components/Reveal/Reveal';
 
 export const metadata: Metadata = {
@@ -46,27 +47,9 @@ const actions = [
   'Volunteer or mentor',
 ];
 
-/*
- * The scrapbook under the statement, after Very Work In Progress: stills from her own convenings, set at an angle,
- * with the three convocations pinned among them as cards. Positions are percentages of the collage box.
- */
-const collage = [
-  { src: '/images/hergaze/panel.jpg', alt: 'A panel on the Her Gaze stage', x: 37, y: 0, w: 26, r: -2 },
-  { src: '/images/hergaze/smiles.jpg', alt: 'Women in the audience, laughing', x: 5, y: 20, w: 24, r: 3 },
-  { src: '/images/hergaze/podcast.jpg', alt: 'The founder in conversation, holding Stay by Design', x: 70, y: 10, w: 18, r: -4, framed: true },
-  { src: '/images/hergaze/speaker.jpg', alt: 'A speaker with a microphone at a Her Gaze convening', x: 31, y: 42, w: 30, r: 1.5, framed: true },
-  { src: '/images/hergaze/audience.jpg', alt: 'The audience facing the purple stage', x: 66, y: 60, w: 25, r: 3 },
-  { src: '/images/hergaze/launch.jpg', alt: 'A book launch banner at the venue', x: 4, y: 62, w: 22, r: -3 },
-];
-const cards = [
-  { label: 'The Singles Kingdom Summit', x: 9, y: 4, bg: 'bg-her-terracotta text-white', r: -3 },
-  { label: 'The Place of Waiting', x: 70, y: 42, bg: 'bg-her-noir text-her-blush', r: 2 },
-  { label: 'The Rebuilding Conference', x: 30, y: 86, bg: 'bg-her-magenta text-white', r: -1.5 },
-];
-
 const label = 'text-[12px] uppercase tracking-[0.24em]';
-/* One sans, set large and regular with tight leading: the Matthieu Givelet way, in the house's own Chillax. */
-const big = 'font-her-text font-normal tracking-[-0.035em]';
+/* Her brand type: Valkyrie for headings (set large, after Matthieu Givelet's scale), Chillax for text, Chopin script. */
+const big = 'font-her-head font-normal tracking-[-0.01em]';
 
 export default function HerGazePage() {
   return (
@@ -94,39 +77,7 @@ export default function HerGazePage() {
           </Reveal>
         </section>
 
-        {/* ── the scrapbook ── */}
-        <section aria-label="From our convenings" className="px-5 pb-28 md:px-10">
-          <div className="relative mx-auto hidden aspect-[16/11] max-w-[1200px] md:block">
-            {collage.map((c, i) => (
-              <figure
-                key={c.src}
-                className={`absolute transition-transform duration-700 ease-reveal hover:z-10 hover:scale-[1.03] ${c.framed ? 'bg-white p-3 shadow-[0_24px_50px_-30px_rgba(26,26,26,0.6)] ring-2 ring-her-noir' : 'shadow-[0_24px_50px_-34px_rgba(26,26,26,0.7)]'}`}
-                style={{ left: `${c.x}%`, top: `${c.y}%`, width: `${c.w}%`, rotate: `${c.r}deg` }}
-              >
-                <Reveal delay={i * 0.06} y={40}>
-                  <img src={c.src} alt={c.alt} className="w-full" />
-                </Reveal>
-              </figure>
-            ))}
-            {cards.map((c) => (
-              <a
-                key={c.label}
-                href="#convocations"
-                data-no-transition
-                className={`absolute z-[5] flex w-[19%] items-center justify-center px-4 py-6 text-center text-[clamp(16px,1.5vw,22px)] leading-tight tracking-[-0.02em] shadow-[0_18px_40px_-26px_rgba(26,26,26,0.7)] transition-transform duration-500 hover:scale-[1.04] ${c.bg}`}
-                style={{ left: `${c.x}%`, top: `${c.y}%`, rotate: `${c.r}deg` }}
-              >
-                {c.label}
-              </a>
-            ))}
-          </div>
-          {/* phones: the same pictures, two by two */}
-          <div className="grid grid-cols-2 gap-4 md:hidden">
-            {collage.map((c) => (
-              <img key={c.src} src={c.src} alt={c.alt} className="aspect-square w-full object-cover" style={{ rotate: `${c.r / 2}deg` }} />
-            ))}
-          </div>
-        </section>
+        <HerGazeScrapbook />
 
         {/* ── the Maison ── */}
         <section id="maison" className="scroll-mt-[120px] border-t border-[rgba(26,26,26,0.14)] px-5 py-24 md:px-10 md:py-32">

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
 import { houses } from '@/content/houses';
+import { ScrollPattern } from '@/components/Patterns/ScrollPattern';
 import { HouseLogo } from '@/components/Logo/HouseLogo';
 import { LOGOS } from '@/components/Logo/logos';
 import { prefersReducedMotion } from '@/lib/motion';
@@ -125,9 +126,10 @@ export function HouseShowcase() {
       id="houses"
       data-nav-theme="light"
       aria-label="The four houses of Gaze Holdings"
-      className="relative w-full overflow-x-clip bg-gaze-parchment text-gaze-deep"
+      className="relative isolate w-full overflow-x-clip bg-gaze-parchment text-gaze-deep"
       style={{ perspective: '1600px' }}
     >
+      <ScrollPattern variant="showcase" />
       {/* screen one: the sentence, alone */}
       <div className="flex min-h-[100svh] flex-col items-center justify-center px-4 text-center">
         <p className="font-text text-[11px] font-medium uppercase tracking-[0.42em] text-gaze-antique">Gaze Holdings Ltd. · Nairobi</p>

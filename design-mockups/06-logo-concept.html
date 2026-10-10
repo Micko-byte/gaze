@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaze Holdings — Logo Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --obsidian: #0A0A0A;
+    --ink: #141414;
+    --ivory: #F4EFE6;
+    --house-rose: #C99BAF;
+    --champagne: #D9C9A8;
+    --hairline: #2a2a2a;
+    --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+    --font-outfit: 'Outfit', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--obsidian);
+    color: var(--ivory);
+    font-family: var(--font-outfit);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+  }
+
+  /* ── layout ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 72px 48px 96px; }
+  .doc-label {
+    font-size: .65rem; letter-spacing: .5em; text-transform: uppercase;
+    color: var(--house-rose); font-weight: 500; margin-bottom: 10px;
+  }
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 200; letter-spacing: -.01em; line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .lede { font-size: .9rem; color: #888; max-width: 560px; line-height: 1.65; margin-bottom: 64px; }
+
+  .section { margin-bottom: 72px; }
+  .section-title {
+    font-size: .62rem; letter-spacing: .45em; text-transform: uppercase;
+    color: var(--house-rose); font-weight: 500; margin-bottom: 32px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--hairline);
+  }
+
+  /* ── mark display ── */
+  .mark-row {
+    display: flex; gap: 64px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .mark-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .mark-label {
+    font-size: .6rem; letter-spacing: .35em; text-transform: uppercase;
+    color: #666; font-weight: 400;
+  }
+
+  /* ── canvas squares ── */
+  .canvas-dark {
+    background: var(--obsidian);
+    border: 1px solid var(--hairline);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ivory);
+  }
+  .canvas-light {
+    background: var(--ivory);
+    border: 1px solid #ddd;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--obsidian);
+  }
+  .canvas-rose {
+    background: var(--obsidian);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--house-rose);
+    border: 1px solid var(--hairline);
+  }
+  .sq { width: 200px; height: 200px; }
+  .rect { width: 380px; height: 100px; }
+  .sq-sm { width: 80px; height: 80px; }
+
+  /* ── nav simulation ── */
+  .nav-sim {
+    background: var(--obsidian);
+    border: 1px solid var(--hairline);
+    height: 56px;
+    display: flex; align-items: center;
+    padding: 0 32px;
+    margin-bottom: 12px;
+  }
+  .nav-sim-light {
+    background: rgba(244,239,230,.95);
+    border: 1px solid #ccc;
+    height: 56px;
+    display: flex; align-items: center;
+    padding: 0 32px;
+    margin-bottom: 12px;
+    color: var(--obsidian);
+  }
+
+  /* ── comparison note ── */
+  .note {
+    background: linear-gradient(135deg, rgba(201,155,175,.06), rgba(217,201,168,.02));
+    border: 1px solid var(--hairline);
+    padding: 24px 28px;
+    margin-top: 48px;
+  }
+  .note p { font-size: .85rem; color: #aaa; line-height: 1.7; }
+  .note strong { color: var(--champagne); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-label">Gaze Holdings — Logo Concept v1</div>
+  <h1>The paired G's</h1>
+  <p class="lede">Two italic G's facing each other — no extra lines, no triangle. The mark is monochrome so it lives on any background without rebuilding the site around it.</p>
+
+  <!-- ── 1. Monogram mark ── -->
+  <div class="section">
+    <div class="section-title">01 — Monogram (the mark alone)</div>
+    <div class="mark-row">
+
+      <div class="mark-cell">
+        <div class="canvas-dark sq">
+          <svg viewBox="0 0 180 100" width="120" height="67" role="img" aria-label="Gaze Holdings monogram" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(90, 0)">
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                transform="scale(-1,1)"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+            </g>
+          </svg>
+        </div>
+        <div class="mark-label">On Obsidian</div>
+      </div>
+
+      <div class="mark-cell">
+        <div class="canvas-light sq">
+          <svg viewBox="0 0 180 100" width="120" height="67" role="img" aria-label="Gaze Holdings monogram" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(90, 0)">
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                transform="scale(-1,1)"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+            </g>
+          </svg>
+        </div>
+        <div class="mark-label">On Ivory</div>
+      </div>
+
+      <div class="mark-cell">
+        <div class="canvas-rose sq">
+          <svg viewBox="0 0 180 100" width="120" height="67" role="img" aria-label="Gaze Holdings monogram" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(90, 0)">
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                transform="scale(-1,1)"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+            </g>
+          </svg>
+        </div>
+        <div class="mark-label">In Rose</div>
+      </div>
+
+      <!-- small sizes -->
+      <div class="mark-cell">
+        <div style="display:flex;gap:16px;align-items:flex-end">
+          <div>
+            <div class="canvas-dark sq-sm" style="margin-bottom:8px">
+              <svg viewBox="0 0 180 100" width="48" height="27" aria-label="Gaze Holdings monogram" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(90, 0)">
+                  <text x="-6" y="84" text-anchor="end" fill="#F4EFE6"
+                    style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+                  <text x="-6" y="84" text-anchor="end" fill="#F4EFE6"
+                    transform="scale(-1,1)"
+                    style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+                </g>
+              </svg>
+            </div>
+            <div class="mark-label" style="text-align:center">48px</div>
+          </div>
+          <div>
+            <div class="canvas-dark" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+              <svg viewBox="0 0 180 100" width="28" height="16" aria-label="Gaze Holdings monogram" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(90, 0)">
+                  <text x="-6" y="84" text-anchor="end" fill="#F4EFE6"
+                    style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+                  <text x="-6" y="84" text-anchor="end" fill="#F4EFE6"
+                    transform="scale(-1,1)"
+                    style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+                </g>
+              </svg>
+            </div>
+            <div class="mark-label" style="text-align:center">24px</div>
+          </div>
+        </div>
+        <div class="mark-label">Small sizes</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 2. Stacked lockup ── -->
+  <div class="section">
+    <div class="section-title">02 — Stacked lockup (hero / landing pages)</div>
+    <div class="mark-row">
+
+      <div class="mark-cell">
+        <div class="canvas-dark sq">
+          <svg viewBox="0 0 220 130" width="148" height="88" role="img" aria-label="Gaze Holdings" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(110, 0)">
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                transform="scale(-1,1)"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+            </g>
+            <text x="110" y="106" text-anchor="middle" fill="currentColor"
+              style="font-family:'Outfit',sans-serif;font-weight:300;font-size:20px;letter-spacing:10px">GAZE</text>
+            <text x="110" y="123" text-anchor="middle" fill="currentColor"
+              style="font-family:'Outfit',sans-serif;font-weight:400;font-size:7.5px;letter-spacing:5px">HOLDINGS</text>
+          </svg>
+        </div>
+        <div class="mark-label">On Obsidian</div>
+      </div>
+
+      <div class="mark-cell">
+        <div class="canvas-light sq">
+          <svg viewBox="0 0 220 130" width="148" height="88" role="img" aria-label="Gaze Holdings" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(110, 0)">
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                transform="scale(-1,1)"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+            </g>
+            <text x="110" y="106" text-anchor="middle" fill="currentColor"
+              style="font-family:'Outfit',sans-serif;font-weight:300;font-size:20px;letter-spacing:10px">GAZE</text>
+            <text x="110" y="123" text-anchor="middle" fill="currentColor"
+              style="font-family:'Outfit',sans-serif;font-weight:400;font-size:7.5px;letter-spacing:5px">HOLDINGS</text>
+          </svg>
+        </div>
+        <div class="mark-label">On Ivory</div>
+      </div>
+
+      <div class="mark-cell">
+        <div class="canvas-rose sq">
+          <svg viewBox="0 0 220 130" width="148" height="88" role="img" aria-label="Gaze Holdings" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(110, 0)">
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+              <text x="-6" y="84" text-anchor="end" fill="currentColor"
+                transform="scale(-1,1)"
+                style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:300;font-size:80px">G</text>
+            </g>
+            <text x="110" y="106" text-anchor="middle" fill="currentColor"
+              style="font-family:'Outfit',sans-serif;font-weight:300;font-size:20px;letter-spacing:10px">GAZE</text>
+            <text x="110" y="123" text-anchor="middle" fill="currentColor"
+              style="font-family:'Outfit',sans-serif;font-weight:400;font-size:7.5px;letter-spacing:5px">HOLDINGS</text>
+          </svg>
+        </div>
+        <div class="mark-label">In Rose</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 3. Inline / nav ── -->
+  <div class="section">
+    <div class="section-title">03 — Inline lockup (navigation bar)</div>
+
+    <!-- Dark nav -->
+    <div class="nav-sim">
+      <svg viewBox="0 0 280 32" width="140" height="16" role="img" aria-label="Gaze Holdings" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" fill="#F4EFE6"
+          style="font-family:'Outfit',sans-serif;font-weight:300;font-size:16px;letter-spacing:5px">GAZE</text>
+        <circle cx="76" cy="13" r="1.8" fill="#C99BAF"/>
+        <text x="88" y="22" fill="#F4EFE6"
+          style="font-family:'Outfit',sans-serif;font-weight:300;font-size:16px;letter-spacing:5px">HOLDINGS</text>
+      </svg>
+    </div>
+    <div class="mark-label" style="margin-bottom:24px;padding-left:4px">Dark nav (obsidian)</div>
+
+    <!-- Light nav -->
+    <div class="nav-sim-light">
+      <svg viewBox="0 0 280 32" width="140" height="16" role="img" aria-label="Gaze Holdings" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" fill="#0A0A0A"
+          style="font-family:'Outfit',sans-serif;font-weight:300;font-size:16px;letter-spacing:5px">GAZE</text>
+        <circle cx="76" cy="13" r="1.8" fill="#C99BAF"/>
+        <text x="88" y="22" fill="#0A0A0A"
+          style="font-family:'Outfit',sans-serif;font-weight:300;font-size:16px;letter-spacing:5px">HOLDINGS</text>
+      </svg>
+    </div>
+    <div class="mark-label" style="padding-left:4px">Light nav (ivory)</div>
+  </div>
+
+  <!-- ── Notes ── -->
+  <div class="note">
+    <p>
+      <strong>What changed from previous versions:</strong> The triangle and decorative lines are gone.
+      The only visual "action" is the two italic G's facing each other — their natural lean toward the centre
+      does the work. The mark is fully monochrome (inherits text colour) so it lives on obsidian, ivory,
+      or any future background without touching the site's palette.
+    </p>
+    <p style="margin-top:12px">
+      <strong>Colour flexibility:</strong> Wrapping the mark in a coloured element changes it instantly —
+      rose, champagne, or white-on-dark all work. The rose separator dot in the inline variant is the
+      only hardcoded accent and can be removed or swapped in one line.
+    </p>
+    <p style="margin-top:12px">
+      <strong>Font:</strong> Cormorant Garamond 300 italic for the G's (already in the design system);
+      Outfit 300 for the wordmark. Georgia renders as fallback until Cormorant is confirmed.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

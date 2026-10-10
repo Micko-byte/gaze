@@ -82,7 +82,7 @@ export function StatsStrip() {
               <div className="font-serif italic font-light text-[2.6rem] md:text-[3.2rem] leading-none text-rose tabular-nums">
                 <CountUp value={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="font-display text-[0.48rem] md:text-[0.52rem] tracking-[0.4em] uppercase text-ivory/40 mt-3 leading-relaxed">
+              <div className="font-display text-[0.48rem] md:text-[0.52rem] tracking-[0.4em] uppercase text-ivory/65 mt-3 leading-relaxed">
                 {stat.label}
               </div>
             </div>

@@ -10,6 +10,7 @@ import { prefersReducedMotion } from '@/lib/motion';
 import { MARK_PATHS } from '@/components/Intro/gazeLogo';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import { DotWord } from './DotWord';
+import { ScrollPattern } from '@/components/Patterns/ScrollPattern';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -94,7 +95,8 @@ export function Ethos() {
   );
 
   return (
-    <section ref={root} id="ethos" data-nav-theme="light" className="relative overflow-hidden bg-[#F3EFE6] py-28 text-[#06122A] md:py-40">
+    <section ref={root} id="ethos" data-nav-theme="light" className="relative isolate overflow-hidden bg-[#F3EFE6] py-28 text-[#06122A] md:py-40">
+      <ScrollPattern variant="ethos" />
       <div className="mx-auto max-w-[1600px] px-5 md:px-10">
         <p className="text-[14px] tracking-[-0.01em]">[ {ethosContent.eyebrow} ]</p>
 

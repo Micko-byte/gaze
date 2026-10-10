@@ -3,12 +3,14 @@ import { leadershipContent } from '@/content/leadership';
 import { StatCountUp } from './StatCountUp';
 import { Reveal } from '@/components/Reveal/Reveal';
 import { ScrollFloat } from '@/components/ui/ScrollFloat';
+import { ScrollPattern } from '@/components/Patterns/ScrollPattern';
 
 export function Leadership() {
   return (
-    <section id="vision" className="relative py-32 px-6 bg-ivory text-obsidian">
+    <section id="vision" className="relative isolate overflow-hidden py-32 px-6 bg-ivory text-obsidian">
+      <ScrollPattern variant="leadership" />
       <Reveal className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-        <div className="relative aspect-[4/5] overflow-hidden border border-obsidian/10">
+        <div className="relative aspect-[4/5] overflow-hidden border border-[rgba(6,18,42,0.1)]">
           <Image
             src="/images/founder/muthoni-ngugi-new.webp"
             alt={`${leadershipContent.name.first} ${leadershipContent.name.last}`}
@@ -26,20 +28,20 @@ export function Leadership() {
         <div>
           <ScrollFloat
             containerClassName="mb-6"
-            textClassName="font-display text-[0.55rem] md:text-[0.62rem] tracking-[0.45em] uppercase text-rose-ink font-medium"
+            textClassName="font-display text-[12px] tracking-[0.4em] uppercase text-rose-ink font-medium"
           >
             {leadershipContent.eyebrow}
           </ScrollFloat>
           <ScrollFloat
             containerClassName="mb-3"
-            textClassName="font-display font-extralight text-3xl md:text-5xl leading-none text-obsidian"
+            textClassName="font-headline text-[clamp(44px,5vw,80px)] leading-none text-obsidian"
           >
             Muthoni Ngugi
           </ScrollFloat>
           <p className="font-serif italic text-rose-ink text-lg md:text-xl mb-10 font-light">
             {leadershipContent.role}
           </p>
-          <div className="space-y-4 text-obsidian/75 font-light text-base md:text-[1.05rem] leading-relaxed max-w-xl">
+          <div className="space-y-4 text-[rgba(6,18,42,0.82)] font-light text-base md:text-[1.05rem] leading-relaxed max-w-xl">
             {leadershipContent.bio.map((line, i) => (
               <p key={i}>{line}</p>
             ))}

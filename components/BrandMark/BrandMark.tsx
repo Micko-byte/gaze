@@ -1,19 +1,17 @@
 /**
- * GAZE ▲ HOLDINGS — inline SVG logo lockup.
+ * GAZE HOLDINGS — brand mark
  *
  * Variants:
- *   inline (default) — horizontal lockup for navbars, footers, anywhere the
- *     mark sits on a single line.
- *   stacked — vertical lockup: large "GAZE" with triangle above center,
- *     thin rose underline, small-caps "HOLDINGS" beneath. For hero canvases,
- *     route curtains, and the 404 page.
+ *   inline (default) — horizontal lockup for nav and footer
+ *   stacked — vertical: paired-G monogram above the wordmark, for hero / route curtains
+ *   monogram — the paired G's alone, for favicons, watermarks, social avatar
  *
- * The rendered SVG uses currentColor for the wordmark so it inherits text
- * color from its parent, with var(--house-rose) hardcoded for the triangle
- * + underline accents (the rose is the brand signature regardless of canvas).
+ * All paths use currentColor so the mark inherits its parent's text color.
+ * The only accent is the rose separator dot in the inline variant; remove
+ * or swap it by overriding fill on <circle> if the palette changes.
  */
 
-type Variant = 'inline' | 'stacked';
+type Variant = 'inline' | 'stacked' | 'monogram';
 
 type Props = {
   variant?: Variant;
@@ -32,19 +30,24 @@ export function BrandMark({
   ariaLabel = 'Gaze Holdings',
 }: Props) {
   if (variant === 'stacked') {
-    return <StackedMark height={height ?? 56} className={className} ariaLabel={ariaLabel} />;
+    return <StackedMark height={height ?? 88} className={className} ariaLabel={ariaLabel} />;
+  }
+  if (variant === 'monogram') {
+    return <MonogramMark height={height ?? 56} className={className} ariaLabel={ariaLabel} />;
   }
   return <InlineMark height={height ?? 18} className={className} ariaLabel={ariaLabel} />;
 }
 
-/* ───────────────── Inline ───────────────── */
+/* ─────────────────────────────────────────────
+   Inline — nav / footer lockup
+   viewBox 0 0 280 32
+───────────────────────────────────────────── */
 
 function InlineMark({ height, className, ariaLabel }: { height: number; className?: string; ariaLabel: string }) {
-  // viewBox 0 0 340 36 — 340 wide / 36 tall — width scales from height
-  const width = (height * 340) / 36;
+  const width = (height * 280) / 32;
   return (
     <svg
-      viewBox="0 0 340 36"
+      viewBox="0 0 280 32"
       width={width}
       height={height}
       role="img"
@@ -52,35 +55,32 @@ function InlineMark({ height, className, ariaLabel }: { height: number; classNam
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* GAZE */}
       <text
         x="0"
-        y="25"
+        y="22"
         fill="currentColor"
         style={{
           fontFamily: 'var(--font-outfit), sans-serif',
-          fontWeight: 500,
-          fontSize: '20px',
-          letterSpacing: '6px',
+          fontWeight: 300,
+          fontSize: '16px',
+          letterSpacing: '5px',
         }}
       >
         GAZE
       </text>
 
-      {/* Triangle separator — geometric, not unicode */}
-      <polygon points="118,18 126,5 134,18" fill="var(--house-rose)" />
-      <line x1="118" y1="22" x2="134" y2="22" stroke="var(--house-rose)" strokeWidth="1" />
+      {/* Rose separator — single dot, brand signature */}
+      <circle cx="76" cy="13" r="1.8" fill="var(--house-rose)" />
 
-      {/* HOLDINGS */}
       <text
-        x="148"
-        y="25"
+        x="88"
+        y="22"
         fill="currentColor"
         style={{
           fontFamily: 'var(--font-outfit), sans-serif',
-          fontWeight: 500,
-          fontSize: '20px',
-          letterSpacing: '6px',
+          fontWeight: 300,
+          fontSize: '16px',
+          letterSpacing: '5px',
         }}
       >
         HOLDINGS
@@ -89,14 +89,18 @@ function InlineMark({ height, className, ariaLabel }: { height: number; classNam
   );
 }
 
-/* ───────────────── Stacked ───────────────── */
+/* ─────────────────────────────────────────────
+   Monogram — the paired G's alone
+   viewBox 0 0 180 100
+   Left G: normal italic. Right G: mirrored italic.
+   They face each other — the only "action" in the mark.
+───────────────────────────────────────────── */
 
-function StackedMark({ height, className, ariaLabel }: { height: number; className?: string; ariaLabel: string }) {
-  // viewBox 0 0 220 88 — 220 wide / 88 tall
-  const width = (height * 220) / 88;
+function MonogramMark({ height, className, ariaLabel }: { height: number; className?: string; ariaLabel: string }) {
+  const width = (height * 180) / 100;
   return (
     <svg
-      viewBox="0 0 220 88"
+      viewBox="0 0 180 100"
       width={width}
       height={height}
       role="img"
@@ -104,39 +108,126 @@ function StackedMark({ height, className, ariaLabel }: { height: number; classNa
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Top triangle */}
-      <polygon points="100,4 110,22 90,22" fill="var(--house-rose)" />
+      {/*
+        Both G's share the same anchor point (x=−6, y=84) with textAnchor="end".
+        The right G uses scale(−1, 1) which flips x around the group's origin (x=90),
+        mirroring it to the right side. The italic slant makes them lean toward each other.
+      */}
+      <g transform="translate(90, 0)">
+        {/* Left G */}
+        <text
+          x="-6"
+          y="84"
+          textAnchor="end"
+          fill="currentColor"
+          style={{
+            fontFamily: 'var(--font-cormorant), "Cormorant Garamond", Georgia, serif',
+            fontStyle: 'italic',
+            fontWeight: 300,
+            fontSize: '80px',
+          }}
+        >
+          G
+        </text>
 
-      {/* GAZE — large geometric sans */}
+        {/* Right G — mirrored around x=90 */}
+        <text
+          x="-6"
+          y="84"
+          textAnchor="end"
+          fill="currentColor"
+          transform="scale(-1, 1)"
+          style={{
+            fontFamily: 'var(--font-cormorant), "Cormorant Garamond", Georgia, serif',
+            fontStyle: 'italic',
+            fontWeight: 300,
+            fontSize: '80px',
+          }}
+        >
+          G
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   Stacked — hero / route curtains / 404
+   viewBox 0 0 220 130
+───────────────────────────────────────────── */
+
+function StackedMark({ height, className, ariaLabel }: { height: number; className?: string; ariaLabel: string }) {
+  const width = (height * 220) / 130;
+  return (
+    <svg
+      viewBox="0 0 220 130"
+      width={width}
+      height={height}
+      role="img"
+      aria-label={ariaLabel}
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Paired G monogram */}
+      <g transform="translate(110, 0)">
+        <text
+          x="-6"
+          y="84"
+          textAnchor="end"
+          fill="currentColor"
+          style={{
+            fontFamily: 'var(--font-cormorant), "Cormorant Garamond", Georgia, serif',
+            fontStyle: 'italic',
+            fontWeight: 300,
+            fontSize: '80px',
+          }}
+        >
+          G
+        </text>
+        <text
+          x="-6"
+          y="84"
+          textAnchor="end"
+          fill="currentColor"
+          transform="scale(-1, 1)"
+          style={{
+            fontFamily: 'var(--font-cormorant), "Cormorant Garamond", Georgia, serif',
+            fontStyle: 'italic',
+            fontWeight: 300,
+            fontSize: '80px',
+          }}
+        >
+          G
+        </text>
+      </g>
+
+      {/* GAZE wordmark */}
       <text
         x="110"
-        y="56"
+        y="106"
         textAnchor="middle"
         fill="currentColor"
         style={{
           fontFamily: 'var(--font-outfit), sans-serif',
           fontWeight: 300,
-          fontSize: '40px',
-          letterSpacing: '8px',
+          fontSize: '20px',
+          letterSpacing: '10px',
         }}
       >
         GAZE
       </text>
 
-      {/* Thin rose underline */}
-      <line x1="40" y1="66" x2="180" y2="66" stroke="var(--house-rose)" strokeWidth="1" />
-
-      {/* HOLDINGS small-caps */}
+      {/* HOLDINGS sub-word */}
       <text
         x="110"
-        y="82"
+        y="123"
         textAnchor="middle"
         fill="currentColor"
         style={{
           fontFamily: 'var(--font-outfit), sans-serif',
           fontWeight: 400,
-          fontSize: '10px',
-          letterSpacing: '6px',
+          fontSize: '7.5px',
+          letterSpacing: '5px',
         }}
       >
         HOLDINGS

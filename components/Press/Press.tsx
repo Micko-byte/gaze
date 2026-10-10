@@ -19,7 +19,7 @@ export function Press() {
         >
           The work, noticed.
         </ScrollReveal>
-        <p className="text-ivory/60 max-w-md mx-auto font-light text-base md:text-lg mb-16">
+        <p className="text-ivory/75 max-w-md mx-auto font-light text-base md:text-lg mb-16">
           {pressContent.sub}
         </p>
 
@@ -37,7 +37,7 @@ export function Press() {
           <div className="font-serif italic font-light text-3xl md:text-4xl text-ivory leading-tight mb-5">
             {award.title}
           </div>
-          <div className="text-ivory/65 font-light text-sm md:text-base mb-2">{award.detail}</div>
+          <div className="text-ivory/80 font-light text-sm md:text-base mb-2">{award.detail}</div>
           <div className="font-display text-[0.6rem] tracking-[0.3em] uppercase text-rose mt-5">
             {award.holder}
           </div>
@@ -47,7 +47,7 @@ export function Press() {
         {coverage.length > 0 && (
           <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
             {coverage.map(c => (
-              <span key={c.id} className="font-display text-[0.7rem] tracking-[0.3em] uppercase text-ivory/40">
+              <span key={c.id} className="font-display text-[0.7rem] tracking-[0.3em] uppercase text-ivory/65">
                 {c.name}
               </span>
             ))}
@@ -57,7 +57,7 @@ export function Press() {
         <div className="mt-14">
           <a
             href={media.href}
-            className="font-display text-[0.6rem] tracking-[0.35em] uppercase text-ivory/55 hover:text-rose transition-colors"
+            className="font-display text-[0.6rem] tracking-[0.35em] uppercase text-ivory/75 hover:text-rose transition-colors"
           >
             {media.label} · {media.cta} →
           </a>

@@ -64,7 +64,7 @@ export function HerGazeBar() {
               </svg>
             </button>
           </div>
-          <ul className="mt-14 flex flex-col gap-5 text-[40px] leading-none tracking-[-0.03em]">
+          <ul className="mt-14 flex flex-col gap-5 font-her-head text-[44px] leading-none">
             {links.map((l) => (
               <li key={l.href}>
                 <a href={l.href} data-no-transition onClick={() => setOpen(false)}>{l.label}</a>

@@ -48,11 +48,11 @@ export function StatCountUp({ value, suffix = '', label, tone = 'dark' }: Props)
   const isLight = tone === 'light';
 
   return (
-    <div ref={ref} className={`border-t pt-3 ${isLight ? 'border-obsidian/15' : 'border-hairline'}`}>
+    <div ref={ref} className={`border-t pt-3 ${isLight ? 'border-[rgba(6,18,42,0.15)]' : 'border-hairline'}`}>
       <div className={`font-serif italic font-light text-3xl md:text-4xl leading-none ${isLight ? 'text-rose-ink' : 'text-rose'}`}>
         {display.toLocaleString()}{suffix}
       </div>
-      <div className={`font-display text-[0.55rem] tracking-[0.35em] uppercase mt-2 ${isLight ? 'text-obsidian/65' : 'text-ivory/50'}`}>
+      <div className={`font-display text-[11px] tracking-[0.3em] uppercase mt-2 ${isLight ? 'text-[rgba(6,18,42,0.72)]' : 'text-[rgba(243,239,230,0.6)]'}`}>
         {label}
       </div>
     </div>
