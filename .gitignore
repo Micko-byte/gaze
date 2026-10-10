@@ -6,3 +6,6 @@ node_modules/
 .claude/
 test-results/
 playwright-report/
+
+# client deliverables (films, discovery report, forms): kept local, never in the public repo
+brand/
