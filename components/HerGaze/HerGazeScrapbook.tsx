@@ -118,7 +118,8 @@ export function HerGazeScrapbook() {
       <div className="grid grid-cols-2 gap-4 md:hidden">
         {collage.map((c, i) => (
           <button key={c.item.src} type="button" onClick={() => { setGrid(true); setOpen(i); }} aria-label={`Open: ${c.item.alt}`} style={{ rotate: `${c.r / 2}deg` }}>
-            <Media item={c.item} className="aspect-square w-full object-cover" />
+            {/* stills on phones; the moving clips belong to the desktop scrapbook and the gallery */}
+            <img src={c.item.video ? c.item.poster : c.item.src} alt={c.item.alt} loading="lazy" className="aspect-square w-full object-cover" />
           </button>
         ))}
       </div>
