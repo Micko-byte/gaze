@@ -53,7 +53,7 @@ export function BookHero({ book, full, action, index }: { book: Book; full?: boo
             {book.shelf === 'authors' ? ' · published for our author' : ' · Gaze Press Global'}
             {book.young ? ' · for young readers' : ''}
           </p>
-          <Title className="mt-5 font-press-head text-[clamp(44px,5.4vw,96px)] font-normal leading-[0.98] tracking-[-0.01em]">{book.title}</Title>
+          <Title data-rise={full ? undefined : ''} className="mt-5 font-press-head text-[clamp(44px,5.4vw,96px)] font-normal leading-[0.98] tracking-[-0.01em]">{book.title}</Title>
           <p className="mt-6 max-w-md text-lg font-light leading-relaxed opacity-85">{book.sub}</p>
           <div className="mt-10">{action}</div>
         </div>

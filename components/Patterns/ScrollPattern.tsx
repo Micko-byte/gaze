@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from '@/lib/gsap';
 import { prefersReducedMotion } from '@/lib/motion';
+import { MARK_PATHS } from '@/components/Intro/gazeLogo';
 
 /* Blue on the way down, gold on the way back up. */
 const DOWN = '#2F4C9E';
@@ -50,15 +51,23 @@ function guides(cx: number, cy: number, r: number, reach: number) {
   });
 }
 
-type Shape = { d: string; w?: number; o?: number };
+/* `w` is a stroke width: page units when `bold` (it grows with the motif, like the logo's bands), screen pixels otherwise. */
+type Shape = { d: string; w: number; o: number; bold?: boolean; t?: string; k?: number };
 
 /* Each variant places its hexagons in the margins, so the lines frame the content instead of crossing the reading line. */
 function build(variant: 'showcase' | 'ethos' | 'leadership', w: number, h: number): Shape[] {
   const out: Shape[] = [];
   const add = (cx: number, cy: number, r: number, rings = 2) => {
-    for (let k = 0; k < rings; k++) out.push({ d: hex(cx, cy, r * (1 - k * 0.22)).d, w: k === 0 ? 1.2 : 0.8 });
-    guides(cx, cy, r, r * 0.55).forEach((d) => out.push({ d, w: 0.6, o: 0.55 }));
-    out.push({ d: `M ${cx - r * 1.18} ${cy} a ${r * 1.18} ${r * 1.18} 0 1 0 ${r * 2.36} 0 a ${r * 1.18} ${r * 1.18} 0 1 0 ${-r * 2.36} 0`, w: 0.6, o: 0.5 });
+    // the logo's bold hexagon band, then a lighter inner ring
+    out.push({ d: hex(cx, cy, r).d, w: r * 0.1, o: 0.24, bold: true });
+    if (rings > 1) out.push({ d: hex(cx, cy, r * 0.74).d, w: r * 0.045, o: 0.2, bold: true });
+    // the hexagonal G itself, in outline at the centre
+    const k = (r * 0.92) / 700;
+    const t = `translate(${(cx - 335 * k).toFixed(1)} ${(cy - 400 * k).toFixed(1)}) scale(${k.toFixed(4)})`;
+    MARK_PATHS.forEach((d) => out.push({ d, w: r * 0.035, o: 0.3, bold: true, t, k }));
+    // the fine construction lines and guide circle the loader draws first
+    guides(cx, cy, r, r * 0.55).forEach((d) => out.push({ d, w: 1.5, o: 0.45 }));
+    out.push({ d: `M ${cx - r * 1.18} ${cy} a ${r * 1.18} ${r * 1.18} 0 1 0 ${r * 2.36} 0 a ${r * 1.18} ${r * 1.18} 0 1 0 ${-r * 2.36} 0`, w: 2, o: 0.4 });
   };
   if (variant === 'showcase') {
     add(w * 0.06, h * 0.16, w * 0.16, 3);
@@ -78,8 +87,8 @@ function build(variant: 'showcase' | 'ethos' | 'leadership', w: number, h: numbe
 }
 
 /**
- * Background linework for a Holdings section, drawn from the Gaze mark the way the loader draws the logo: hexagons
- * with construction lines run out past their corners, and a guide circle. The lines draw on as the section scrolls by
+ * Background linework for a Holdings section, drawn from the Gaze mark the way the loader draws the logo: bold
+ * hexagon bands as heavy as the mark's own, the hexagonal G in outline, and fine construction lines with a guide circle. The lines draw on as the section scrolls by
  * (and undraw on the way back), blue when scrolling down and gold when scrolling up. It sits beneath the section's
  * content (the section needs `isolate`), so it never covers text.
  */
@@ -124,12 +133,20 @@ export function ScrollPattern({ variant }: { variant: 'showcase' | 'ethos' | 'le
             <path
               key={i}
               d={p.d}
+              transform={p.t}
               pathLength={1}
               fill="none"
-              vectorEffect="non-scaling-stroke"
+              vectorEffect={p.bold ? undefined : 'non-scaling-stroke'}
               strokeDasharray="1"
-              strokeLinecap="round"
-              style={{ stroke: 'var(--pattern-ink, #2F4C9E)', strokeWidth: p.w ?? 1, opacity: (p.o ?? 1) * 0.55, transition: 'stroke 0.6s ease' }}
+              strokeLinecap={p.bold ? 'butt' : 'round'}
+              strokeLinejoin="miter"
+              style={{
+                stroke: 'var(--pattern-ink, #2F4C9E)',
+                // a scaled G takes its width in its own, unscaled units
+                strokeWidth: p.k ? p.w / p.k : p.w,
+                opacity: p.o,
+                transition: 'stroke 0.6s ease',
+              }}
             />
           ))}
       </svg>

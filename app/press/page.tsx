@@ -7,6 +7,7 @@ import { PressFooter } from '@/components/Press/PressFooter';
 import { BookFeature } from '@/components/Press/BookFeature';
 import { PressHowItWorks } from '@/components/Press/PressHowItWorks';
 import { Reveal } from '@/components/Reveal/Reveal';
+import { PressMotion, PressTitle } from '@/components/Press/PressMotion';
 
 export const metadata: Metadata = {
   title: 'Gaze Press Global',
@@ -34,17 +35,9 @@ export default function PressPage() {
         {/* ── hero: the name with a picture set into it ── */}
         <section id="top" className="px-5 pb-16 pt-36 text-center md:px-9 md:pt-40">
           <div data-loader-target>
-            <h1 className="font-press-head text-[clamp(72px,13.5vw,232px)] font-normal leading-[0.9] tracking-[-0.02em]">
-              Gaze{' '}
-              <img
-                src="/images/press/books/the-collection.jpg"
-                alt="Five Gaze Press Global titles"
-                className="inline-block h-[0.74em] w-[1.15em] rounded-[6px] object-cover object-[50%_40%] align-[-0.02em]"
-              />{' '}
-              Press
-            </h1>
-            <p className={`${big} mx-auto mt-10 max-w-[22ch] text-[clamp(28px,3.6vw,52px)] leading-[1.1]`}>
-              We do not merely print books. We archive legacy. <span className="whitespace-nowrap">[ Nairobi ]</span>
+            <PressTitle image="/images/press/books/the-collection.jpg" alt="Five Gaze Press Global titles" />
+            <p data-rise className={`${big} mx-auto mt-10 max-w-[22ch] text-[clamp(28px,3.6vw,52px)] leading-[1.1]`}>
+              We do not merely print books. We archive legacy. [&nbsp;Nairobi&nbsp;]
             </p>
           </div>
         </section>
@@ -67,7 +60,7 @@ export default function PressPage() {
         {/* ── the library: an index, then a section for each book ── */}
         <section id="library" className="scroll-mt-[72px] px-5 md:px-9">
           <Reveal className="flex items-end justify-between gap-6">
-            <h2 className={`${big} text-[clamp(44px,5vw,80px)] leading-none`}>The library</h2>
+            <h2 data-rise className={`${big} text-[clamp(44px,5vw,80px)] leading-none`}>The library</h2>
             <a href="#how" data-no-transition className={label}>→ How it works</a>
           </Reveal>
           <ol className="mt-12 border-t border-[rgba(17,17,17,0.15)]">
@@ -102,7 +95,13 @@ export default function PressPage() {
             <div>
               <h2 className={`${big} text-[clamp(40px,5vw,84px)] leading-[1]`}>
                 We{' '}
-                <span className="rounded-[4px] bg-press-rose px-[0.12em]">architect</span>{' '}
+                <span
+                  data-mark
+                  className="rounded-[4px] px-[0.12em]"
+                  style={{ backgroundImage: 'linear-gradient(#B5776F, #B5776F)', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }}
+                >
+                  architect
+                </span>{' '}
                 literary legacies.
               </h2>
               <p className="mt-8 max-w-xl text-lg font-light leading-relaxed">
@@ -115,7 +114,7 @@ export default function PressPage() {
           <Reveal className="mt-20 grid gap-10 md:grid-cols-[1fr_1.2fr]">
             <div>
               <p className={label}>[ The Sovereign Commission ]</p>
-              <p className="mt-6 font-press-head text-[clamp(72px,9vw,160px)] leading-[0.9]">$500</p>
+              <p data-count="500" className="mt-6 font-press-head text-[clamp(72px,9vw,160px)] leading-[0.9] tabular-nums">$500</p>
               <p className={`${label} mt-4 text-[#5A5550]`}>USD · Ksh 65,000 · all-inclusive</p>
               <Link href="/press/commission" data-no-transition className="mt-10 inline-block rounded-[3px] bg-press-ink px-[14px] py-[8px] text-[17px] tracking-[-0.02em] text-press-paper transition-colors hover:bg-press-rose hover:text-press-ink">
                 Submit a manuscript
@@ -163,7 +162,7 @@ export default function PressPage() {
         <section id="archive" className="scroll-mt-[72px] px-5 pb-32 text-center md:px-9">
           <Reveal>
             <p className={label}>[ The archive ]</p>
-            <p className="mx-auto mt-8 max-w-[22ch] font-press-head text-[clamp(40px,5vw,88px)] leading-[1.02]">
+            <p data-ink className="mx-auto mt-8 max-w-[22ch] font-press-head text-[clamp(40px,5vw,88px)] leading-[1.02]">
               True influence is not spoken into the wind; it is bound in permanence.
             </p>
             <p className="mt-10 font-press-script text-[clamp(36px,3.4vw,60px)] text-press-rose">Gaze Press Global</p>
@@ -171,6 +170,7 @@ export default function PressPage() {
         </section>
       </main>
       <PressFooter />
+      <PressMotion />
     </div>
   );
 }

@@ -109,7 +109,7 @@ export function PressHowItWorks() {
     <section id="how" ref={root} className="scroll-mt-[72px] overflow-hidden px-5 py-24 md:px-9 md:py-32">
       <div className="relative mx-auto max-w-[1440px] rounded-[40px] bg-[#E9D9D2] px-5 py-16 md:px-14 md:py-20">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <h2 className="font-press-head text-[clamp(52px,7vw,120px)] font-normal leading-[0.92]">How it works</h2>
+          <h2 data-rise className="font-press-head text-[clamp(52px,7vw,120px)] font-normal leading-[0.92]">How it works</h2>
           <p className="max-w-xs font-press-script text-[clamp(28px,2.4vw,40px)] leading-[1.05]">from your manuscript to a book in the world</p>
         </div>
         <ol className="mt-14 flex flex-col items-center gap-6 lg:flex-row lg:items-stretch lg:justify-center lg:gap-0">

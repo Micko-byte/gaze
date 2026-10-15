@@ -13,39 +13,50 @@ export function HeroHeadline({ lines }: { lines: ReadonlyArray<Line> }) {
   useEffect(() => {
     if (!ref.current) return;
     if (prefersReducedMotion()) {
-      gsap.set(ref.current.querySelectorAll('.h-word'), { opacity: 1, y: 0 });
+      gsap.set(ref.current.querySelectorAll('.h-char, .h-acc'), { opacity: 1, y: 0 });
       return;
     }
 
-    const split = new SplitType(ref.current.querySelectorAll('.h-line') as unknown as HTMLElement[], {
-      types: 'words',
-      wordClass: 'h-word',
+    // letters flip up from below in 3D; the gold accent word arrives whole so its shimmer stays unbroken
+    const split = new SplitType(ref.current.querySelectorAll('[data-split]') as unknown as HTMLElement[], {
+      types: 'chars',
+      charClass: 'h-char',
     });
 
-    gsap.from('.h-word', {
-      yPercent: 110,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.04,
-      ease: 'expo.out',
-      delay: 0.2,
-    });
+    const el = ref.current;
+    // a context, so a re-run (React's dev double effect) reverts the first tween instead of freezing the accent mid-flip
+    const ctx = gsap.context(() => {
+      gsap.from(el.querySelectorAll('.h-char, .h-acc'), {
+        rotateX: -100,
+        yPercent: 45,
+        opacity: 0,
+        transformOrigin: '50% 100%',
+        duration: 1.3,
+        stagger: 0.035,
+        ease: 'expo.out',
+        delay: 0.2,
+      });
+    }, el);
 
-    return () => { split.revert(); };
+    return () => {
+      ctx.revert();
+      split.revert();
+    };
   }, []);
 
   return (
     <h1
       ref={ref}
       className="type-strong font-display text-[clamp(84px,15vw,260px)] leading-[0.84] tracking-[-0.01em] text-ivory"
+      style={{ perspective: '1000px' }}
     >
       {lines.map((line, i) => (
         <span key={i} className="h-line block overflow-hidden">
           {line.parts.map((p, j) =>
             p.accent ? (
-              <em key={j} className="font-serif text-rose ml-[0.22em]">{p.text}</em>
+              <em key={j} className="h-acc gold-sheen ml-[0.22em] inline-block font-serif">{p.text}</em>
             ) : (
-              <span key={j}>{p.text}</span>
+              <span key={j} data-split>{p.text}</span>
             )
           )}
         </span>

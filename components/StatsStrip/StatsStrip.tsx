@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { prefersReducedMotion } from '@/lib/motion';
 
+/* Each figure sits on a colour from the brand kit, so the group's houses show on the Holdings page. */
 const stats = [
-  { value: 12, suffix: '+', label: 'Years Experience' },
-  { value: 5000, suffix: '+', label: 'Furnitures Delivered' },
-  { value: 3, suffix: '', label: 'Countries Served' },
-  { value: 500, suffix: '+', label: 'Leaders Trained' },
+  { value: 12, suffix: '+', label: 'Years Experience', bg: '#06122A', ink: '#DEBA78' },
+  { value: 5000, suffix: '+', label: 'Furnitures Delivered', bg: '#7B5232', ink: '#EEE7DF' },
+  { value: 3, suffix: '', label: 'Countries Served', bg: '#C8186F', ink: '#FFFFFF' },
+  { value: 500, suffix: '+', label: 'Leaders Trained', bg: '#4C88F0', ink: '#06122A' },
 ];
 
 function CountUp({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -47,48 +48,24 @@ function CountUp({ value, suffix = '' }: { value: number; suffix?: string }) {
 }
 
 /**
- * Full-width stats strip — sits between Leadership and Press.
- * 2×2 on mobile, 4-column on desktop, counting effect on scroll.
+ * Full-width stats strip, between Leadership and Recognition: four blocks in the colours of the brand kit (Holdings navy,
+ * Furnishings earth, Her Gaze magenta, Institute cobalt), each figure counting up as it scrolls in.
  */
 export function StatsStrip() {
   return (
-    <div className="relative w-full bg-ink border-y border-hairline overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute left-1/4 top-0 h-48 w-72 rounded-full bg-rose/6 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-48 w-72 rounded-full bg-champagne/5 blur-3xl" />
-      </div>
-
-      {/* Decorative top rule */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rose/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-champagne/20 to-transparent" />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-14 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4">
-          {stats.map((stat, i) => (
-            <div
-              key={stat.label}
-              className={[
-                'flex flex-col items-center justify-center text-center px-4 py-8 md:py-6',
-                'relative',
-                /* vertical divider on desktop */
-                i < 3 ? 'md:after:absolute md:after:right-0 md:after:top-1/4 md:after:h-1/2 md:after:w-px md:after:bg-hairline' : '',
-                /* horizontal divider on mobile for bottom row */
-                i >= 2 ? 'border-t border-hairline md:border-t-0' : '',
-                /* vertical divider on mobile between cols */
-                i % 2 === 0 ? 'border-r border-hairline md:border-r-0' : '',
-              ].join(' ')}
-            >
-              <div className="font-serif italic font-light text-[2.6rem] md:text-[3.2rem] leading-none text-rose tabular-nums">
-                <CountUp value={stat.value} suffix={stat.suffix} />
-              </div>
-              <div className="font-display text-[0.48rem] md:text-[0.52rem] tracking-[0.4em] uppercase text-ivory/65 mt-3 leading-relaxed">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+    <div className="grid w-full grid-cols-2 md:grid-cols-4">
+      {stats.map((stat) => (
+        <div
+          key={stat.label}
+          className="flex min-h-[220px] flex-col justify-between px-6 py-8 md:min-h-[280px] md:px-8 md:py-10"
+          style={{ background: stat.bg, color: stat.ink }}
+        >
+          <div className="font-display text-[11px] uppercase leading-relaxed tracking-[0.32em]">{stat.label}</div>
+          <div className="font-headline text-[clamp(56px,7vw,112px)] leading-none tabular-nums">
+            <CountUp value={stat.value} suffix={stat.suffix} />
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }

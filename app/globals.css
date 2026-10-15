@@ -25,6 +25,12 @@
   --inst-maroon: #7A1F2E;
   --inst-sky: #4C88F0;
   --inst-paper: #F6F4EE;
+  /* The Institute's own site, from the GLI Brand Book V1: navy, signal red and white, with the crest's gold */
+  --gli-navy: #000B3D;
+  --gli-ink: #08183C;
+  --gli-red: #DC0E20;
+  --gli-gold: #C8992F;
+  --gli-mist: #F2F5FA;
   /* Brand system — Her Gaze Global */
   --her-magenta: #C8186F;
   --her-terracotta: #C25530;
@@ -266,8 +272,39 @@ h1.font-display.type-strong {
   to { width: 100%; }
 }
 
+/* A slow gold light passing across a word, for Holdings accents. */
+.gold-sheen {
+  background-image: linear-gradient(110deg, #ae8448 0%, #deba78 38%, #fff2d2 50%, #deba78 62%, #ae8448 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: goldsheen 5s linear infinite;
+}
+@keyframes goldsheen {
+  from { background-position: 100% 0; }
+  to { background-position: -160% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) .gold-sheen { animation: none; background-position: 50% 0; }
+}
+
 /* Press bar items rise into place one after another, as Matthieu Givelet's do. */
 @keyframes pressnav {
   from { opacity: 0; transform: translateY(70%); }
   to { opacity: 1; transform: none; }
+}
+
+/* GLI navy flecked with gold and silver, as on the brand book's programme pages. */
+.gli-speckle {
+  background-color: var(--gli-navy);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(200, 153, 47, 0.55) 0 1.4px, transparent 2px),
+    radial-gradient(circle at 67% 9%, rgba(214, 220, 235, 0.35) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 38% 52%, rgba(214, 220, 235, 0.3) 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 84% 61%, rgba(200, 153, 47, 0.45) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 21% 83%, rgba(214, 220, 235, 0.32) 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 58% 92%, rgba(200, 153, 47, 0.4) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 93% 30%, rgba(214, 220, 235, 0.28) 0 1.1px, transparent 1.7px);
+  background-size: 230px 230px;
 }

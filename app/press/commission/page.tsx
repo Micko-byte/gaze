@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { PressNav } from '@/components/Press/PressNav';
 import { PressFooter } from '@/components/Press/PressFooter';
 import { AgreementForm } from '@/components/Press/AgreementForm';
+import { PressMotion } from '@/components/Press/PressMotion';
 
 export const metadata: Metadata = {
   title: 'Publishing & Literary Commission · Gaze Press Global',
@@ -17,7 +18,7 @@ export default function PressCommissionPage() {
         <div className="mx-auto max-w-[1100px]">
           <div data-loader-target className="max-w-3xl">
             <p className="text-[11px] font-medium uppercase tracking-[0.42em] text-press-rose">The Sovereign Commission · $500 · Ksh 65,000</p>
-            <h1 className="mt-6 font-press-head text-[clamp(44px,6vw,104px)] font-normal leading-[0.96]">Commission your book.</h1>
+            <h1 data-rise className="mt-6 font-press-head text-[clamp(44px,6vw,104px)] font-normal leading-[0.96]">Commission your book.</h1>
             <p className="mt-8 max-w-xl text-lg font-light leading-relaxed">
               Tell us about yourself and your manuscript, read the Publishing &amp; Literary Commission Agreement, and sign it
               here. Gaze Press Global reviews every manuscript before countersigning.
@@ -29,6 +30,7 @@ export default function PressCommissionPage() {
         </div>
       </main>
       <PressFooter />
+      <PressMotion />
     </div>
   );
 }

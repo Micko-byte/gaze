@@ -3,6 +3,7 @@ import { instagram } from '@/content/social';
 import { instagramSection, instagramFallback } from '@/content/instagram';
 import { InstagramGrid, type GalleryTile } from './InstagramGrid';
 import { Reveal } from '@/components/Reveal/Reveal';
+import { KineticText } from '@/components/ui/KineticText';
 
 export async function InstagramGallery() {
   const posts = await getInstagramPosts(8);
@@ -23,24 +24,27 @@ export async function InstagramGallery() {
       }));
 
   return (
-    <section id="instagram" className="relative py-28 px-6 bg-obsidian">
+    <section id="instagram" data-nav-theme="light" className="relative bg-[#C99DC2] px-6 py-28 text-[#06122A]">
       <Reveal className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>
-            <div className="font-display text-[0.65rem] tracking-[0.45em] uppercase text-rose font-medium mb-5">
+            <div className="font-display text-[11px] tracking-[0.45em] uppercase font-medium mb-5">
               {instagramSection.eyebrow}
             </div>
-            <h2 className="font-display font-extralight text-4xl md:text-5xl leading-[0.98] tracking-tight text-ivory">
-              {instagramSection.heading.pre}
-              <em className="font-serif italic font-light text-rose">{instagramSection.heading.accent}</em>
-              {instagramSection.heading.post}
-            </h2>
+            <KineticText
+              className="font-headline text-[clamp(52px,7vw,112px)] leading-[0.95]"
+              parts={[
+                { text: instagramSection.heading.pre },
+                { text: instagramSection.heading.accent, className: 'text-[#7B5232]' },
+                { text: instagramSection.heading.post },
+              ]}
+            />
           </div>
           <a
             href={instagram.profileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-display text-[0.65rem] tracking-[0.3em] uppercase text-champagne hover:text-rose transition-colors whitespace-nowrap"
+            className="font-display text-[11px] tracking-[0.3em] uppercase whitespace-nowrap underline underline-offset-4 transition-colors hover:text-[#7B5232]"
           >
             {instagram.handle} · {instagramSection.cta} →
           </a>
