@@ -125,9 +125,11 @@ export function PageTransition() {
   useEffect(() => {
     if (!pending.current) return;
     pending.current = null;
-    // land at the top instantly: an eased scroll here reads as a lag at the end of the transition
-    activeLenis?.scrollTo(0, { immediate: true, force: true });
-    window.scrollTo(0, 0);
+    // land instantly, at the top or at the link's #section: an eased scroll here reads as a lag at the end of the transition
+    const target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    const y = target ? target.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(target).scrollMarginTop) || 0) : 0;
+    activeLenis?.scrollTo(y, { immediate: true, force: true });
+    window.scrollTo(0, y);
     whenSettled(reveal);
   }, [pathname, reveal]);
 

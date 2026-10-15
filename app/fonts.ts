@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+import { Anton, Merriweather, Montserrat } from 'next/font/google';
 
 /*
  * The agreed brand faces. Licences live in app/fonts/licences. The 1001fonts FFC faces (Valkyrie, Chopin Script)
@@ -6,7 +7,7 @@ import localFont from 'next/font/local';
  *
  *   Gaze Holdings ........ Thegralke (headlines) + Metropolis (text, every house)
  *   Gaze Furnishings ..... FogtwoNo5
- *   Leadership Institute . Glacial Indifference
+ *   Leadership Institute . Glacial Indifference (house mark); its own site follows the GLI brand book (below)
  *   Her Gaze Global ...... Valkyrie (headlines), Chopin Script (accent), Chillax (text)
  *   Gaze Press Global .... Bodonio (titles), Thesignature (accent)
  */
@@ -60,6 +61,22 @@ const bodonio = localFont({ src: './fonts/Bodonio.ttf', variable: '--font-bodoni
 
 const thesignature = localFont({ src: './fonts/Thesignature.otf', variable: '--font-thesignature', display: 'swap' });
 
-export const fontVariables = [thegralke, metropolis, fogtwo, glacial, valkyrie, chopin, chillax, bodonio, thesignature]
+/*
+ * Gaze Leadership Institute: the faces of its own brand book (GLI Brand Book V1), all SIL Open Font Licence and
+ * self-hosted by next/font at build. Anton for headings, Merriweather Black for the name, Montserrat for text.
+ */
+const anton = Anton({ subsets: ['latin'], weight: '400', variable: '--font-anton', display: 'swap' });
+
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['400', '900'],
+  style: ['normal', 'italic'],
+  variable: '--font-merriweather',
+  display: 'swap',
+});
+
+const montserrat = Montserrat({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-montserrat', display: 'swap' });
+
+export const fontVariables = [thegralke, metropolis, fogtwo, glacial, valkyrie, chopin, chillax, bodonio, thesignature, anton, merriweather, montserrat]
   .map((f) => f.variable)
   .join(' ');
