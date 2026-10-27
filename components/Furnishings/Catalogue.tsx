@@ -97,27 +97,6 @@ function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boole
   );
 }
 
-/** More of the room from the atelier: the client's own work beyond the named pieces, in a strip that scrolls sideways. */
-function Atelier({ room, photos }: { room: string; photos: string[] }) {
-  return (
-    <div className="mt-20">
-      <div className="flex items-baseline justify-between gap-6 border-t border-[rgba(30,30,34,0.15)] pt-5">
-        <p className="font-furn text-[clamp(24px,2vw,32px)] leading-none">from the atelier</p>
-        <p className="text-[12px] text-[#6F6A62]">{photos.length} more {room.toLowerCase()} commissions · made to order</p>
-      </div>
-      <ul className="-mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] md:mx-0 md:px-0">
-        {photos.map((src) => (
-          <li key={src} className="w-[62vw] shrink-0 snap-start sm:w-[34vw] lg:w-[21vw]">
-            <div className="aspect-[4/5] overflow-hidden bg-[#F6F1EA]">
-              <img src={src} alt={`A ${room.toLowerCase()} commission by Gaze Furnishings`} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] ease-reveal hover:scale-[1.04]" />
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 /**
  * The catalogue, read like a magazine: a contents page, then one chapter per room, each opening on a spread with
  * its numeral and name, followed by the room's named pieces set in an asymmetric grid.
@@ -132,7 +111,7 @@ export function Catalogue() {
             <p className="text-[12px] text-[#6F6A62]">the catalogue · collection 2026</p>
             <h2 className="mt-4 font-furn text-[clamp(56px,8vw,148px)] leading-[0.92]">Contents</h2>
             <p className="mt-8 max-w-sm text-base font-light leading-relaxed text-[#4A4640]">
-              Seven rooms, each piece named for an animal of the plains and made to commission for the room it will live in.
+              Seven rooms, each piece named in Swahili for a creature of Africa and made to commission for the room it will live in.
             </p>
           </Reveal>
           <Reveal delay={0.1}>
@@ -176,7 +155,7 @@ export function Catalogue() {
                     ? mirror ? 'md:col-span-7 md:col-start-6' : 'md:col-span-7'
                     : j === 1
                       ? mirror ? 'md:col-span-5 md:col-start-1 md:row-start-1 md:mt-32' : 'md:col-span-5 md:mt-32'
-                      : mirror ? 'md:col-span-6 md:col-start-7' : 'md:col-span-6 md:col-start-2';
+                      : j % 2 === 0 ? 'md:col-span-6' : 'md:col-span-6 md:mt-24';
                   return (
                     <Reveal key={p.slug} delay={j * 0.08} className={span}>
                       <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} />
@@ -185,7 +164,6 @@ export function Catalogue() {
                 })}
               </div>
 
-              {c.atelier && <Atelier room={c.name} photos={c.atelier} />}
             </div>
           </section>
         );

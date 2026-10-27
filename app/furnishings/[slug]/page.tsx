@@ -43,7 +43,7 @@ export default function PiecePage({ params }: Props) {
               <span className="text-furn-ink">{piece.name}</span>
             </nav>
             <div className="mt-10 grid items-start gap-12 md:grid-cols-12">
-              <div className="md:col-span-7">
+              <div className="min-w-0 md:col-span-7">
                 <PieceGallery piece={piece} />
               </div>
               <div className="md:col-span-5 md:sticky md:top-[96px] md:pl-6">
@@ -100,7 +100,7 @@ export default function PiecePage({ params }: Props) {
               <p className="text-[12px] text-[#6F6A62]">the commission</p>
               <h2 className="mt-3 font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.96]">Make the {piece.name.split(' ')[0]} yours</h2>
               <p className="mt-5 text-base font-light leading-relaxed text-[#4A4640]">
-                Seven short steps: your measurements, fabric and colour, your own design, a word to the atelier, and your
+                Six short steps: your measurements, your fabric, colour and finish in the Bespoke Atelier, your own design, a word to the atelier, and your
                 signature. A representative then confirms everything with you before a single cut is made.
               </p>
             </div>

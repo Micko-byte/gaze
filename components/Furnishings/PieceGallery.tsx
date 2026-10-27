@@ -37,7 +37,7 @@ export function PieceGallery({ piece }: { piece: Piece }) {
         </div>
       </div>
       {plates.length > 1 && (
-        <ul className="mt-4 flex gap-3" aria-label={`${piece.name}: plates`}>
+        <ul className="mt-4 flex flex-wrap gap-3" aria-label={`${piece.name}: plates`}>
           {plates.map((p, i) => (
             <li key={p}>
               <button

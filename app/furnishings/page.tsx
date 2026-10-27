@@ -5,6 +5,7 @@ import { orderingSteps, payments } from '@/content/furnishings';
 import { FurnHeader } from '@/components/Furnishings/FurnHeader';
 import { FurnHero } from '@/components/Furnishings/FurnHero';
 import { CollectionCarousel } from '@/components/Furnishings/CollectionCarousel';
+import { AtelierStudio } from '@/components/Furnishings/AtelierStudio';
 import { Catalogue } from '@/components/Furnishings/Catalogue';
 import { FurnFooter } from '@/components/Furnishings/FurnFooter';
 import { Reveal } from '@/components/Reveal/Reveal';
@@ -64,6 +65,24 @@ export default function FurnishingsPage() {
         </section>
 
         <Catalogue />
+
+        {/* ── the bespoke atelier: the client's fabric studio ── */}
+        <section id="atelier" className="scroll-mt-[72px] bg-furn-linen px-5 py-24 md:px-[6vw] md:py-36">
+          <div className="mx-auto max-w-[1600px]">
+            <div className="grid gap-10 border-t border-furn-ink pt-8 md:grid-cols-[1fr_1fr] md:items-end">
+              <div>
+                <p className="text-[12px] text-[#6F6A62]">the fabric studio</p>
+                <h2 className="mt-3 font-furn text-[clamp(56px,7.4vw,132px)] leading-[0.92]">The Bespoke Atelier</h2>
+              </div>
+              <p className="max-w-md text-lg font-light leading-relaxed text-[#4A4640] md:justify-self-end">
+                Select your texture, define your palette, and curate your piece. Watch it take shape as you choose.
+              </p>
+            </div>
+            <div className="mt-14">
+              <AtelierStudio />
+            </div>
+          </div>
+        </section>
 
         {/* ── interior design & consultation ── */}
         <section id="consultation" className="relative scroll-mt-[72px] overflow-hidden">
