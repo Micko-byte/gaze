@@ -104,3 +104,26 @@ export function GliCircle({ src, alt, className = '' }: { src: string; alt: stri
     </span>
   );
 }
+
+/** The Institute's two faculties side by side: the seven Schools, and the School of Prophetic Intelligence. */
+export function GliFaculties({ faculties }: { faculties: ReadonlyArray<{ numeral: string; name: string; focus: string; body: string; href: string; cta: string }> }) {
+  return (
+    <div className="grid gap-5 md:grid-cols-2">
+      {faculties.map((f, i) => (
+        <Link
+          key={f.numeral}
+          href={f.href}
+          data-gli-wipe
+          className={`group relative flex flex-col overflow-hidden p-8 text-white md:p-12 ${i === 0 ? 'bg-[linear-gradient(135deg,#DC0E20_0%,#7A0C2A_55%,#000B3D_100%)]' : 'gli-speckle'}`}
+        >
+          <span className={`font-gli-serif text-[clamp(72px,8vw,128px)] font-black leading-none ${i === 0 ? 'text-[rgba(255,255,255,0.3)]' : 'text-gli-gold'}`}>{f.numeral}</span>
+          <p className="mt-4 text-[12px] font-bold uppercase tracking-[0.24em] text-[rgba(255,255,255,0.75)]">Faculty {f.numeral}</p>
+          <h3 className="mt-2 font-gli-serif text-[clamp(26px,2.6vw,40px)] font-black leading-[1.12]">{f.name}</h3>
+          <p className="mt-3 text-[14px] font-bold uppercase tracking-[0.12em] text-[rgba(255,255,255,0.85)]">{f.focus}</p>
+          <p className="mt-5 max-w-[44ch] text-[16px] font-medium leading-relaxed text-[rgba(255,255,255,0.82)]">{f.body}</p>
+          <span className="mt-auto pt-10 text-[13px] font-bold uppercase tracking-[0.18em] transition-transform duration-300 group-hover:translate-x-1">{f.cta} →</span>
+        </Link>
+      ))}
+    </div>
+  );
+}

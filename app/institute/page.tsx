@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { hero, offers, tagline, testimonials, upcoming, whoWeAre, whyGli } from '@/content/institute';
-import { GliBars, GliButton, GliCircle, GliContours, GliCrest, GliLabel } from '@/components/Institute/GliBits';
+import { hero, offers, tagline, testimonials, upcoming, whoWeAre, whyGli, faculties } from '@/content/institute';
+import { GliBars, GliButton, GliCircle, GliContours, GliCrest, GliLabel, GliFaculties } from '@/components/Institute/GliBits';
 
 export const metadata: Metadata = {
   title: 'Gaze Leadership Institute',
@@ -62,6 +62,16 @@ export default function InstituteHome() {
           <div className="relative mx-auto w-full max-w-[460px]">
             <GliCircle src="campus-circle" alt="A sandstone university hall" className="w-[78%] border-[10px] border-white" />
             <GliCircle src="counsel" alt="Two women in a coaching conversation" className="absolute bottom-[-8%] right-0 w-[52%] border-[10px] border-gli-red" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── the two faculties ── */}
+      <section className="bg-white px-5 py-24 md:px-10 md:py-28">
+        <div className="mx-auto max-w-[1320px]">
+          <h2 data-gli-rise className="font-gli-head text-[clamp(44px,5vw,84px)] uppercase leading-none text-gli-navy">Two faculties</h2>
+          <div className="mt-12">
+            <GliFaculties faculties={faculties} />
           </div>
         </div>
       </section>

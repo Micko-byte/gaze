@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { certifications, flagships, graduation, schools, teachingMethods } from '@/content/institute';
-import { GliBars, GliButton, GliCircle, GliContours, GliLabel } from '@/components/Institute/GliBits';
+import { certifications, flagships, graduation, schools, teachingMethods, faculties } from '@/content/institute';
+import { GliBars, GliButton, GliCircle, GliContours, GliLabel, GliFaculties } from '@/components/Institute/GliBits';
 
 export const metadata: Metadata = {
   title: 'Schools & Programs · Gaze Leadership Institute',
@@ -25,6 +25,16 @@ export default function InstitutePrograms() {
             </p>
           </div>
           <GliCircle src="campus-circle" alt="A sandstone university hall" className="mx-auto w-full max-w-[460px] border-[12px] border-gli-navy" />
+        </div>
+      </section>
+
+      {/* ── the two faculties ── */}
+      <section className="bg-white px-5 py-24 md:px-10 md:py-28">
+        <div className="mx-auto max-w-[1320px]">
+          <h2 data-gli-rise className="font-gli-head text-[clamp(44px,5vw,84px)] uppercase leading-none text-gli-navy">Two faculties</h2>
+          <div className="mt-12">
+            <GliFaculties faculties={faculties} />
+          </div>
         </div>
       </section>
 

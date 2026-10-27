@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, type FormEvent, type ReactNode } from 'react';
-import { corporate, gliContact, schools, whoCanApply } from '@/content/institute';
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { corporate, gliContact, prophetic, schools, whoCanApply } from '@/content/institute';
 
 /*
  * The Institute's three forms: apply, request corporate training, and write to us. Like the Holdings contact form,
@@ -219,6 +219,91 @@ export function ContactForm() {
       </div>
       <div className="md:col-span-2">
         <Submit>Send message</Submit>
+      </div>
+    </form>
+  );
+}
+
+/**
+ * Intake for the School of Prophetic Intelligence: the fields the client set out (name, organisation / designation,
+ * sector, statement of intent, intake term), with email and phone so the Institute can answer. Arriving through
+ * #assessment preselects an assessment call instead of an application.
+ */
+export function PropheticIntakeForm() {
+  const { sent, onSubmit } = useSubmit('prophetic intake');
+  const [kind, setKind] = useState<'apply' | 'call'>('apply');
+
+  useEffect(() => {
+    const pick = () => setKind(location.hash === '#assessment' ? 'call' : 'apply');
+    pick();
+    window.addEventListener('hashchange', pick);
+    return () => window.removeEventListener('hashchange', pick);
+  }, []);
+
+  if (sent)
+    return (
+      <Thanks title={sent.request === 'Reserve an assessment call' ? 'Your call is requested.' : 'Your application is in.'}>
+        Thank you, {String(sent.name).split(' ')[0]}. The Faculty will write to {String(sent.email)} to{' '}
+        {sent.request === 'Reserve an assessment call' ? 'arrange your assessment call.' : 'confirm your place in the cohort.'}
+      </Thanks>
+    );
+
+  return (
+    <form onSubmit={onSubmit} className="grid gap-8 md:grid-cols-2">
+      <fieldset className="md:col-span-2">
+        <legend className="font-gli-text text-[12px] font-bold uppercase tracking-[0.2em] text-gli-navy">I would like to</legend>
+        <div className="mt-4 flex flex-wrap gap-3">
+          {(['apply', 'call'] as const).map((k) => (
+            <label key={k} className={`cursor-pointer border-2 px-5 py-3 font-gli-text text-[14px] font-bold transition-colors ${kind === k ? 'border-gli-navy bg-gli-navy text-white' : 'border-[rgba(0,11,61,0.25)] text-gli-navy'}`}>
+              <input type="radio" name="request" value={k === 'apply' ? 'Apply for the next cohort' : 'Reserve an assessment call'} checked={kind === k} onChange={() => setKind(k)} className="sr-only" />
+              {k === 'apply' ? 'Apply for the next cohort' : 'Reserve an assessment call'}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <Row id="pi-name" label="Full name">
+        <input id="pi-name" name="name" required autoComplete="name" className={field} />
+      </Row>
+      <Row id="pi-org" label="Organization / designation">
+        <input id="pi-org" name="organization" required autoComplete="organization-title" className={field} />
+      </Row>
+      <Row id="pi-email" label="Email">
+        <input id="pi-email" name="email" type="email" required autoComplete="email" className={field} />
+      </Row>
+      <Row id="pi-phone" label="Phone">
+        <input id="pi-phone" name="phone" type="tel" autoComplete="tel" className={field} />
+      </Row>
+      <Row id="pi-sector" label="Primary sector">
+        <select id="pi-sector" name="sector" required defaultValue="" className={field}>
+          <option value="" disabled>Choose a sector</option>
+          {prophetic.sectors.map((x) => (
+            <option key={x} value={x}>{x}</option>
+          ))}
+        </select>
+      </Row>
+      <Row id="pi-track" label="Track">
+        <select id="pi-track" name="track" required defaultValue={prophetic.tracks[0]} className={field}>
+          {prophetic.tracks.map((x) => (
+            <option key={x} value={x}>{x}</option>
+          ))}
+        </select>
+      </Row>
+      <div className="md:col-span-2">
+        <Row id="pi-term" label="Preferred intake term">
+          <select id="pi-term" name="term" required defaultValue={prophetic.terms[0]} className={field}>
+            {prophetic.terms.map((x) => (
+              <option key={x} value={x}>{x}</option>
+            ))}
+          </select>
+        </Row>
+      </div>
+      <div className="md:col-span-2">
+        <Row id="pi-intent" label="Statement of intent: what primary transition or vision are you seeking divine alignment on?">
+          <textarea id="pi-intent" name="intent" required rows={5} className={`${field} resize-none`} />
+        </Row>
+      </div>
+      <div className="md:col-span-2">
+        <Submit>{kind === 'apply' ? 'Apply for the next cohort' : 'Reserve an assessment call'}</Submit>
       </div>
     </form>
   );

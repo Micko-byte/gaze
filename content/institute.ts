@@ -6,6 +6,7 @@
 export const gliNav = [
   { label: 'About', href: '/institute/about' },
   { label: 'Programs', href: '/institute/programs' },
+  { label: 'Prophetic School', href: '/institute/prophetic-intelligence' },
   { label: 'Admissions', href: '/institute/admissions' },
   { label: 'Corporate', href: '/institute/corporate' },
   { label: 'Contact', href: '/institute/contact' },
@@ -388,4 +389,86 @@ export const corporate = {
     { title: 'Measurable outcomes', body: 'Improved performance, engagement, and culture.' },
     { title: 'Faith-friendly approach (when requested)', body: 'An excellence-driven approach that honors both professionalism and values.' },
   ],
+};
+
+/* ── Faculties (22 Oct 2026): the seven Schools sit in Faculty I; the School of Prophetic Intelligence is Faculty II ── */
+
+export const faculties = [
+  {
+    numeral: 'I',
+    name: 'Executive Leadership & Public Discourse',
+    focus: 'Communication, Public Speaking, Thought Leadership',
+    body: 'The seven Schools of the Institute: leadership and personal mastery, business, emotional intelligence, purpose and faith, coaching, women in leadership, and communication.',
+    href: '/institute/programs',
+    cta: 'Explore the Schools',
+  },
+  {
+    numeral: 'II',
+    name: 'The School of Prophetic Intelligence',
+    focus: 'Spiritual Governance, Strategic Discernment, Kingdom Architecture',
+    body: 'An executive spiritual incubator for leaders who translate divine foresight into institutions, strategy, and generational frameworks.',
+    href: '/institute/prophetic-intelligence',
+    cta: 'Enter Faculty II',
+  },
+] as const;
+
+export const prophetic = {
+  name: 'The School of Prophetic Intelligence & Strategic Governance',
+  alt: 'The School of Prophetic Architecture',
+  tagline: 'Deconstructing Human Limits. Governing through Divine Foresight and Alignment.',
+  overview:
+    'The School of Prophetic Intelligence at the Gaze Leadership Institute is an executive spiritual incubator designed for high-caliber leaders, entrepreneurs, and visionaries. Grounded in the tradition of kingdom stewardship, structural alignment, and strategic discernment, this program equips leaders to hear, interpret, and translate divine foresight into tangible institutional systems, business strategies, and generational frameworks.',
+  modules: [
+    {
+      title: 'The Artisan’s Anointing & Spiritual Architecture',
+      focus: 'Aligning spiritual insight with physical execution and craftsmanship.',
+      topics: [
+        { title: 'The Bezalel Blueprint', body: 'Translating divine revelation into physical structure, design, and enterprise.' },
+        { title: 'Understanding Spiritual Authority', body: 'Operating with integrity, purity, and governance in marketplace spheres.' },
+        { title: 'Cognitive Alignment', body: 'Overcoming cognitive dissonance and aligning internal identity with corporate vision.' },
+        { title: 'Deconstructing Cultural Models', body: 'Breaking reliance on performance-driven paradigms to enter alignment-based leadership.' },
+      ],
+    },
+    {
+      title: 'Prophetic Discernment & Strategic Foresight',
+      focus: 'Cultivating acute spiritual perception to navigate complex economic and organizational decisions.',
+      topics: [
+        { title: 'The Hearing Ear', body: 'Systems of personal silence, intercession, and hearing God cleanly without ego filter.' },
+        { title: 'Reading Seasons & Cycles', body: 'Discernment in timing—knowing when to build, when to hold, and when to expand.' },
+        { title: 'Pattern Recognition & Market Foresight', body: 'Distinguishing divine direction from market noise and trend-chasing.' },
+        { title: 'Guardianship of the Mind', body: 'Preserving executive mental clarity and spiritual health under high-stakes pressure.' },
+      ],
+    },
+    {
+      title: 'Kingdom Governance, Order & Wealth Stewardship',
+      focus: 'Transitioning from personal breakthrough to enterprise governance and institutional legacy.',
+      topics: [
+        { title: 'The Architecture of Altars', body: 'Building sustainable prayer protocols and spiritual foundations for families and corporate entities.' },
+        { title: 'Kingdom Wealth Mechanics', body: 'Managing capital, asset stewardship, and financial flow with righteous accountability.' },
+        { title: 'Ethical Governance & Boardroom Integrity', body: 'Establishing institutional policies reflecting divine justice and order.' },
+        { title: 'Territorial & Marketplace Mandates', body: 'How to influence cities, industries, and executive ecosystems.' },
+      ],
+    },
+    {
+      title: 'Practical Translation & Execution Sprints',
+      focus: 'Turning prophetic revelation into written strategy, enterprise frameworks, and operational systems.',
+      topics: [
+        { title: 'Translating Revelation into Strategy', body: 'Writing clear corporate briefs, policies, and operational manifestos from divine guidance.' },
+        { title: 'Spiritual Warfare in Enterprise', body: 'Shielding your enterprise, household, and health from institutional burnout and spiritual friction.' },
+        { title: 'Mentorship & Covenant Networks', body: 'Building accountability circles with fellow kingdom builders.' },
+        { title: 'The Capstone Blueprint', body: 'Developing your personal or corporate 10-year Strategic Vision Document.' },
+      ],
+    },
+  ],
+  details: [
+    { label: 'Format', value: 'Hybrid', note: 'Virtual Executive Sprints via Google Meet, with Quarterly In-Person Intensives.' },
+    { label: 'Target audience', value: 'Founders & executives', note: 'Founders, C-Suite Executives, Public Sector Leaders, Authors, and High-Impact Builders.' },
+    { label: 'Duration', value: '12 weeks', note: '12-Week Immersion Cohort, or the 6-Month Mentorship Circle Track.' },
+  ],
+  /* foundational required reading for cohort participants, from the Gaze Press library */
+  reading: ['stay-by-design', 'the-artisans-anointing'],
+  sectors: ['Business', 'Public Policy', 'Creative Arts', 'Ministry', 'Education'],
+  tracks: ['12-Week Immersion Cohort', '6-Month Mentorship Circle Track'],
+  /* the client is to publish cohort dates */
+  terms: ['The next cohort (dates to be announced)', 'The cohort after', 'Not decided yet'],
 };

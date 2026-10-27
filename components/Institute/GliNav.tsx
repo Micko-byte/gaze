@@ -46,7 +46,7 @@ export function GliNav() {
               Institute
             </span>
           </Link>
-          <nav aria-label="Gaze Leadership Institute" className="hidden lg:block">
+          <nav aria-label="Gaze Leadership Institute" className="hidden xl:block">
             <ul className="flex items-center gap-8 text-[13px] font-bold uppercase tracking-[0.14em] text-gli-navy">
               {gliNav.map((l) => {
                 const active = pathname === l.href;
@@ -69,7 +69,7 @@ export function GliNav() {
               type="button"
               onClick={() => setOpen(true)}
               aria-expanded={open}
-              className="bg-gli-navy px-4 py-3.5 text-[12px] font-bold uppercase tracking-[0.16em] text-white lg:hidden"
+              className="bg-gli-navy px-4 py-3.5 text-[12px] font-bold uppercase tracking-[0.16em] text-white xl:hidden"
             >
               Menu
             </button>
