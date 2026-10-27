@@ -7,6 +7,6 @@ export const heroContent = {
       { parts: [{ text: 'of' }, { text: 'Brands', accent: true }, { text: '.' }] },
     ],
   },
-  sub: 'Four houses. One standard. Built in Nairobi, made for the world.',
+  sub: 'Five houses. One standard. Built in Nairobi, made for the world.',
   scrollCue: 'Scroll',
 } as const;

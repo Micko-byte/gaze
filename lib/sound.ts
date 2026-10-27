@@ -8,7 +8,7 @@
  *  · clicks  — a soft wooden tap on links and buttons, synthesised
  * Browsers allow audio only after the visitor clicks or presses a key, so nothing plays before that.
  */
-export type HouseKey = 'holdings' | 'furnishings' | 'institute' | 'hergaze' | 'press';
+export type HouseKey = 'holdings' | 'furnishings' | 'manor' | 'institute' | 'hergaze' | 'press';
 export type CueId = 'intro-holdings' | `cue-${HouseKey}`;
 
 const KEY = 'gaze.sound';

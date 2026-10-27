@@ -24,7 +24,7 @@ export const ethosContent = {
   manifesto: [
     'Gaze Holdings Ltd. is an apex parent enterprise rooted in Nairobi, overseeing a curated ecosystem of luxury, education, convening, and literature.',
     'We do not manage businesses; we anchor institutions of enduring power.',
-    'Operating at the intersection of uncompromised craftsmanship, sovereign leadership, and divine mandate, Gaze Holdings unites four distinct global houses under a single standard of absolute distinction.',
+    'Operating at the intersection of uncompromised craftsmanship, sovereign leadership, and divine mandate, Gaze Holdings unites five distinct global houses under a single standard of absolute distinction.',
     'For those who understand that true legacy is designed, structured, and sustained, Gaze Holdings provides the ultimate ecosystem.',
   ],
   pullquote: {

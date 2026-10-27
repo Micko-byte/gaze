@@ -11,8 +11,8 @@ import { LOGOS } from '@/components/Logo/logos';
 import { prefersReducedMotion } from '@/lib/motion';
 
 /** The sentence; a house logo sits after each index in LOGO_AFTER. */
-const WORDS = ['A', 'house', 'of', 'four', 'brands,', 'one', 'standard.'];
-const LOGO_AFTER = [1, 3, 4, 5];
+const WORDS = ['A', 'house', 'of', 'five', 'brands,', 'one', 'standard.'];
+const LOGO_AFTER = [1, 3, 4, 5, 6];
 
 const aspect = (id: (typeof houses)[number]['logo']) => {
   const [, , w, h] = LOGOS[id].viewBox.split(/\s+/).map(Number);
@@ -42,7 +42,7 @@ function fitIn(well: Box, ratio: number): Box {
 }
 
 /**
- * The four houses, after Butter. Two screens: the sentence, with the house logos set in its words, and below it
+ * The five houses, after Butter. Two screens: the sentence, with the house logos set in its words, and below it
  * the navy dock. Nothing is pinned and the dock never moves on its own: the page scrolls, the sentence leaves
  * upwards, and the logos drop out of the words and travel down the page into the dock's cards as it arrives.
  * Scrolling back up sends them back into the sentence.
@@ -125,7 +125,7 @@ export function HouseShowcase() {
       ref={root}
       id="houses"
       data-nav-theme="light"
-      aria-label="The four houses of Gaze Holdings"
+      aria-label="The five houses of Gaze Holdings"
       className="relative isolate w-full overflow-x-clip bg-gaze-parchment text-gaze-deep"
       style={{ perspective: '1600px' }}
     >
@@ -166,10 +166,10 @@ export function HouseShowcase() {
           className="relative mx-auto w-full max-w-[1240px] rounded-[6px] bg-gaze-navy shadow-[0_50px_100px_-40px_rgba(6,18,42,0.7)]"
         >
           <div className="flex justify-between border-b border-[#1E2B48] px-6 py-4 font-text text-[11px] uppercase tracking-[0.3em] text-[#8F9AB4]">
-            <span className="text-gaze-champagne">The four houses</span>
+            <span className="text-gaze-champagne">The five houses</span>
             <span className="hidden sm:inline">One standard</span>
           </div>
-          <div className="grid grid-cols-2 gap-3 p-4 md:grid-cols-4 md:gap-5 md:p-6">
+          <div className="grid grid-cols-2 gap-3 p-4 md:grid-cols-5 md:gap-4 md:p-6">
             {houses.map((house, i) => (
               <article key={house.id} className="flex min-w-0 flex-col">
                 <div data-well className="relative aspect-[1/0.78] w-full">

@@ -2,9 +2,9 @@ import type { LogoId } from '@/components/Logo/logos';
 
 /**
  * The houses of Gaze Holdings: routes, logos and brand-kit colours. The showcase, the page transitions and the
- * division pages all read from here. Lines are the client's Master Ecosystem Profile (5 Oct 2026).
+ * division pages all read from here. Lines are the client's Master Ecosystem Profile (5 Oct 2026); The Gaze Manor joined as the fifth house on 22 Oct 2026.
  */
-export type HouseId = 'holdings' | 'furnishings' | 'institute' | 'hergaze' | 'press';
+export type HouseId = 'holdings' | 'furnishings' | 'manor' | 'institute' | 'hergaze' | 'press';
 
 export type House = {
   id: HouseId;
@@ -43,6 +43,18 @@ export const houses: ReadonlyArray<House> = [
     ink: '#1E1E22',
     accent: '#C99DC2',
     stack: ['#7B5232', '#C99DC2', '#1E1E22'],
+  },
+  {
+    id: 'manor',
+    logo: 'manor',
+    name: 'The Gaze Manor',
+    line: 'An international series on luxury real estate, interior architecture, and the psychology of space.',
+    href: '/manor',
+    /* its mark is black on white; the house is set on warm stone with a bronze accent */
+    ground: '#EEEBE6',
+    ink: '#111111',
+    accent: '#A38B67',
+    stack: ['#A38B67', '#5C5248', '#111111'],
   },
   {
     id: 'institute',

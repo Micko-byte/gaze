@@ -26,7 +26,7 @@ const VOICE: Record<Style, string> = {
   mark: '',
 };
 /* Text on each house's accent colour when its row is hovered. */
-const ROW_INK: Record<string, string> = { furnishings: '#1E1E22', institute: '#F6F4EE', hergaze: '#FFFFFF', press: '#111111' };
+const ROW_INK: Record<string, string> = { furnishings: '#1E1E22', manor: '#111111', institute: '#F6F4EE', hergaze: '#FFFFFF', press: '#111111' };
 
 /* Each line starts at its own indent, as the reference staggers them. */
 const INDENT = ['md:pl-[9%]', 'md:pl-[2%]', 'md:pl-[16%]'];
@@ -62,7 +62,7 @@ function RevealedSentence({ text }: { text: string }) {
 
 /**
  * The Holdings philosophy. First her line, set after Pensatori Irrazionali in mixed voices: the capitals rise letter
- * by letter, the small words come into focus and the script writes itself in. Then, after hobro.digital, the four
+ * by letter, the small words come into focus and the script writes itself in. Then, after hobro.digital, the five
  * houses: an outlined word beside a typed one, a scatter of gold points gathering into GAZE, and a numbered index.
  */
 export function Ethos() {
@@ -88,11 +88,11 @@ export function Ethos() {
         );
       });
 
-      // "Four" fills with gold from left to right as it scrolls past
-      gsap.to('[data-four]', {
+      // "Five" fills with gold from left to right as it scrolls past
+      gsap.to('[data-five]', {
         backgroundSize: '100% 100%',
         ease: 'none',
-        scrollTrigger: { trigger: '[data-four]', start: 'top 85%', end: 'top 35%', scrub: true },
+        scrollTrigger: { trigger: '[data-five]', start: 'top 85%', end: 'top 35%', scrub: true },
       });
 
       // the typed word, a letter at a time behind a cursor
@@ -165,16 +165,16 @@ export function Ethos() {
           </ol>
         </div>
 
-        {/* ── the four houses, after hobro.digital ── */}
+        {/* ── the five houses, after hobro.digital ── */}
         <div data-houses className="mt-32 md:mt-44">
-          <h3 className="relative flex flex-wrap items-end gap-x-[0.2em]" aria-label="Four houses">
+          <h3 className="relative flex flex-wrap items-end gap-x-[0.2em]" aria-label="Five houses">
             <span
               aria-hidden="true"
-              data-four
+              data-five
               className="bg-clip-text font-headline text-[clamp(84px,14vw,264px)] italic leading-[0.85] text-transparent [-webkit-text-stroke:1.5px_#06122A]"
               style={{ backgroundImage: 'linear-gradient(90deg, #AE8448, #DEBA78)', backgroundRepeat: 'no-repeat', backgroundSize: '0% 100%' }}
             >
-              Four
+              Five
             </span>
             <span aria-hidden="true" className="translate-y-[0.32em] font-text text-[clamp(56px,9.6vw,180px)] font-semibold uppercase leading-[0.85] tracking-[-0.055em]">
               {Array.from('houses').map((ch, i) => (

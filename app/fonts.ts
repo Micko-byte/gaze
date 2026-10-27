@@ -1,5 +1,5 @@
 import localFont from 'next/font/local';
-import { Anton, Merriweather, Montserrat } from 'next/font/google';
+import { Anton, Cormorant_Garamond, Merriweather, Montserrat } from 'next/font/google';
 
 /*
  * The agreed brand faces. Licences live in app/fonts/licences. The 1001fonts FFC faces (Valkyrie, Chopin Script)
@@ -77,6 +77,15 @@ const merriweather = Merriweather({
 
 const montserrat = Montserrat({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-montserrat', display: 'swap' });
 
-export const fontVariables = [thegralke, metropolis, fogtwo, glacial, valkyrie, chopin, chillax, bodonio, thesignature, anton, merriweather, montserrat]
+/* The Gaze Manor: the faces of its mark, Cormorant Garamond for the GM and the headings (Montserrat, above, for text). */
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant-garamond',
+  display: 'swap',
+});
+
+export const fontVariables = [thegralke, metropolis, fogtwo, glacial, valkyrie, chopin, chillax, bodonio, thesignature, anton, merriweather, montserrat, cormorant]
   .map((f) => f.variable)
   .join(' ');

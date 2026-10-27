@@ -35,6 +35,12 @@ const config: Config = {
           sky: 'var(--inst-sky)',
           paper: 'var(--inst-paper)',
         },
+        manor: {
+          stone: 'var(--manor-stone)',
+          ink: 'var(--manor-ink)',
+          bronze: 'var(--manor-bronze)',
+          umber: 'var(--manor-umber)',
+        },
         gli: {
           navy: 'var(--gli-navy)',
           ink: 'var(--gli-ink)',
@@ -62,6 +68,8 @@ const config: Config = {
         text: ['var(--font-metropolis)', 'system-ui', 'sans-serif'],
         furn: ['var(--font-fogtwo)', 'Georgia', 'serif'],
         inst: ['var(--font-glacial)', 'system-ui', 'sans-serif'],
+        'manor-head': ['var(--font-cormorant-garamond)', 'Georgia', 'serif'],
+        'manor-text': ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
         'gli-head': ['var(--font-anton)', 'Impact', 'sans-serif'],
         'gli-serif': ['var(--font-merriweather)', 'Georgia', 'serif'],
         'gli-text': ['var(--font-montserrat)', 'system-ui', 'sans-serif'],

@@ -13,10 +13,12 @@ type Props = {
   overHero: 'light' | 'dark';
   /** Typeface class for the links (the house's text face). */
   textFont?: string;
+  /** The hero's colour: details the logo knocks out of a solid shape (the Manor's GM) show in it while over the hero. */
+  heroGround?: string;
 };
 
 /** Division navigation: the house's own logo and links, with a way back to Gaze Holdings. */
-export function HouseHeader({ house, links, overHero, textFont = 'font-text' }: Props) {
+export function HouseHeader({ house, links, overHero, textFont = 'font-text', heroGround }: Props) {
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -43,7 +45,7 @@ export function HouseHeader({ house, links, overHero, textFont = 'font-text' }: 
       >
         <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 md:px-10">
           <Link href={house.href} aria-label={`${house.name} home`} className="shrink-0">
-            <HouseLogo id={house.logo} tone={logoMono ? 'mono' : 'original'} className="h-9 w-auto md:h-11" />
+            <HouseLogo id={house.logo} tone={logoMono ? 'mono' : 'original'} knock={logoMono ? heroGround : undefined} className="h-9 w-auto md:h-11" />
           </Link>
           <nav aria-label={`${house.name}`} className="hidden lg:block">
             <ul className={`flex items-center gap-8 ${textFont} text-[12px] uppercase tracking-[0.22em]`}>

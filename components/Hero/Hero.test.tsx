@@ -24,6 +24,6 @@ describe('Hero', () => {
     // between them; the gap is a margin on the accent.
     expect(container.textContent).toContain('A House');
     expect(container.textContent).toContain('Brands');
-    expect(container.textContent).toContain('Four houses');
+    expect(container.textContent).toContain('Five houses');
   });
 });
