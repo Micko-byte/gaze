@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { navLinks } from '@/content/nav';
 import { MobileMenu } from './MobileMenu';
@@ -16,6 +17,8 @@ export function Nav({ theme = 'auto' }: Props) {
   const [activeId, setActiveId] = useState('');
   const [overLight, setOverLight] = useState(false);
   const isLight = theme === 'light' || overLight;
+  // on other pages (vision, legal, the director's office) the section links lead back to the home page
+  const home = usePathname() === '/' ? '' : '/';
 
   useEffect(() => {
     const onScroll = () => {
@@ -68,7 +71,7 @@ export function Nav({ theme = 'auto' }: Props) {
         aria-label="Primary"
       >
         <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
-          <a href="#top" aria-label="Gaze Holdings home" className={`${isLight ? 'text-obsidian hover:text-rose-ink' : 'text-ivory hover:text-rose'} transition-colors`}>
+          <a href={`${home}#top`} aria-label="Gaze Holdings home" className={`${isLight ? 'text-obsidian hover:text-rose-ink' : 'text-ivory hover:text-rose'} transition-colors`}>
             <HouseLogo id="holdings" tone="mono" title="Gaze Holdings" className="h-[30px] w-auto" />
           </a>
 
@@ -83,7 +86,7 @@ export function Nav({ theme = 'auto' }: Props) {
               return (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={link.href.startsWith('#') ? `${home}${link.href}` : link.href}
                     {...externalProps}
                     aria-current={isActive ? 'true' : undefined}
                     className={

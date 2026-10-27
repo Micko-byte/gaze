@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { navLinks } from '@/content/nav';
 import { divisions } from '@/content/divisions';
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export function MobileMenu({ open, onClose, theme = 'auto' }: Props) {
+  const home = usePathname() === '/' ? '' : '/';
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
@@ -41,7 +43,7 @@ export function MobileMenu({ open, onClose, theme = 'auto' }: Props) {
       } ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
     >
       <div className={`flex items-center justify-between px-6 py-5 border-b ${isLight ? 'border-black/10' : 'border-hairline'}`}>
-        <a href="#top" onClick={onClose} aria-label="Gaze Holdings home" className={isLight ? 'text-obsidian' : 'text-ivory'}>
+        <a href={`${home}#top`} onClick={onClose} aria-label="Gaze Holdings home" className={isLight ? 'text-obsidian' : 'text-ivory'}>
           <HouseLogo id="holdings" tone="mono" title="Gaze Holdings" className="h-[30px] w-auto" />
         </a>
         <button
@@ -66,7 +68,7 @@ export function MobileMenu({ open, onClose, theme = 'auto' }: Props) {
           return (
             <a
               key={link.href}
-              href={link.href}
+              href={link.href.startsWith('#') ? `${home}${link.href}` : link.href}
               {...externalProps}
               onClick={onClose}
               style={{ transitionDelay: open ? `${i * 60 + 200}ms` : '0ms' }}

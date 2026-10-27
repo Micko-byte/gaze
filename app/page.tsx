@@ -3,6 +3,7 @@ import { Hero } from '@/components/Hero/Hero';
 import { Ethos } from '@/components/Ethos/Ethos';
 import { HouseShowcase } from '@/components/Houses/HouseShowcase';
 import { Leadership } from '@/components/Leadership/Leadership';
+import { Board } from '@/components/Board/Board';
 import { StatsStrip } from '@/components/StatsStrip/StatsStrip';
 import { Press } from '@/components/Press/Press';
 import { InstagramGallery } from '@/components/Instagram/InstagramGallery';
@@ -25,6 +26,7 @@ export default function Page() {
         <HouseShowcase />
         <Ethos />
         <Leadership />
+        <Board />
         <StatsStrip />
         <Press />
         <InstagramGallery />
