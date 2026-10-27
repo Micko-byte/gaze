@@ -1,11 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { collections, pieces } from '@/content/furnishings';
+import { collections, colours, pieces } from '@/content/furnishings';
 import { FurnHeader } from '@/components/Furnishings/FurnHeader';
 import { FurnFooter } from '@/components/Furnishings/FurnFooter';
 import { FurnitureDrawing } from '@/components/Furnishings/FurnitureDrawing';
 import { CommissionForm } from '@/components/Furnishings/CommissionForm';
+import { PieceGallery } from '@/components/Furnishings/PieceGallery';
 
 type Props = { params: { slug: string } };
 
@@ -40,37 +42,52 @@ export default function PiecePage({ params }: Props) {
               <span className="px-2">/</span>
               <span className="text-furn-ink">{piece.name}</span>
             </nav>
-            <div className="mt-10 grid items-end gap-12 md:grid-cols-12">
-              <div data-loader-target className="relative flex aspect-[4/3] items-center justify-center bg-[#F6F1EA] md:col-span-7">
-                <FurnitureDrawing kind={piece.drawing} className="w-[74%] text-furn-ink" />
-                {piece.decided && <span className="absolute left-5 top-5 rounded-full bg-furn-lilac px-3 py-1 text-[11px]">signature</span>}
+            <div className="mt-10 grid items-start gap-12 md:grid-cols-12">
+              <div className="md:col-span-7">
+                <PieceGallery piece={piece} />
               </div>
-              <div className="md:col-span-5 md:pl-6">
-                <p className="text-[12px] text-[#6F6A62]">{room.name.toLowerCase()} · named for the {piece.animal}</p>
-                <h1 className="mt-4 font-furn text-[clamp(56px,7vw,124px)] font-normal leading-[0.92]">{piece.name}</h1>
-                <p className="mt-3 text-[15px] text-[#6F6A62]">{piece.kind}</p>
+              <div className="md:col-span-5 md:sticky md:top-[96px] md:pl-6">
+                <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-furn-walnut">
+                  No. {String(pieces.indexOf(piece) + 1).padStart(2, '0')} · {room.name}
+                </p>
+                <h1 className="mt-5 font-furn text-[clamp(56px,7vw,124px)] font-normal leading-[0.92]">{piece.name}</h1>
+                <p className="mt-4 font-furn text-[22px] italic text-[#6F6A62]">
+                  {piece.kind}, named for the {piece.animal}
+                </p>
                 <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
-                <dl className="mt-10 grid max-w-md grid-cols-2 gap-y-6 border-t border-[rgba(30,30,34,0.15)] pt-6 text-[13px]">
-                  <div>
-                    <dt className="text-[#6F6A62]">price</dt>
-                    <dd className="mt-1 inline-block min-w-[120px] border-b border-dashed border-[rgba(30,30,34,0.35)] font-furn text-2xl">{piece.price ?? 'to follow'}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[#6F6A62]">made to order</dt>
-                    <dd className="mt-1 font-furn text-2xl">14–21 days</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[#6F6A62]">size</dt>
-                    <dd className="mt-1 font-furn text-2xl">to your room</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[#6F6A62]">delivery</dt>
-                    <dd className="mt-1 font-furn text-2xl">worldwide</dd>
-                  </div>
+
+                <div className="mt-10 max-w-md border-t border-[rgba(30,30,34,0.15)] pt-6">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#8A847A]">The house palette, or a colour of yours</p>
+                  <ul className="mt-4 flex flex-wrap gap-2.5">
+                    {colours.map((c) => (
+                      <li key={c.name} title={c.name} className="h-6 w-6 rounded-full ring-1 ring-inset ring-[rgba(30,30,34,0.15)]" style={{ background: c.hex }}>
+                        <span className="sr-only">{c.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <dl className="mt-8 grid max-w-md grid-cols-2 border-t border-[rgba(30,30,34,0.15)]">
+                  {[
+                    ['Price', piece.price ?? 'On request'],
+                    ['Made to order', '14–21 days'],
+                    ['Size', 'To your room'],
+                    ['Delivery', 'Worldwide'],
+                  ].map(([k, v], i) => (
+                    <div key={k} className={`border-b border-[rgba(30,30,34,0.15)] py-5 ${i % 2 ? 'pl-6' : 'border-r pr-6'}`}>
+                      <dt className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#8A847A]">{k}</dt>
+                      <dd className="mt-2 font-furn text-[26px] leading-none">{v}</dd>
+                    </div>
+                  ))}
                 </dl>
-                <a href="#commission" data-no-transition className="mt-10 inline-block rounded-full bg-furn-ink px-8 py-4 text-[13px] text-furn-linen transition-colors hover:bg-furn-walnut">
-                  begin your commission
-                </a>
+                <div className="mt-10 flex flex-wrap items-center gap-6">
+                  <a href="#commission" data-no-transition className="rounded-full bg-furn-ink px-9 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-furn-linen transition-colors hover:bg-furn-walnut">
+                    Begin your commission
+                  </a>
+                  <Link href="/furnishings#consultation" data-no-transition className="text-[11px] font-medium uppercase tracking-[0.24em] underline decoration-[rgba(30,30,34,0.35)] underline-offset-[6px] hover:decoration-furn-ink">
+                    Book a private consultation
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -100,8 +117,12 @@ export default function PiecePage({ params }: Props) {
                 {more.map((p) => (
                   <li key={p.slug}>
                     <Link href={`/furnishings/${p.slug}`} data-no-transition className="group block">
-                      <div className="flex aspect-[4/3] items-center justify-center bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2]">
-                        <FurnitureDrawing kind={p.drawing} className="w-[70%] text-furn-ink" />
+                      <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2]">
+                        {p.photos ? (
+                          <img src={p.photos[0]} alt={p.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                        ) : (
+                          <FurnitureDrawing kind={p.drawing} className="w-[70%] text-furn-ink" />
+                        )}
                       </div>
                       <p className="mt-3 font-furn text-2xl">{p.name}</p>
                       <p className="text-[12px] text-[#6F6A62]">{p.kind}</p>

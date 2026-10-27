@@ -1,33 +1,120 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { collections, pieces, type Piece } from '@/content/furnishings';
+import { collections, colours, pieces, type Piece } from '@/content/furnishings';
 import { FurnitureDrawing } from './FurnitureDrawing';
 import { Reveal } from '@/components/Reveal/Reveal';
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
 
-/** One plate of the catalogue: the piece, its name, and the slot its price will fill. */
-function PieceCard({ piece, tall }: { piece: Piece; tall?: boolean }) {
+const cap = 'text-[10px] font-medium uppercase tracking-[0.28em]';
+
+/**
+ * One plate of the catalogue, after Natuzzi's product listings: the photograph held in a linen mount, the second
+ * plate fading in on hover with a quiet call to view; then the plate number, the name, the palette it comes in, and
+ * the price, which reads "on request" until the client sets it.
+ */
+function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boolean }) {
+  const plates = piece.photos?.length ?? 0;
   return (
     <Link href={`/furnishings/${piece.slug}`} data-no-transition className="group block">
-      <div className={`relative flex items-center justify-center overflow-hidden bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2] ${tall ? 'aspect-[4/5]' : 'aspect-[4/3]'}`}>
-        <FurnitureDrawing kind={piece.drawing} className="w-[70%] text-furn-ink transition-transform duration-[900ms] ease-reveal group-hover:scale-[1.05]" />
-        {piece.decided && <span className="absolute left-4 top-4 rounded-full bg-furn-lilac px-3 py-1 text-[11px]">signature</span>}
-      </div>
-      <div className="mt-5 flex items-start justify-between gap-6 border-b border-[rgba(30,30,34,0.15)] pb-5">
-        <div>
-          <h3 className="font-furn text-[clamp(26px,2.2vw,38px)] leading-none">{piece.name}</h3>
-          <p className="mt-2 text-[13px] text-[#6F6A62]">{piece.kind} · named for the {piece.animal}</p>
-        </div>
-        <p className="shrink-0 text-right">
-          <span className="block text-[11px] text-[#8A847A]">price</span>
-          <span className="mt-1 inline-block min-w-[96px] border-b border-dashed border-[rgba(30,30,34,0.35)] pb-0.5 text-[14px]">
-            {piece.price ?? 'to follow'}
+      <div className="bg-[#F3EDE4] p-3 transition-colors duration-700 group-hover:bg-[#EADFD2] md:p-4">
+        <div className={`relative flex items-center justify-center overflow-hidden bg-[#F6F1EA] ${tall ? 'aspect-[4/5]' : 'aspect-[4/3]'}`}>
+          {piece.photos ? (
+            <>
+              <img
+                src={piece.photos[0]}
+                alt={`${piece.name}, made by Gaze Furnishings`}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover object-[50%_70%] transition-transform duration-[1600ms] ease-reveal group-hover:scale-[1.06]"
+              />
+              {/* the second photograph fades in on hover, as on Natuzzi's product plates */}
+              {piece.photos[1] && (
+                <img
+                  src={piece.photos[1]}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full scale-[1.04] object-cover object-[50%_70%] opacity-0 transition-[opacity,transform] duration-[1200ms] ease-reveal group-hover:scale-100 group-hover:opacity-100"
+                />
+              )}
+              {/* a soft floor of shade so the labels always read */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(0deg,rgba(30,30,34,0.38),transparent)]" />
+            </>
+          ) : (
+            <FurnitureDrawing kind={piece.drawing} className="w-[70%] text-furn-ink transition-transform duration-[900ms] ease-reveal group-hover:scale-[1.05]" />
+          )}
+          {piece.decided && (
+            <span className={`absolute left-4 top-4 rounded-full border border-[rgba(255,255,255,0.7)] bg-[rgba(238,231,223,0.85)] px-3 py-1.5 text-furn-ink backdrop-blur-sm ${cap}`}>
+              Signature
+            </span>
+          )}
+          {plates > 1 && (
+            <span aria-hidden="true" className="absolute bottom-4 left-4 flex gap-1.5">
+              {Array.from({ length: plates }, (_, i) => (
+                <span key={i} className={`h-px w-5 transition-colors duration-700 ${i === 0 ? 'bg-white group-hover:bg-[rgba(255,255,255,0.45)]' : i === 1 ? 'bg-[rgba(255,255,255,0.45)] group-hover:bg-white' : 'bg-[rgba(255,255,255,0.45)]'}`} />
+              ))}
+            </span>
+          )}
+          <span
+            className={`absolute bottom-4 right-4 translate-y-3 rounded-full bg-furn-linen px-5 py-2.5 text-furn-ink opacity-0 transition-[opacity,transform] duration-500 ease-reveal group-hover:translate-y-0 group-hover:opacity-100 ${cap}`}
+          >
+            Discover the piece
           </span>
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-[1fr_auto] items-end gap-6">
+        <div>
+          <p className={`${cap} text-furn-walnut`}>No. {String(no).padStart(2, '0')}</p>
+          <h3 className="mt-3 font-furn text-[clamp(30px,2.6vw,44px)] leading-[0.95]">{piece.name}</h3>
+          <p className="mt-2 font-furn text-[17px] italic text-[#6F6A62]">
+            {piece.kind}, named for the {piece.animal}
+          </p>
+        </div>
+        <p className="text-right">
+          <span className={`block ${cap} text-[#8A847A]`}>Price</span>
+          <span className="mt-1.5 block font-furn text-[20px] leading-none">{piece.price ?? 'On request'}</span>
         </p>
       </div>
+
+      <div className="mt-5 flex items-center justify-between gap-6 border-y border-[rgba(30,30,34,0.12)] py-3.5">
+        <span className="flex items-center gap-1.5" aria-label={`Made in ${colours.length} house colours, or yours`}>
+          {colours.slice(0, 6).map((c) => (
+            <span key={c.name} title={c.name} className="h-3.5 w-3.5 rounded-full ring-1 ring-inset ring-[rgba(30,30,34,0.15)]" style={{ background: c.hex }} />
+          ))}
+          <span className="ml-1.5 text-[12px] text-[#6F6A62]">+{colours.length - 6} &amp; bespoke</span>
+        </span>
+        <span className={`${cap} text-[#6F6A62]`}>Made to order · 14–21 days</span>
+      </div>
+
       <p className="mt-4 max-w-md text-sm font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
-      <span className="mt-4 inline-block text-[13px] transition-transform duration-500 group-hover:translate-x-1">commission this piece →</span>
+      <span className={`mt-5 inline-flex items-center gap-3 ${cap}`}>
+        <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
+          Commission this piece
+        </span>
+        <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+      </span>
     </Link>
+  );
+}
+
+/** More of the room from the atelier: the client's own work beyond the named pieces, in a strip that scrolls sideways. */
+function Atelier({ room, photos }: { room: string; photos: string[] }) {
+  return (
+    <div className="mt-20">
+      <div className="flex items-baseline justify-between gap-6 border-t border-[rgba(30,30,34,0.15)] pt-5">
+        <p className="font-furn text-[clamp(24px,2vw,32px)] leading-none">from the atelier</p>
+        <p className="text-[12px] text-[#6F6A62]">{photos.length} more {room.toLowerCase()} commissions · made to order</p>
+      </div>
+      <ul className="-mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] md:mx-0 md:px-0">
+        {photos.map((src) => (
+          <li key={src} className="w-[62vw] shrink-0 snap-start sm:w-[34vw] lg:w-[21vw]">
+            <div className="aspect-[4/5] overflow-hidden bg-[#F6F1EA]">
+              <img src={src} alt={`A ${room.toLowerCase()} commission by Gaze Furnishings`} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] ease-reveal hover:scale-[1.04]" />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -92,11 +179,13 @@ export function Catalogue() {
                       : mirror ? 'md:col-span-6 md:col-start-7' : 'md:col-span-6 md:col-start-2';
                   return (
                     <Reveal key={p.slug} delay={j * 0.08} className={span}>
-                      <PieceCard piece={p} tall={j === 1} />
+                      <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} />
                     </Reveal>
                   );
                 })}
               </div>
+
+              {c.atelier && <Atelier room={c.name} photos={c.atelier} />}
             </div>
           </section>
         );

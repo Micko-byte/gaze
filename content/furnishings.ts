@@ -20,14 +20,18 @@ export type RoomId = 'living' | 'dining' | 'bedroom' | 'kids' | 'kitchen' | 'out
  * The catalogue's chapters: the client's catalogue sections, in her order. Each opens as a magazine spread.
  * Every piece is named for an animal of the plains, as the Duma and the Kifaru are.
  */
-export const collections: ReadonlyArray<{ id: RoomId; name: string; intro: string; drawing: Drawing }> = [
-  { id: 'living', name: 'Living', intro: 'The room where a house receives the world. Deep seats, low lines and fabrics that soften with the years.', drawing: 'sofa' },
-  { id: 'dining', name: 'Dining', intro: 'A table is a promise of company. Ours are drawn with speed and restraint, and made to the size of your gatherings.', drawing: 'dining' },
-  { id: 'bedroom', name: 'Master bedroom', intro: 'Quiet architecture for the most private room: upholstered headboards, measured storage, nothing that asks for attention.', drawing: 'bed' },
-  { id: 'kids', name: 'Kids bedroom', intro: 'Pieces that grow with them: safe, sturdy, and made with the same care as the rest of the house.', drawing: 'kids' },
-  { id: 'kitchen', name: 'Kitchen', intro: 'Where the day begins. Islands and stools built for daily use and finished to be looked at.', drawing: 'kitchen' },
+/* Photographs are the client's own work, sent 4–6 Oct 2026 (public/images/furnishings). `cover` opens the room in the
+   carousel; `atelier` is more of her work for that room, beyond the named pieces. */
+const f = (name: string) => `/images/furnishings/${name}.jpg`;
+
+export const collections: ReadonlyArray<{ id: RoomId; name: string; intro: string; drawing: Drawing; cover?: string; atelier?: string[] }> = [
+  { id: 'living', name: 'Living', intro: 'The room where a house receives the world. Deep seats, low lines and fabrics that soften with the years.', drawing: 'sofa', cover: f('curved-sofa-mink'), atelier: ['curved-sofa-pair', 'curved-sofa-channel', 'curved-sofa-forest', 'curved-sofa-ivory', 'curved-sofa-emerald', 'sofa-chartreuse', 'armchair-swivel-grey', 'sofa-corner-ivory', 'sofa-claret'].map(f) },
+  { id: 'dining', name: 'Dining', intro: 'A table is a promise of company. Ours are drawn with speed and restraint, and made to the size of your gatherings.', drawing: 'dining', cover: f('dining-organic-table'), atelier: ['table-walnut-slats', 'table-crescent', 'table-white-extending', 'tables-round-white'].map(f) },
+  { id: 'bedroom', name: 'Master bedroom', intro: 'Quiet architecture for the most private room: upholstered headboards, measured storage, nothing that asks for attention.', drawing: 'bed', cover: f('bed-bolster'), atelier: ['bed-stripe-claret', 'bed-stripe-blue', 'bed-stripe-olive', 'bed-plum', 'bed-channel-lit', 'bed-arched', 'bed-panel-wall', 'bed-mocha'].map(f) },
+  { id: 'kids', name: 'Kids bedroom', intro: 'Pieces that grow with them: safe, sturdy, and made with the same care as the rest of the house.', drawing: 'kids', cover: f('kids-mountain-room'), atelier: ['kids-daybed-blue', 'kids-cloud-sofa', 'kids-forest', 'kids-cat-beige'].map(f) },
+  { id: 'kitchen', name: 'Kitchen', intro: 'Where the day begins. Islands and stools built for daily use and finished to be looked at.', drawing: 'kitchen', cover: f('kitchen-oak-grey'), atelier: ['kitchen-open-plan', 'kitchen-wide'].map(f) },
   { id: 'outdoor', name: 'Outdoor', intro: 'Made for the light and the long evenings: weather-ready frames and fabrics that keep their colour.', drawing: 'outdoor' },
-  { id: 'office', name: 'Office & study', intro: 'For the decisions that matter: desks of presence and storage that keeps the room composed.', drawing: 'desk' },
+  { id: 'office', name: 'Office & study', intro: 'For the decisions that matter: desks of presence and storage that keeps the room composed.', drawing: 'desk', atelier: ['reception-ring', 'reception-ring-side'].map(f) },
 ];
 
 export type Piece = {
@@ -44,20 +48,22 @@ export type Piece = {
   price: string | null;
   /** The client's decided pieces; the rest are named proposals for her to confirm. */
   decided?: boolean;
+  /** Her photographs of the piece, the cover first. Pieces without photographs show their drawing. */
+  photos?: string[];
 };
 
 export const pieces: ReadonlyArray<Piece> = [
-  { slug: 'simba-sofa', name: 'Simba Sofa', kind: 'three-seater sofa', animal: 'lion', room: 'living', drawing: 'sofa', price: null, line: 'A broad, low sofa with a generous seat and a back that holds you upright: the centre of the room.' },
-  { slug: 'twiga-armchair', name: 'Twiga Armchair', kind: 'armchair', animal: 'giraffe', room: 'living', drawing: 'armchair', price: null, line: 'A tall-backed reading chair on slender legs, made to sit beside a window.' },
+  { slug: 'simba-sofa', name: 'Simba Sofa', kind: 'three-seater sofa', animal: 'lion', room: 'living', drawing: 'sofa', price: null, line: 'A broad, low sofa with a generous seat and a back that holds you upright: the centre of the room.', photos: ['sofa-olive-room', 'sofa-olive-stair', 'sofa-ivory-sectional'].map(f) },
+  { slug: 'twiga-armchair', name: 'Twiga Armchair', kind: 'armchair', animal: 'giraffe', room: 'living', drawing: 'armchair', price: null, line: 'A tall-backed reading chair on slender legs, made to sit beside a window.', photos: ['armchair-boucle', 'armchair-stripe-swivel', 'armchair-toile'].map(f) },
   { slug: 'kobe-coffee-table', name: 'Kobe Coffee Table', kind: 'coffee table', animal: 'tortoise', room: 'living', drawing: 'table', price: null, line: 'A low, rounded table in solid timber, built to be handed down.' },
-  { slug: 'duma-dining-set', name: 'Duma Dining Set', kind: 'dining table & chairs', animal: 'cheetah', room: 'dining', drawing: 'dining', price: null, decided: true, line: 'Named for the cheetah: a table and chairs drawn with speed and restraint, made to your room\u2019s measurements.' },
-  { slug: 'nyati-sideboard', name: 'Nyati Sideboard', kind: 'sideboard', animal: 'buffalo', room: 'dining', drawing: 'sideboard', price: null, line: 'A long, grounded sideboard with quiet doors and room for the good china.' },
-  { slug: 'chui-bed', name: 'Chui Bed', kind: 'upholstered bed', animal: 'leopard', room: 'bedroom', drawing: 'bed', price: null, line: 'A bed with a tall upholstered headboard that wraps the room in calm.' },
-  { slug: 'nyumbu-wardrobe', name: 'Nyumbu Wardrobe', kind: 'wardrobe', animal: 'wildebeest', room: 'bedroom', drawing: 'wardrobe', price: null, line: 'Fitted storage, measured to your wall, with a finish matched to the bed.' },
-  { slug: 'kifaru-kids-set', name: 'Kifaru Kids Set', kind: 'bed, desk & storage', animal: 'rhino', room: 'kids', drawing: 'kids', price: null, decided: true, line: 'Named for the rhino: a sturdy bed, desk and storage set made to grow with them.' },
-  { slug: 'pundamilia-bunk-bed', name: 'Pundamilia Bunk Bed', kind: 'bunk bed', animal: 'zebra', room: 'kids', drawing: 'bunk', price: null, line: 'Two beds, one frame, safe rails and a ladder they will race up.' },
-  { slug: 'kongoni-kitchen-island', name: 'Kongoni Kitchen Island', kind: 'kitchen island', animal: 'hartebeest', room: 'kitchen', drawing: 'kitchen', price: null, line: 'A working island with a stone top and storage on every side.' },
-  { slug: 'korongo-bar-stool', name: 'Korongo Bar Stool', kind: 'bar stool', animal: 'crane', room: 'kitchen', drawing: 'stool', price: null, line: 'A tall, light stool with a footrest at the right height, made in sets.' },
+  { slug: 'duma-dining-set', name: 'Duma Dining Set', kind: 'dining table & chairs', animal: 'cheetah', room: 'dining', drawing: 'dining', price: null, decided: true, line: 'Named for the cheetah: a table and chairs drawn with speed and restraint, made to your room\u2019s measurements.', photos: ['dining-organic-table', 'dining-sculpted-base', 'dining-velvet-chairs'].map(f) },
+  { slug: 'nyati-sideboard', name: 'Nyati Sideboard', kind: 'sideboard', animal: 'buffalo', room: 'dining', drawing: 'sideboard', price: null, line: 'A long, grounded sideboard with quiet doors and room for the good china.', photos: ['sideboard-navy'].map(f) },
+  { slug: 'chui-bed', name: 'Chui Bed', kind: 'upholstered bed', animal: 'leopard', room: 'bedroom', drawing: 'bed', price: null, line: 'A bed with a tall upholstered headboard that wraps the room in calm.', photos: ['bed-bolster', 'bed-stripe-room', 'bed-ivory-suite'].map(f) },
+  { slug: 'nyumbu-wardrobe', name: 'Nyumbu Wardrobe', kind: 'wardrobe', animal: 'wildebeest', room: 'bedroom', drawing: 'wardrobe', price: null, line: 'Fitted storage, measured to your wall, with a finish matched to the bed.', photos: ['wardrobe-lit-niche', 'wardrobe-grey', 'wardrobe-white'].map(f) },
+  { slug: 'kifaru-kids-set', name: 'Kifaru Kids Set', kind: 'bed, desk & storage', animal: 'rhino', room: 'kids', drawing: 'kids', price: null, decided: true, line: 'Named for the rhino: a sturdy bed, desk and storage set made to grow with them.', photos: ['kids-mountain-room', 'kids-pink-cat', 'kids-cloud-bed'].map(f) },
+  { slug: 'pundamilia-bunk-bed', name: 'Pundamilia Bunk Bed', kind: 'bunk bed', animal: 'zebra', room: 'kids', drawing: 'bunk', price: null, line: 'Two beds, one frame, safe rails and a ladder they will race up.', photos: ['bunk-terrazzo', 'bunk-grey', 'bunk-white'].map(f) },
+  { slug: 'kongoni-kitchen-island', name: 'Kongoni Kitchen Island', kind: 'kitchen island', animal: 'hartebeest', room: 'kitchen', drawing: 'kitchen', price: null, line: 'A working island with a stone top and storage on every side.', photos: ['kitchen-oak-grey', 'kitchen-corner', 'kitchen-drawers'].map(f) },
+  { slug: 'korongo-bar-stool', name: 'Korongo Bar Stool', kind: 'bar stool', animal: 'crane', room: 'kitchen', drawing: 'stool', price: null, line: 'A tall, light stool with a footrest at the right height, made in sets.', photos: ['bar-black', 'bar-stools-walnut'].map(f) },
   { slug: 'kiboko-outdoor-sofa', name: 'Kiboko Outdoor Sofa', kind: 'outdoor sofa', animal: 'hippo', room: 'outdoor', drawing: 'outdoor', price: null, line: 'A deep outdoor sofa with weather-ready cushions, made for long evenings.' },
   { slug: 'mamba-lounger', name: 'Mamba Lounger', kind: 'sun lounger', animal: 'crocodile', room: 'outdoor', drawing: 'lounger', price: null, line: 'A low lounger with an adjustable back, built to stay out in the sun.' },
   { slug: 'tai-executive-desk', name: 'Tai Executive Desk', kind: 'executive desk', animal: 'eagle', room: 'office', drawing: 'desk', price: null, line: 'A desk of presence, with a leather-lined top and drawers that close without a sound.' },
