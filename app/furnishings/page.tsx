@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { orderingSteps, payments } from '@/content/furnishings';
+import { orderingSteps, payments, textures } from '@/content/furnishings';
 import { FurnHeader } from '@/components/Furnishings/FurnHeader';
 import { FurnHero } from '@/components/Furnishings/FurnHero';
 import { CollectionCarousel } from '@/components/Furnishings/CollectionCarousel';
-import { AtelierStudio } from '@/components/Furnishings/AtelierStudio';
-import { Catalogue } from '@/components/Furnishings/Catalogue';
+import { CatalogueContents } from '@/components/Furnishings/Catalogue';
 import { FurnFooter } from '@/components/Furnishings/FurnFooter';
 import { Reveal } from '@/components/Reveal/Reveal';
 
@@ -29,7 +28,7 @@ export default function FurnishingsPage() {
         <section id="collection" className="scroll-mt-[72px] bg-white py-24 md:py-32">
           <Reveal className="mb-12 text-center">
             <h2 className="inline-block border-b border-furn-ink pb-1 font-furn text-[clamp(30px,3vw,48px)] leading-none">explore the collection</h2>
-            <p className="mx-auto mt-5 max-w-md px-5 text-sm font-light text-[#6F6A62]">Seven rooms. Choose one to open its chapter of the catalogue.</p>
+            <p className="mx-auto mt-5 max-w-md px-5 text-sm font-light text-[#6F6A62]">Seven rooms, each its own wing. Choose one to walk in.</p>
           </Reveal>
           <CollectionCarousel />
         </section>
@@ -64,10 +63,10 @@ export default function FurnishingsPage() {
           </Reveal>
         </section>
 
-        <Catalogue />
+        <CatalogueContents />
 
-        {/* ── the bespoke atelier: the client's fabric studio ── */}
-        <section id="atelier" className="scroll-mt-[72px] bg-furn-linen px-5 py-24 md:px-[6vw] md:py-36">
+        {/* ── the bespoke atelier, its own wing: her five fabrics lead the way in ── */}
+        <section id="atelier" className="scroll-mt-[72px] bg-white px-5 py-24 md:px-[6vw] md:py-36">
           <div className="mx-auto max-w-[1600px]">
             <div className="grid gap-10 border-t border-furn-ink pt-8 md:grid-cols-[1fr_1fr] md:items-end">
               <div>
@@ -75,12 +74,24 @@ export default function FurnishingsPage() {
                 <h2 className="mt-3 font-furn text-[clamp(56px,7.4vw,132px)] leading-[0.92]">The Bespoke Atelier</h2>
               </div>
               <p className="max-w-md text-lg font-light leading-relaxed text-[#4A4640] md:justify-self-end">
-                Select your texture, define your palette, and curate your piece. Watch it take shape as you choose.
+                Select your fabric, define your palette, and curate your piece. Watch it take shape as you choose.
               </p>
             </div>
-            <div className="mt-14">
-              <AtelierStudio />
-            </div>
+            <ul className="mt-14 grid grid-cols-3 gap-3 md:grid-cols-5 md:gap-4">
+              {textures.map((t, i) => (
+                <li key={t.id}>
+                  <Reveal delay={i * 0.06}>
+                    <Link href="/furnishings/atelier" data-no-transition className="group block">
+                      <span className="block aspect-[720/819] overflow-hidden">
+                        <img src={t.photo} alt={`${t.name}: the cloth, and an armchair made in it`} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] ease-reveal group-hover:scale-[1.04]" />
+                      </span>
+                      <span className="mt-3 block font-furn text-xl md:text-2xl">{t.short}</span>
+                    </Link>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+            <Link href="/furnishings/atelier" data-no-transition className={`${pill} mt-12 bg-furn-ink text-furn-linen hover:bg-furn-walnut`}>enter the atelier</Link>
           </div>
         </section>
 

@@ -24,13 +24,14 @@ export type RoomId = 'living' | 'dining' | 'bedroom' | 'kids' | 'kitchen' | 'out
    carousel. Since 27 Oct every piece in her photographs stands as its own product. */
 const f = (name: string) => `/images/furnishings/${name}.jpg`;
 
-export const collections: ReadonlyArray<{ id: RoomId; name: string; intro: string; drawing: Drawing; cover?: string }> = [
+/* Since 27 Oct each room is its own wing of the house, at /furnishings/<id>; `film` plays beside the wing's name. */
+export const collections: ReadonlyArray<{ id: RoomId; name: string; intro: string; drawing: Drawing; cover?: string; film?: { src: string; poster: string } }> = [
   { id: 'living', name: 'Living', intro: 'The room where a house receives the world. Deep seats, low lines and fabrics that soften with the years.', drawing: 'sofa', cover: f('curved-sofa-mink') },
   { id: 'dining', name: 'Dining', intro: 'A table is a promise of company. Ours are drawn with speed and restraint, and made to the size of your gatherings.', drawing: 'dining', cover: f('dining-organic-table') },
   { id: 'bedroom', name: 'Master bedroom', intro: 'Quiet architecture for the most private room: upholstered headboards, measured storage, nothing that asks for attention.', drawing: 'bed', cover: f('bed-bolster') },
   { id: 'kids', name: 'Kids bedroom', intro: 'Pieces that grow with them: safe, sturdy, and made with the same care as the rest of the house.', drawing: 'kids', cover: f('kids-mountain-room') },
   { id: 'kitchen', name: 'Kitchen', intro: 'Where the day begins. Kitchens and bars built for daily use and finished to be looked at.', drawing: 'kitchen', cover: f('kitchen-oak-grey') },
-  { id: 'outdoor', name: 'Outdoor', intro: 'Made for the light and the long evenings: weather-ready frames and fabrics that keep their colour.', drawing: 'outdoor' },
+  { id: 'outdoor', name: 'Outdoor', intro: 'Made for the light and the long evenings: weather-ready frames and fabrics that keep their colour.', drawing: 'outdoor', cover: f('outdoor-daybed-round-pool'), film: { src: '/video/furnishings/outdoor-garden.mp4', poster: '/video/furnishings/outdoor-garden.jpg' } },
   { id: 'office', name: 'Office & study', intro: 'For the decisions that matter: desks of presence, reception pieces and storage that keeps the room composed.', drawing: 'desk', cover: f('reception-ring') },
 ];
 
@@ -103,9 +104,19 @@ export const pieces: ReadonlyArray<Piece> = [
   /* kitchen */
   P('kongoni-kitchen-island', 'Kongoni Kitchen', 'fitted kitchen', 'hartebeest', 'kitchen', 'kitchen', 'A fitted kitchen measured to your walls: handle-less fronts, oak and stone, storage on every side.', ['kitchen-oak-grey', 'kitchen-corner', 'kitchen-drawers', 'kitchen-open-plan', 'kitchen-wide']),
   P('korongo-bar-stool', 'Korongo Bar & Stools', 'home bar & stools', 'crane', 'kitchen', 'stool', 'A bar counter and tall stools with a footrest at the right height, made in sets.', ['bar-black', 'bar-stools-walnut']),
-  /* outdoor */
-  P('kiboko-outdoor-sofa', 'Kiboko Outdoor Sofa', 'outdoor sofa', 'hippo', 'outdoor', 'outdoor', 'A deep outdoor sofa with weather-ready cushions, made for long evenings.'),
-  P('mamba-lounger', 'Mamba Lounger', 'sun lounger', 'crocodile', 'outdoor', 'lounger', 'A low lounger with an adjustable back, built to stay out in the sun.'),
+  /* outdoor: her photographs of 27 Oct */
+  P('kiboko-outdoor-sofa', 'Kiboko Outdoor Sofa', 'outdoor sofa', 'hippo', 'outdoor', 'outdoor', 'A deep outdoor sofa with weather-ready cushions, made for long evenings.', ['outdoor-sofa-cream-teak', 'outdoor-sofa-cream-low']),
+  P('kuro-curved-sectional', 'Kuro Curved Sectional', 'curved outdoor sectional', 'waterbuck', 'outdoor', 'outdoor', 'A long sectional that bends along the terrace, so the whole party faces the water.', ['outdoor-sectional-curved']),
+  P('taa-modular-lounge', 'Taa Modular Lounge', 'low modular lounge', 'manta ray', 'outdoor', 'outdoor', 'Low, wide modules that set out as sofa, chaise or a single chair, wherever the shade falls.', ['outdoor-modular-terrace', 'outdoor-modular-lounge']),
+  P('ngamia-teak-sofa', 'Ngamia Teak Sofa', 'teak-framed sofa & armchair', 'camel', 'outdoor', 'outdoor', 'A solid teak frame around deep cushions, a sofa and armchair that weather to silver over the years.', ['outdoor-teak-sofa-deck', 'outdoor-teak-sofa-sea']),
+  P('mbogo-charcoal-sofa', 'Mbogo Charcoal Sofa', 'outdoor sectional in charcoal', 'buffalo', 'outdoor', 'outdoor', 'A grounded sofa in charcoal, as a corner sectional or a rope-wrapped three-seater.', ['outdoor-sectional-charcoal', 'outdoor-sofa-rope-charcoal']),
+  P('mnandi-rope-armchair', 'Mnandi Rope Armchair', 'rope-woven armchair', 'weaver bird', 'outdoor', 'armchair', 'Hand-woven rope around a deep cushion, the way the weaver bird builds its nest. Fixed or on a swivel.', ['outdoor-armchair-rope-set', 'outdoor-armchair-rope-black']),
+  P('mwari-outdoor-dining', 'Mwari Outdoor Dining', 'outdoor dining table & rope chairs', 'pelican', 'outdoor', 'dining', 'A table for lunch by the water, ringed with rope-woven chairs that turn to the view.', ['outdoor-dining-rope-sea', 'outdoor-dining-teak-pool', 'outdoor-dining-rope-round', 'outdoor-dining-rope-pedestal']),
+  P('nyegere-dining-set', 'Nyegere Dining Set', 'outdoor dining set in black', 'honey badger', 'outdoor', 'dining', 'Black frames and woven backs around a stone or timber top: dining that stands up to sun and rain.', ['outdoor-dining-black-table', 'outdoor-dining-black-chair', 'outdoor-dining-black-pool', 'outdoor-dining-stone-round']),
+  P('mamba-lounger', 'Mamba Lounger', 'teak sun lounger', 'crocodile', 'outdoor', 'lounger', 'A low teak lounger with an adjustable back, built to stay out in the sun.', ['outdoor-lounger-teak-sea', 'outdoor-lounger-teak-sling', 'outdoor-lounger-teak-cushion']),
+  P('kasa-lounger', 'Kasa Lounger', 'upholstered sun lounger', 'sea turtle', 'outdoor', 'lounger', 'A deep, cushioned lounger with a reclining back, made in pairs and rows for the poolside.', ['outdoor-lounger-pool', 'outdoor-lounger-umbrellas', 'outdoor-lounger-swim', 'outdoor-lounger-above']),
+  P('heroe-round-daybed', 'Heroe Round Daybed', 'round rope daybed', 'flamingo', 'outdoor', 'lounger', 'A round daybed held in a curved, rope-woven back, deep enough for two and an afternoon.', ['outdoor-daybed-round-pool', 'outdoor-daybed-round-pair', 'outdoor-daybed-round-sunset']),
+  P('shakwe-daybed', 'Shakwe Daybed', 'low outdoor daybed', 'gull', 'outdoor', 'lounger', 'A low daybed on a timber plinth, soft-edged and made to sit right at the water.', ['outdoor-daybed-plinth', 'outdoor-daybed-rounded']),
   /* office */
   P('nyuki-reception-desk', 'Nyuki Reception Desk', 'curved reception desk', 'bee', 'office', 'desk', 'A ring of fluted timber that receives your guests from every side, made to your lobby.', ['reception-ring', 'reception-ring-side']),
   P('tai-executive-desk', 'Tai Executive Desk', 'executive desk', 'eagle', 'office', 'desk', 'A desk of presence, with a leather-lined top and drawers that close without a sound.'),
@@ -114,36 +125,42 @@ export const pieces: ReadonlyArray<Piece> = [
 
 /**
  * Lowercase room links in the bar, as Natuzzi sets them, each with the two columns its dropdown shows.
- * Each opens its chapter of the catalogue; the sub-categories are a proposal until the client's product list arrives.
+ * Each opens its own wing; the sub-categories are a proposal until the client's product list arrives.
  */
 export type FurnRoom = { label: string; href: string; columns: [string[], string[]]; feature?: string };
 
 export const furnRooms: ReadonlyArray<FurnRoom> = [
-  { label: 'living', href: '/furnishings#living', columns: [['sofas & sectionals', 'armchairs', 'coffee tables', 'side tables'], ['media units', 'shelving & bookcases', 'rugs', 'cushions & throws']] },
-  { label: 'dining', href: '/furnishings#dining', columns: [['dining tables', 'dining chairs', 'sideboards & storage'], ['bar stools', 'lighting', 'table linen']], feature: 'Duma Dining Set' },
-  { label: 'bedrooms', href: '/furnishings#bedroom', columns: [['beds', 'bedside tables', 'wardrobes'], ['dressers & chests', 'benches', 'bed linen']] },
-  { label: 'kids', href: '/furnishings#kids', columns: [['kids beds', 'study desks', 'storage'], ['reading corners', 'play furniture', 'kids furniture design']], feature: 'Kifaru Kids Set' },
-  { label: 'kitchen', href: '/furnishings#kitchen', columns: [['kitchen islands', 'bar stools'], ['pantry storage', 'open shelving']] },
-  { label: 'outdoor', href: '/furnishings#outdoor', columns: [['loungers', 'outdoor sofas'], ['outdoor dining', 'planters & accessories']] },
-  { label: 'office', href: '/furnishings#office', columns: [['desks', 'office chairs'], ['bookcases', 'filing & storage']] },
-  { label: 'atelier', href: '/furnishings#atelier', columns: [['fabrics & textures', 'colour families'], ['finishes', 'swatch samples']] },
+  { label: 'living', href: '/furnishings/living', columns: [['sofas & sectionals', 'armchairs', 'coffee tables', 'side tables'], ['media units', 'shelving & bookcases', 'rugs', 'cushions & throws']] },
+  { label: 'dining', href: '/furnishings/dining', columns: [['dining tables', 'dining chairs', 'sideboards & storage'], ['bar stools', 'lighting', 'table linen']], feature: 'Duma Dining Set' },
+  { label: 'bedrooms', href: '/furnishings/bedroom', columns: [['beds', 'bedside tables', 'wardrobes'], ['dressers & chests', 'benches', 'bed linen']] },
+  { label: 'kids', href: '/furnishings/kids', columns: [['kids beds', 'study desks', 'storage'], ['reading corners', 'play furniture', 'kids furniture design']], feature: 'Kifaru Kids Set' },
+  { label: 'kitchen', href: '/furnishings/kitchen', columns: [['kitchen islands', 'bar stools'], ['pantry storage', 'open shelving']] },
+  { label: 'outdoor', href: '/furnishings/outdoor', columns: [['sun loungers & daybeds', 'outdoor sofas', 'rope armchairs'], ['outdoor dining', 'planters & accessories']] },
+  { label: 'office', href: '/furnishings/office', columns: [['desks', 'office chairs'], ['bookcases', 'filing & storage']] },
+  { label: 'atelier', href: '/furnishings/atelier', columns: [['velvet', 'bouclé', 'linen', 'chenille', 'leatherette'], ['colour families', 'finishes', 'swatch samples']] },
   { label: 'consultations', href: '/furnishings#consultation', columns: [['interior design services', 'private consultation'], ['book a showroom visit', 'made-to-measure pieces']] },
 ];
 
 /* ── the bespoke atelier: the client's fabric studio brief ── */
 
 /*
- * Her five fabric families, grouped by how they feel. Which colours each is offered in is a proposal until she
- * confirms what her mills and suppliers carry.
+ * Her five fabrics, as she photographed them on 27 Oct: each beside an armchair made in it (`photo`), with the cloth
+ * alone cut from the same picture (`cloth`) and the house colour the picture shows (`shown`). Which colours each is offered in is a proposal until she confirms what
+ * her mills and suppliers carry.
  */
+const a = (name: string) => `/images/atelier/${name}.jpg`;
+
 export const textures = [
   {
     id: 'velvet',
     short: 'Velvet',
-    name: 'Plush Velvet & Chenille',
+    name: 'Plush Velvet',
     family: 'Plush & luminous',
     line: 'Luminous, ultra-soft, and rich in depth.',
     detail: 'A rich, light-catching nap, soft to the touch, that adds instant depth and regal warmth to a room. Made for statement sofas and accent chairs.',
+    photo: a('velvet'),
+    cloth: a('velvet-cloth'),
+    shown: 'Terracotta',
   },
   {
     id: 'boucle',
@@ -152,6 +169,9 @@ export const textures = [
     family: 'Tactile & dimensional',
     line: 'Tactile, dimensional, and modern.',
     detail: 'A heavy loop texture, highly tactile and contemporary: the fabric of quiet luxury, adding physical depth to minimalist spaces.',
+    photo: a('boucle'),
+    cloth: a('boucle-cloth'),
+    shown: 'Alabaster White',
   },
   {
     id: 'linen',
@@ -160,22 +180,31 @@ export const textures = [
     family: 'Natural & breathable',
     line: 'Relaxed sophistication that softens over time.',
     detail: 'An organic texture with a matte finish and a casual elegance that softens gracefully with the years. Made for relaxed, sophisticated living.',
+    photo: a('linen'),
+    cloth: a('linen-cloth'),
+    shown: 'Warm Linen',
   },
   {
-    id: 'leather',
-    short: 'Leather',
-    name: 'Performance Leather & Suede',
+    id: 'chenille',
+    short: 'Chenille',
+    name: 'Soft Chenille',
+    family: 'Soft & enveloping',
+    line: 'Warm to the hand and made for every day.',
+    detail: 'A tufted yarn woven into a soft, gently napped cloth: warm to sit in, hard-wearing, and forgiving of daily life. Made for the family sofa and the armchair everyone reaches for.',
+    photo: a('chenille'),
+    cloth: a('chenille-cloth'),
+    shown: 'Olive',
+  },
+  {
+    id: 'leatherette',
+    short: 'Leatherette',
+    name: 'Performance Leatherette',
     family: 'Supple & durable',
-    line: 'A buttery finish engineered for longevity.',
-    detail: 'A smooth, buttery grain or a velvety brushed finish, engineered to last and easy to care for, without giving up any luxury.',
-  },
-  {
-    id: 'damask',
-    short: 'Damask',
-    name: 'Embossed Damask & Jacquard',
-    family: 'Embossed & patterned',
-    line: 'Classical weight and commanding presence.',
-    detail: 'Woven-in patterns and raised textures with historical gravitas: for statement pieces that carry a commanding presence.',
+    line: 'The look of leather, made for daily life.',
+    detail: 'A fine-grained faux leather with a soft hand that wipes clean, resists wear and keeps its colour. Made for dining chairs, offices and busy homes.',
+    photo: a('leatherette'),
+    cloth: a('leatherette-cloth'),
+    shown: 'Cognac',
   },
 ] as const;
 
@@ -222,8 +251,8 @@ export const textureColours: Record<TextureId, ReadonlyArray<string>> = {
   velvet: ['Alabaster White', 'Warm Taupe', 'Charcoal Grey', 'Obsidian Black', 'Midnight Navy', 'Forest Emerald', 'Deep Plum', 'Cognac', 'Warm Ochre', 'Terracotta', 'Olive'],
   boucle: ['Alabaster White', 'Warm Linen', 'Warm Taupe', 'Charcoal Grey', 'Midnight Navy', 'Warm Ochre', 'Olive'],
   linen: ['Alabaster White', 'Warm Linen', 'Warm Taupe', 'Charcoal Grey', 'Midnight Navy', 'Terracotta', 'Olive'],
-  leather: ['Alabaster White', 'Warm Taupe', 'Charcoal Grey', 'Obsidian Black', 'Midnight Navy', 'Forest Emerald', 'Cognac', 'Terracotta'],
-  damask: ['Alabaster White', 'Obsidian Black', 'Midnight Navy', 'Forest Emerald', 'Deep Plum', 'Warm Ochre'],
+  chenille: ['Alabaster White', 'Warm Linen', 'Warm Taupe', 'Charcoal Grey', 'Midnight Navy', 'Forest Emerald', 'Terracotta', 'Olive'],
+  leatherette: ['Alabaster White', 'Warm Taupe', 'Charcoal Grey', 'Obsidian Black', 'Midnight Navy', 'Forest Emerald', 'Cognac', 'Terracotta'],
 };
 
 /* For case pieces (tables, storage, kitchens, desks), the studio offers timber and lacquer instead of fabric. */
@@ -266,6 +295,12 @@ export function studioForm(piece: Piece): StudioForm {
 
 /** One configuration from the studio: a fabric (or timber), its colour, and the finish. */
 export type Configuration = { material: TextureId | TimberId; colour: string; finish: FinishId };
+
+/** The configuration in another fabric or timber, keeping its colour where the new material is made in it. */
+export function withMaterial(c: Configuration, material: TextureId | TimberId): Configuration {
+  const allowed = material === 'lacquer' ? colours.map((x) => x.name) : timbers.some((t) => t.id === material) ? [] : textureColours[material as TextureId];
+  return { ...c, material, colour: allowed.includes(c.colour) ? c.colour : allowed[0] ?? '' };
+}
 
 export const defaultConfiguration = (form: StudioForm): Configuration =>
   form === 'case' ? { material: 'walnut', colour: '', finish: 'brass' } : { material: 'boucle', colour: 'Alabaster White', finish: 'brass' };

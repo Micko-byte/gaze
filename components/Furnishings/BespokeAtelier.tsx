@@ -10,10 +10,10 @@ import {
   textureColours,
   textures,
   timbers,
+  withMaterial,
   type Configuration,
   type Piece,
   type TextureId,
-  type TimberId,
 } from '@/content/furnishings';
 import type { ReactNode } from 'react';
 import { AtelierRender, baseHex, materialStyle } from './AtelierRender';
@@ -44,12 +44,6 @@ export function BespokeAtelier({ piece, value, onChange, layout = 'wide' }: { pi
   const texture = textures.find((t) => t.id === value.material);
   const timber = timbers.find((t) => t.id === value.material);
   const offered = isCase ? (value.material === 'lacquer' ? colours.map((c) => c.name) : []) : textureColours[value.material as TextureId] ?? [];
-
-  const pickMaterial = (material: TextureId | TimberId) => {
-    const allowed = isCase ? (material === 'lacquer' ? colours.map((c) => c.name) : []) : textureColours[material as TextureId];
-    const colour = allowed.includes(value.colour) ? value.colour : allowed[0] ?? '';
-    onChange({ ...value, material, colour });
-  };
 
   const tag = [texture?.short ?? timber?.name, value.colour || null, finishes.find((f) => f.id === value.finish)!.name].filter(Boolean).join(' / ');
 
@@ -82,31 +76,44 @@ export function BespokeAtelier({ piece, value, onChange, layout = 'wide' }: { pi
 
   const phases = (
     <div className="flex flex-col gap-10">
-      <Phase n={1} title={isCase ? 'Select your material' : 'Select your texture'}>
-        <div role="radiogroup" aria-label={isCase ? 'Material' : 'Texture'} className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <Phase n={1} title={isCase ? 'Select your material' : 'Select your fabric'}>
+        <div role="radiogroup" aria-label={isCase ? 'Material' : 'Fabric'} className={`grid gap-3 ${isCase ? 'grid-cols-3' : 'grid-cols-3 sm:grid-cols-5'}`}>
           {(isCase ? timbers : textures).map((m) => {
             const on = value.material === m.id;
             const sampleHex = isCase ? (m.id === 'lacquer' ? hex ?? colours[0].hex : (m as (typeof timbers)[number]).hex) : hex ?? colours[0].hex;
+            const ring = on ? 'ring-2 ring-furn-ink ring-offset-2 ring-offset-[#EEE7DF]' : 'ring-1 ring-[rgba(30,30,34,0.15)] group-hover:ring-furn-ink';
             return (
               <button
                 key={m.id}
                 type="button"
                 role="radio"
                 aria-checked={on}
-                onClick={() => pickMaterial(m.id)}
-                className={`group text-left outline-offset-4 transition-opacity ${on ? '' : 'opacity-80 hover:opacity-100'}`}
+                onClick={() => onChange(withMaterial(value, m.id))}
+                className={`group self-start text-left outline-offset-4 transition-opacity ${on ? '' : 'opacity-80 hover:opacity-100'}`}
               >
-                <span
-                  className={`block aspect-[4/3] transition-[box-shadow,background] duration-500 ${on ? 'ring-2 ring-furn-ink ring-offset-2 ring-offset-[#EEE7DF]' : 'ring-1 ring-[rgba(30,30,34,0.15)] group-hover:ring-furn-ink'}`}
-                  style={materialStyle(m.id, sampleHex)}
-                />
-                <span className="mt-2 block text-[14px] leading-tight">{m.name}</span>
+                {'cloth' in m ? (
+                  /* her photograph of the cloth itself */
+                  <span className={`relative block aspect-[4/5] overflow-hidden transition-shadow duration-500 ${ring}`}>
+                    <img src={m.cloth} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </span>
+                ) : (
+                  <span className={`block aspect-[4/3] transition-[box-shadow,background] duration-500 ${ring}`} style={materialStyle(m.id, sampleHex)} />
+                )}
+                <span className="mt-2 block text-[14px] leading-tight">{'cloth' in m ? m.short : m.name}</span>
                 <span className="block text-[12px] text-[#6F6A62]">{'family' in m ? m.family : m.line}</span>
               </button>
             );
           })}
         </div>
-        {texture && <p className="mt-5 max-w-xl text-[14px] font-light leading-relaxed text-[#4A4640]">{texture.detail}</p>}
+        {texture && (
+          <div className="mt-6 grid items-center gap-5 sm:grid-cols-[140px_1fr]">
+            <img src={texture.photo} alt={`${texture.name}: the cloth, and an armchair made in it`} className="aspect-[720/819] w-[140px] object-cover" />
+            <div>
+              <p className="font-furn text-[22px] leading-tight">{texture.name}</p>
+              <p className="mt-2 max-w-xl text-[14px] font-light leading-relaxed text-[#4A4640]">{texture.detail}</p>
+            </div>
+          </div>
+        )}
       </Phase>
 
       {offered.length > 0 && (

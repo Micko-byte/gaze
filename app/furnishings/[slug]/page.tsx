@@ -8,21 +8,27 @@ import { FurnFooter } from '@/components/Furnishings/FurnFooter';
 import { FurnitureDrawing } from '@/components/Furnishings/FurnitureDrawing';
 import { CommissionForm } from '@/components/Furnishings/CommissionForm';
 import { PieceGallery } from '@/components/Furnishings/PieceGallery';
+import { Wing } from '@/components/Furnishings/Wing';
 
 type Props = { params: { slug: string } };
 
+/* /furnishings/<slug> is a wing of the house when the slug names a room, and a piece otherwise. */
 export function generateStaticParams() {
-  return pieces.map((p) => ({ slug: p.slug }));
+  return [...collections.map((c) => ({ slug: c.id })), ...pieces.map((p) => ({ slug: p.slug }))];
 }
 
 export function generateMetadata({ params }: Props): Metadata {
+  const wing = collections.find((c) => c.id === params.slug);
+  if (wing) return { title: `${wing.name} · Gaze Furnishings`, description: `${wing.intro} Made to commission in Nairobi.` };
   const piece = pieces.find((p) => p.slug === params.slug);
   if (!piece) return {};
   return { title: `${piece.name} · Gaze Furnishings`, description: `${piece.line} Made to commission in Nairobi.` };
 }
 
-/** A piece of the catalogue: its spread, then its commission. */
+/** A wing of the house, or a piece of the catalogue: its spread, then its commission. */
 export default function PiecePage({ params }: Props) {
+  const wing = collections.find((c) => c.id === params.slug);
+  if (wing) return <Wing room={wing} />;
   const piece = pieces.find((p) => p.slug === params.slug);
   if (!piece) notFound();
   const room = collections.find((c) => c.id === piece.room)!;
@@ -38,7 +44,7 @@ export default function PiecePage({ params }: Props) {
             <nav aria-label="Breadcrumb" className="text-[12px] text-[#6F6A62]">
               <Link href="/furnishings#catalogue" data-no-transition className="hover:text-furn-ink">the catalogue</Link>
               <span className="px-2">/</span>
-              <Link href={`/furnishings#${room.id}`} data-no-transition className="hover:text-furn-ink">{room.name.toLowerCase()}</Link>
+              <Link href={`/furnishings/${room.id}`} data-no-transition className="hover:text-furn-ink">{room.name.toLowerCase()}</Link>
               <span className="px-2">/</span>
               <span className="text-furn-ink">{piece.name}</span>
             </nav>

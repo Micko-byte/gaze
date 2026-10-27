@@ -5,10 +5,6 @@ import { finishes, timbers, type Configuration, type StudioForm, type TextureId,
  * The look of each material, drawn over its colour: the same overlays dress the swatch cards and the live render, so
  * what is chosen in the grid is exactly what appears on the piece.
  */
-const damask = encodeURIComponent(
-  "<svg xmlns='http://www.w3.org/2000/svg' width='36' height='48' viewBox='0 0 36 48'><path d='M18 4c6 6 10 10 10 20s-4 14-10 20c-6-6-10-10-10-20S12 10 18 4z' fill='rgba(255,255,255,0.16)' stroke='rgba(0,0,0,0.2)' stroke-width='1'/><path d='M18 14c3 3 4 6 4 10s-1 7-4 10c-3-3-4-6-4-10s1-7 4-10z' fill='rgba(0,0,0,0.14)'/><circle cx='0' cy='0' r='3' fill='rgba(255,255,255,0.18)'/><circle cx='36' cy='0' r='3' fill='rgba(255,255,255,0.18)'/><circle cx='0' cy='48' r='3' fill='rgba(255,255,255,0.18)'/><circle cx='36' cy='48' r='3' fill='rgba(255,255,255,0.18)'/></svg>",
-);
-
 const OVERLAYS: Record<TextureId | TimberId, string> = {
   velvet:
     'linear-gradient(125deg, rgba(255,255,255,0.34), rgba(255,255,255,0) 32%, rgba(0,0,0,0.34) 68%, rgba(255,255,255,0.1)), repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px)',
@@ -16,9 +12,10 @@ const OVERLAYS: Record<TextureId | TimberId, string> = {
     'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0 1.1px, transparent 1.7px) 0 0/5px 5px, radial-gradient(circle at 75% 70%, rgba(0,0,0,0.22) 0 1.2px, transparent 1.8px) 0 0/5px 5px, radial-gradient(circle at 70% 25%, rgba(255,255,255,0.16) 0 0.9px, transparent 1.4px) 2px 1px/7px 7px, radial-gradient(circle at 20% 80%, rgba(0,0,0,0.12) 0 0.9px, transparent 1.4px) 1px 3px/6px 6px',
   linen:
     'repeating-linear-gradient(0deg, rgba(255,255,255,0.14) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,0.11) 0 1px, transparent 1px 4px), linear-gradient(160deg, rgba(255,255,255,0.08), rgba(0,0,0,0.08))',
-  leather:
+  chenille:
+    'repeating-linear-gradient(0deg, rgba(255,255,255,0.12) 0 1.5px, transparent 1.5px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,0.1) 0 1.5px, transparent 1.5px 3px), radial-gradient(rgba(255,255,255,0.1) 0.7px, transparent 1.2px) 1px 1px/3px 3px, linear-gradient(125deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 40%, rgba(0,0,0,0.18))',
+  leatherette:
     'radial-gradient(ellipse at 28% 18%, rgba(255,255,255,0.36), transparent 55%), radial-gradient(ellipse at 82% 92%, rgba(0,0,0,0.32), transparent 60%), radial-gradient(rgba(0,0,0,0.12) 0.8px, transparent 1.3px) 0 0/4px 4px',
-  damask: `url("data:image/svg+xml,${damask}") 0 0/36px 48px, linear-gradient(140deg, rgba(255,255,255,0.14), rgba(0,0,0,0.16))`,
   oak: 'repeating-linear-gradient(93deg, rgba(0,0,0,0.08) 0 2px, transparent 2px 7px, rgba(255,255,255,0.08) 7px 8px, transparent 8px 13px), radial-gradient(ellipse at 30% 40%, rgba(0,0,0,0.12), transparent 30%)',
   walnut: 'repeating-linear-gradient(91deg, rgba(0,0,0,0.16) 0 2px, transparent 2px 6px, rgba(255,255,255,0.06) 6px 7px, transparent 7px 12px), radial-gradient(ellipse at 65% 60%, rgba(0,0,0,0.18), transparent 32%)',
   lacquer: 'linear-gradient(160deg, rgba(255,255,255,0.3), transparent 40%, rgba(0,0,0,0.2))',

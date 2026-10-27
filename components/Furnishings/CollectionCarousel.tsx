@@ -2,6 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useRef } from 'react';
+import Link from 'next/link';
 import { collections, pieces } from '@/content/furnishings';
 import { FurnitureDrawing } from './FurnitureDrawing';
 
@@ -27,7 +28,7 @@ export function CollectionCarousel() {
           const signature = pieces.find((p) => p.room === c.id && p.decided);
           return (
             <li key={c.name} className="w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[27vw] xl:w-[22vw]">
-              <a href={`#${c.id}`} data-no-transition className="group block">
+              <Link href={`/furnishings/${c.id}`} data-no-transition className="group block">
                 <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2]">
                   {c.cover ? (
                     <img src={c.cover} alt={`${c.name}, by Gaze Furnishings`} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-reveal group-hover:scale-[1.05]" />
@@ -42,7 +43,7 @@ export function CollectionCarousel() {
                   )}
                 </div>
                 <p className="mt-4 font-text text-[15px]">{c.name}</p>
-              </a>
+              </Link>
             </li>
           );
         })}

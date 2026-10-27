@@ -1,9 +1,9 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { defaultConfiguration, describeConfiguration, pieces, studioForm, type Configuration } from '@/content/furnishings';
+import { defaultConfiguration, describeConfiguration, pieces, studioForm, textures, withMaterial, type Configuration } from '@/content/furnishings';
 import { BespokeAtelier } from './BespokeAtelier';
 
 /* the studio opens on the upholstered pieces she has photographed: the ones a fabric changes */
@@ -12,14 +12,21 @@ const choices = pieces.filter((p) => p.photos && studioForm(p) !== 'case');
 const field = 'w-full border-b border-[rgba(238,231,223,0.35)] bg-transparent py-2 text-base text-furn-linen outline-none placeholder:text-[rgba(238,231,223,0.45)] focus:border-furn-linen';
 
 /**
- * The Bespoke Atelier on the Furnishings page: choose a piece, dress it, then take the configuration into a commission
- * for a quote, or ask for physical swatches of it.
+ * The Bespoke Atelier wing: her five fabrics as a wall of photographs to choose from, then a piece to dress in the one
+ * chosen, then the configuration taken into a commission for a quote, or a request for physical swatches of it.
  */
 export function AtelierStudio() {
   const [slug, setSlug] = useState(choices[0].slug);
   const piece = choices.find((p) => p.slug === slug)!;
   const [config, setConfig] = useState<Configuration>(defaultConfiguration(studioForm(piece)));
   const [samples, setSamples] = useState<'closed' | 'open' | 'sent'>('closed');
+  const studio = useRef<HTMLDivElement>(null);
+
+  // the wall shows each fabric in one colour, so choosing it there dresses the piece in that colour too
+  const chooseFabric = (t: (typeof textures)[number]) => {
+    setConfig({ ...withMaterial(config, t.id), colour: t.shown });
+    studio.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const quoteHref = `/furnishings/${piece.slug}?material=${config.material}&colour=${encodeURIComponent(config.colour)}&finish=${config.finish}#commission`;
 
@@ -32,7 +39,38 @@ export function AtelierStudio() {
 
   return (
     <div>
-      <div role="radiogroup" aria-label="Choose a piece" className="-mx-5 flex snap-x gap-3 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] md:mx-0 md:px-0">
+      {/* ── the fabric wall: her photographs, each one a choice ── */}
+      <div role="radiogroup" aria-label="Choose a fabric" className="-mx-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-4 pt-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-5 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
+        {textures.map((t) => {
+          const on = config.material === t.id;
+          return (
+            <button
+              key={t.id}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              onClick={() => chooseFabric(t)}
+              className="group w-[68vw] shrink-0 snap-start self-start text-left outline-offset-4 sm:w-[40vw] md:w-auto"
+            >
+              <span className={`relative block aspect-[720/819] overflow-hidden transition-shadow duration-500 ${on ? 'ring-2 ring-furn-ink ring-offset-4 ring-offset-furn-linen' : ''}`}>
+                <img src={t.photo} alt={`${t.name}: the cloth, and an armchair made in it`} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-reveal group-hover:scale-[1.04]" />
+                <span
+                  className={`absolute left-3 top-3 rounded-full px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.24em] transition-colors ${on ? 'bg-furn-ink text-furn-linen' : 'bg-[rgba(238,231,223,0.88)] text-furn-ink opacity-0 group-hover:opacity-100'}`}
+                >
+                  {on ? 'Chosen' : 'Choose'}
+                </span>
+              </span>
+              <span className="mt-4 block font-furn text-[26px] leading-none">{t.short}</span>
+              <span className="mt-1.5 block text-[13px] font-light text-[#6F6A62]">{t.line}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div ref={studio} className="scroll-mt-[96px] pt-16">
+        <p className="text-[12px] text-[#6F6A62]">now choose a piece to dress in it</p>
+      </div>
+      <div role="radiogroup" aria-label="Choose a piece" className="-mx-5 mt-4 flex snap-x gap-3 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] md:mx-0 md:px-0">
         {choices.map((p) => {
           const on = p.slug === slug;
           return (
