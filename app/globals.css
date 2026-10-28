@@ -322,3 +322,22 @@ h1.font-display.type-strong {
 @media (prefers-reduced-motion: reduce) {
   :root:not([data-motion='full']) .manor-drift { animation: none; }
 }
+
+/* the Holdings hero: her city films, set side by side, pan slowly across the screen and back */
+@keyframes city-pan {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(calc(-100% + 100vw), 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) .city-pan { animation: none; }
+}
+
+/* Projects & Contract: each project's picture drifts slowly inside its frame */
+@keyframes project-pan {
+  from { transform: scale(1.14) translate3d(-3%, 2%, 0); }
+  to { transform: scale(1.14) translate3d(3%, -2%, 0); }
+}
+.project-pan { animation: project-pan 18s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) .project-pan { animation: none; transform: scale(1.04); }
+}

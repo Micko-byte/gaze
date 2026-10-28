@@ -187,7 +187,6 @@ export function CommissionForm({ piece }: { piece: Piece }) {
                   <option value="call">a phone call</option>
                   <option value="whatsapp">WhatsApp</option>
                   <option value="video">a video call</option>
-                  <option value="visit">a visit to the showroom</option>
                 </select>
               </label>
               <label className="flex flex-col gap-1">
@@ -301,7 +300,7 @@ export function CommissionForm({ piece }: { piece: Piece }) {
             </div>
           </dl>
           <p className="mt-6 text-[12px] leading-relaxed text-[#6F6A62]">
-            {piece.imported ? 'imported in 3 months' : 'made to order in 14–21 days'} · free delivery in Nairobi · prices exclude 16% VAT ·{' '}
+            {piece.imported ? 'imported in 3 months' : 'made to order in 14–21 days'} · free delivery within Nairobi · prices exclude 16% VAT ·{' '}
             <Link href="/furnishings/international" className="underline underline-offset-2">outside Kenya?</Link>
           </p>
         </div>

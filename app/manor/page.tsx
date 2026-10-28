@@ -36,7 +36,8 @@ const nav = [
   { label: 'Commissions', href: '#commission' },
 ] as const;
 
-const photo = (name: string) => `/images/furnishings/${name}.jpg`;
+/* Gaze Manor shows only its own pictures and films, never Furnishings' (her instruction, 28 Oct 2026). */
+const photo = (name: string) => `/images/manor/${name}.jpg`;
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const eyebrow = 'text-[11px] font-medium uppercase tracking-[0.42em] text-manor-bronze';
 
@@ -144,7 +145,7 @@ export default function ManorPage() {
               </div>
             </div>
             <div data-manor-arch className="relative mx-auto aspect-[9/14] w-full max-w-[460px] overflow-hidden rounded-t-full">
-              <Film {...manorFilm('staircase')} />
+              <Film {...manorFilm('salon')} />
               <div className="absolute inset-0 rounded-t-full ring-1 ring-inset ring-[rgba(238,235,230,0.25)]" />
             </div>
           </div>
@@ -207,7 +208,7 @@ export default function ManorPage() {
           <WingOpening wing={landscape} />
           <div id="landscape-works" className="mx-auto mt-24 grid max-w-[1440px] scroll-mt-24 gap-4 md:grid-cols-3">
             <div data-manor-reveal className="aspect-[9/14] overflow-hidden rounded-t-full md:row-span-2 md:aspect-auto">
-              <Film src="/video/furnishings/outdoor-garden.mp4" poster="/video/furnishings/outdoor-garden.jpg" />
+              <Film {...manorFilm('garden-table')} />
             </div>
             {landscape.images!.map((img) => (
               <div key={img.src} data-manor-reveal className="aspect-[3/4] overflow-hidden">
@@ -254,10 +255,10 @@ export default function ManorPage() {
           <div className="mx-auto grid max-w-[1440px] items-center gap-16 lg:grid-cols-[1fr_1.1fr]">
             <div className="grid grid-cols-2 gap-4">
               <div data-manor-reveal className="aspect-[3/4] overflow-hidden">
-                <img src={photo('bed-bolster')} alt="A bedroom suite with a bespoke upholstered bed" className="h-full w-full object-cover" />
+                <img src={photo('evening-fireplace')} alt="A white living room at night, a fire lit under a mantel of hydrangeas" className="h-full w-full object-cover" />
               </div>
               <div data-manor-reveal className="mt-24 aspect-[3/4] overflow-hidden">
-                <img src={photo('sofa-olive-room')} alt="A living room with a low olive sofa under a timber ceiling" className="h-full w-full object-cover" />
+                <img src={photo('evening-vanity')} alt="A painted vanity under a gilt mirror, lamplit in the evening" className="h-full w-full object-cover" />
               </div>
             </div>
             <div>
@@ -278,7 +279,7 @@ export default function ManorPage() {
               {manorPillars.items.map((p, i) => (
                 <li key={p.title} className={i === 1 ? 'md:mt-24' : ''}>
                   <div data-manor-reveal className="aspect-[4/5] overflow-hidden">
-                    <img src={photo(p.image)} alt="" className="h-full w-full object-cover" />
+                    <img src={p.image} alt="" className="h-full w-full object-cover" />
                   </div>
                   <h3 className="mt-6 font-manor-head text-[clamp(26px,2.2vw,34px)] leading-tight">{p.title}</h3>
                   <p className="mt-3 text-[16px] font-light leading-relaxed text-manor-umber">{p.body}</p>
@@ -298,7 +299,7 @@ export default function ManorPage() {
             {manorExperience.map((a, i) => (
               <article key={a.title} className="grid gap-8 lg:w-[56vw] lg:shrink-0 lg:grid-cols-[0.8fr_1fr] lg:items-center">
                 <div className="relative aspect-[9/14] max-h-[72svh] overflow-hidden rounded-t-full">
-                  {'video' in a.media ? <Film {...manorFilm(a.media.video)} /> : <img src={photo(a.media.image)} alt="" className="h-full w-full object-cover" />}
+                  {'video' in a.media ? <Film {...manorFilm(a.media.video)} /> : <img src={a.media.image} alt="" className="h-full w-full object-cover" />}
                 </div>
                 <div>
                   <span className="font-manor-head text-[clamp(64px,7vw,120px)] font-light italic leading-none text-manor-bronze">{ROMAN[i]}</span>

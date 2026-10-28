@@ -1,6 +1,6 @@
 /** Gaze Furnishings content, from the client's discovery answers (3 Oct 2026). Page rhythm after Natuzzi Italia. */
 export const furnHero = {
-  eyebrow: 'Gaze Furnishings · Nairobi',
+  eyebrow: 'Gaze Furnishings · Online, delivered to your door',
   headline: ['Luxury,', 'without ornament.'],
   sub: 'Bespoke furniture, made to order in 14–21 days and delivered worldwide.',
   /* Interiors for the hero until the studio shoot; the client prefers not to reuse Instagram imagery. */
@@ -53,6 +53,8 @@ export type Piece = {
   decided?: boolean;
   /** Her photographs of the piece, the cover first; further photographs are other angles or colourways. */
   photos?: string[];
+  /** Standard size, as "W 240 × D 100 × H 80 cm", once she sends it; until then the page offers her standard or yours. */
+  dims?: string;
 };
 
 const P = (slug: string, name: string, kind: string, animal: string, room: RoomId, drawing: Drawing, line: string, photos?: string[], decided?: boolean): Piece => ({
@@ -144,7 +146,7 @@ export const furnRooms: ReadonlyArray<FurnRoom> = [
   { label: 'outdoor', href: '/furnishings/outdoor', columns: [['sun loungers & daybeds', 'outdoor sofas', 'rope armchairs'], ['outdoor dining', 'planters & accessories']] },
   { label: 'office', href: '/furnishings/office', columns: [['executive desks', 'boardroom suites', 'office seating'], ['reception & lounge', 'bookcases']], feature: 'The Sovereign Monolith' },
   { label: 'atelier', href: '/furnishings/atelier', columns: [['velvet', 'bouclé', 'linen', 'chenille', 'leatherette'], ['colour families', 'finishes', 'swatch samples']] },
-  { label: 'consultations', href: '/furnishings#consultation', columns: [['interior design services', 'private consultation'], ['book a showroom visit', 'made-to-measure pieces']] },
+  { label: 'projects & contract', href: '/furnishings/projects', columns: [['residences', 'hospitality', 'corporate', 'estates & gardens'], ['interior design services', 'private consultation', 'trade enquiries']] },
 ];
 
 /* ── the bespoke atelier: the client's fabric studio brief ── */
@@ -322,12 +324,15 @@ export function describeConfiguration(c: Configuration): string {
 
 /* ── the house: the client's write-ups of 27 Oct 2026 ── */
 
-/* From her letterhead (Gaze Forms, 27 Oct). */
+/* Since 28 Oct 2026 Gaze Furnishings is wholly online: the storefront has closed, so no address is shown anywhere.
+   Her official numbers; orders confirmed on WhatsApp go to the first. */
 export const furnContact = {
-  phone: '+254 741 577 381',
-  tel: '+254741577381',
+  phones: [
+    { label: '+254 706 338 791', tel: '+254706338791' },
+    { label: '+254 740 692 298', tel: '+254740692298' },
+  ],
+  whatsapp: '254706338791',
   email: 'sales@gazefurnishings.co.ke',
-  address: '1st Floor, Nextgen Mall, Mombasa Road, Nairobi',
 };
 
 const catalogueRequest = (subject: string) => `mailto:${furnContact.email}?subject=${encodeURIComponent(subject)}`;

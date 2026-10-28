@@ -11,7 +11,7 @@ import { Reveal } from '@/components/Reveal/Reveal';
 
 export const metadata: Metadata = {
   title: 'Gaze Furnishings',
-  description: 'Bespoke furniture, made to order in Nairobi in 14–21 days and delivered worldwide. Luxury, without ornament.',
+  description: 'Bespoke furniture, bought online, made to order in 14–21 days and delivered worldwide. Luxury, without ornament.',
 };
 
 const pill = 'inline-block rounded-full px-7 py-3.5 font-text text-[13px] transition-colors';
@@ -43,7 +43,7 @@ export default function FurnishingsPage() {
         >
           {/* the client's Master Atelier write-up (27 Oct 2026) */}
           <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="text-[12px] text-furn-lilac">
+            <p className="text-[12px] text-[rgba(238,231,223,0.75)]">
               {masterAtelier.company} · {masterAtelier.tagline}
             </p>
             <p className="mt-8 text-[11px] font-medium uppercase tracking-[0.3em] text-[rgba(238,231,223,0.7)]">{masterAtelier.eyebrow}</p>
@@ -53,7 +53,7 @@ export default function FurnishingsPage() {
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <a href="#pillars" data-no-transition className={`${pill} mt-12 bg-furn-linen text-furn-ink hover:bg-furn-lilac`}>the curated pillars</a>
+            <a href="#pillars" data-no-transition className={`${pill} mt-12 bg-furn-linen text-furn-ink hover:bg-white`}>the curated pillars</a>
           </Reveal>
         </section>
 
@@ -124,27 +124,27 @@ export default function FurnishingsPage() {
             <h2 className="font-furn text-[clamp(44px,6vw,108px)] leading-[0.98]">Interior design, privately</h2>
             <p className="mt-5 max-w-lg text-base font-light md:text-lg">Our way of taking care of your project: a designer walks the space with you, then proposes pieces, fabrics and finishes made for it.</p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <a href="/#contact" className={`${pill} bg-furn-linen text-furn-ink hover:bg-furn-lilac`}>book a consultation</a>
-              <a href="/#contact" className={`${pill} border border-[rgba(238,231,223,0.7)] hover:border-furn-lilac hover:text-furn-lilac`}>see how it works</a>
+              <a href={`https://wa.me/${furnContact.whatsapp}?text=${encodeURIComponent('Hello Gaze Furnishings, I would like to book an interior design consultation.')}`} target="_blank" rel="noopener noreferrer" className={`${pill} bg-furn-linen text-furn-ink hover:bg-white`}>book a consultation</a>
+              <Link href="/furnishings/projects" data-no-transition className={`${pill} border border-[rgba(238,231,223,0.7)] hover:bg-[rgba(238,231,223,0.12)]`}>see our projects</Link>
             </div>
           </Reveal>
         </section>
 
-        {/* ── crafted in Nairobi ── */}
+        {/* ── made to order ── */}
         <section id="craft" className="scroll-mt-[72px] px-5 py-24 md:px-[6vw] md:py-36">
           <div className="mx-auto grid max-w-[1600px] items-center gap-14 md:grid-cols-2">
             <Reveal className="aspect-[4/5] overflow-hidden md:aspect-[5/6]">
               <img src="/images/divisions/furnishings.jpg" alt="A lounge in warm timber, leather and linen" className="h-full w-full object-cover" />
             </Reveal>
             <Reveal delay={0.1} className="md:pl-10">
-              <h2 className="font-furn text-[clamp(44px,5.4vw,96px)] leading-[0.98]">Made in Nairobi, made for your room</h2>
+              <h2 className="font-furn text-[clamp(44px,5.4vw,96px)] leading-[0.98]">Made to order, made for your room</h2>
               <p className="mt-8 max-w-md text-base font-light leading-relaxed text-[#4A4640]">
-                Each piece is made to order in our Nairobi workshop in 14 to 21 days, to your measurements and in the fabric
+                Each piece is made to order by our artisans in 14 to 21 days, to your measurements and in the fabric
                 you choose, then delivered wherever you are.
               </p>
               <dl className="mt-12 grid max-w-md grid-cols-2 gap-y-8 border-t border-[rgba(30,30,34,0.15)] pt-8">
                 <div><dt className="text-[12px] text-[#6F6A62]">made to order</dt><dd className="mt-1 font-furn text-3xl">14–21 days</dd></div>
-                <div><dt className="text-[12px] text-[#6F6A62]">delivery</dt><dd className="mt-1 font-furn text-3xl">free in Nairobi</dd></div>
+                <div><dt className="text-[12px] text-[#6F6A62]">delivery</dt><dd className="mt-1 font-furn text-3xl">free within Nairobi</dd></div>
                 <div><dt className="text-[12px] text-[#6F6A62]">rooms</dt><dd className="mt-1 font-furn text-3xl">seven</dd></div>
                 <div><dt className="text-[12px] text-[#6F6A62]">deposit</dt><dd className="mt-1 font-furn text-3xl">75%</dd></div>
               </dl>
@@ -156,13 +156,13 @@ export default function FurnishingsPage() {
         <section id="signature" className="bg-furn-ink px-5 py-24 text-furn-linen md:px-[6vw] md:py-36">
           <div className="mx-auto grid max-w-[1600px] items-end gap-14 md:grid-cols-[1fr_1.2fr]">
             <Reveal>
-              <p className="text-[12px] text-furn-lilac">signature · dining</p>
+              <p className="text-[12px] text-[rgba(238,231,223,0.6)]">signature · dining</p>
               <h2 className="mt-4 font-furn text-[clamp(56px,7vw,128px)] leading-[0.94]">Duma Dining Set</h2>
               <p className="mt-6 max-w-md text-base font-light leading-relaxed text-[rgba(238,231,223,0.8)]">
                 Named for the cheetah: a table and chairs drawn with speed and restraint, made to your room&apos;s measurements
                 and finished in the fabric you choose.
               </p>
-              <Link href="/furnishings/duma-dining-set" data-no-transition className={`${pill} mt-10 bg-furn-lilac text-furn-ink hover:bg-furn-linen`}>commission the duma</Link>
+              <Link href="/furnishings/duma-dining-set" data-no-transition className={`${pill} mt-10 bg-furn-linen text-furn-ink hover:bg-white`}>buy the duma</Link>
             </Reveal>
             <Reveal delay={0.1} className="aspect-[16/10] overflow-hidden">
               <img src="/video/hero-poster.jpg" alt="An open-plan dining and living space" className="h-full w-full object-cover" />
@@ -220,7 +220,7 @@ export default function FurnishingsPage() {
         </section>
 
         {/* ── see it in your room ── */}
-        <section className="bg-furn-lilac px-5 py-24 md:px-[6vw]">
+        <section className="bg-[#E4DCD1] px-5 py-24 md:px-[6vw]">
           <Reveal className="mx-auto flex max-w-[1600px] flex-col justify-between gap-8 md:flex-row md:items-center">
             <div>
               <p className="text-[12px]">coming after launch</p>
@@ -230,21 +230,37 @@ export default function FurnishingsPage() {
           </Reveal>
         </section>
 
-        {/* ── visit ── */}
-        <section id="showroom" className="scroll-mt-[72px] px-5 py-24 md:px-[6vw] md:py-36">
-          <div className="mx-auto grid max-w-[1600px] items-center gap-14 md:grid-cols-[1fr_1.4fr]">
+        {/* ── wholly online since 28 Oct 2026: how buying works, and how to reach the team ── */}
+        <section id="shop-online" className="scroll-mt-[72px] px-5 py-24 md:px-[6vw] md:py-36">
+          <div className="mx-auto grid max-w-[1600px] gap-14 md:grid-cols-[1fr_1.4fr]">
             <Reveal>
-              <h2 className="font-furn text-[clamp(44px,5vw,88px)] leading-[0.98]">A unique experience, come visit us</h2>
-              <p className="mt-6 max-w-sm text-base font-light leading-relaxed text-[#4A4640]">See the fabrics, sit in the pieces and meet the people who make them, in Nairobi.</p>
-              <address className="mt-8 grid gap-1 text-[15px] not-italic">
-                <span>{furnContact.address}</span>
-                <a href={`tel:${furnContact.tel}`} className="hover:text-furn-walnut">{furnContact.phone}</a>
+              <h2 className="font-furn text-[clamp(44px,5vw,88px)] leading-[0.98]">Shop from wherever you are</h2>
+              <p className="mt-6 max-w-sm text-base font-light leading-relaxed text-[#4A4640]">
+                Gaze Furnishings is entirely online: choose your piece here, and we make it and bring it to your door.
+              </p>
+              <div className="mt-8 grid gap-1 text-[15px]">
+                {furnContact.phones.map((p) => (
+                  <a key={p.tel} href={`tel:${p.tel}`} className="hover:text-furn-walnut">{p.label}</a>
+                ))}
                 <a href={`mailto:${furnContact.email}`} className="hover:text-furn-walnut">{furnContact.email}</a>
-              </address>
-              <a href="/#contact" className={`${pill} mt-10 bg-furn-ink text-furn-linen hover:bg-furn-walnut`}>book a visit</a>
+              </div>
+              <a href={`https://wa.me/${furnContact.whatsapp}`} target="_blank" rel="noopener noreferrer" className={`${pill} mt-10 bg-furn-ink text-furn-linen hover:bg-furn-walnut`}>chat on WhatsApp</a>
             </Reveal>
-            <Reveal delay={0.1} className="aspect-[16/11] overflow-hidden">
-              <img src="/images/contact-backdrop.jpg" alt="A styled room in the showroom" className="h-full w-full object-cover object-[50%_60%]" />
+            <Reveal delay={0.1}>
+              <ol className="border-t border-furn-ink">
+                {[
+                  ['Choose', 'Pick the piece, then its fabric, colour, finish and size, all on its page.'],
+                  ['Order', 'Add it to your bag and check out on one page. We reply on WhatsApp with your invoice.'],
+                  ['Confirm', 'Your 75% deposit, by M-Pesa, card or bank transfer, starts production.'],
+                  ['Receive', `Made in 14–21 days (imported pieces in 3 months), then delivered and placed: free within Nairobi.`],
+                ].map(([t, b], i) => (
+                  <li key={t} className="grid grid-cols-[3rem_1fr] gap-4 border-b border-[rgba(30,30,34,0.15)] py-6 md:grid-cols-[3rem_10rem_1fr]">
+                    <span className="font-furn text-2xl text-furn-walnut">{i + 1}</span>
+                    <span className="font-furn text-[28px] leading-none">{t}</span>
+                    <span className="col-start-2 text-[15px] font-light leading-relaxed text-[#4A4640] md:col-start-3">{b}</span>
+                  </li>
+                ))}
+              </ol>
             </Reveal>
           </div>
         </section>

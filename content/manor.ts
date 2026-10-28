@@ -96,12 +96,12 @@ export const manorWings: ReadonlyArray<ManorWing> = [
       { label: 'Discover Spatial Portfolio', href: '#landscape-works' },
       { label: 'Inquire for Private Commissions', href: '#commission' },
     ],
-    /* stills from her villa garden film of 27 Oct */
+    /* stills from the Manor's own garden film of 27 Oct (Manor never borrows Furnishings' pictures) */
     images: [
-      { src: m('grounds-pergola-pool'), alt: 'A timber-slatted pergola beside a pool and a lawn' },
-      { src: m('grounds-olive-court'), alt: 'An olive tree in a white gravel court' },
-      { src: m('grounds-stone-shower'), alt: 'An outdoor shower set into an arched stone wall' },
-      { src: m('grounds-outdoor-kitchen'), alt: 'An outdoor kitchen counter with woven bar stools' },
+      { src: m('garden-table'), alt: 'Round garden tables dressed in a blue floral cloth, with bamboo chairs on a stone terrace' },
+      { src: m('garden-vase'), alt: 'A tall vase of garden flowers over limes, on a dressed table beside the house' },
+      { src: m('garden-bamboo'), alt: 'A bamboo chair against a floral tablecloth' },
+      { src: m('garden-setting'), alt: 'Stacked plates on a woven charger, navy napkins and a vase of limes' },
     ],
   },
   {
@@ -154,18 +154,19 @@ export const manorPillars = {
   heading: 'Where Architectural Prestige Meets Cognitive Science',
   lede: 'Every episode explores the intersection of high-net-worth real estate, bespoke interior craftsmanship, and psychological wellbeing:',
   items: [
-    { title: 'Global Real Estate & Architecture', body: 'Touring premier luxury condos and private estates across Africa, North America, and Europe.', image: 'sofa-olive-stair' },
-    { title: 'The Psychology of Space', body: 'Unpacking how lighting, layout, and spatial balance elevate mental clarity, emotional peace, and restorative living.', image: 'bed-ivory-suite' },
-    { title: 'Bespoke Interior Craftsmanship', body: 'Going behind the scenes to show how custom, artisan-crafted furnishings transform raw architecture into a living sanctuary.', image: 'curved-sofa-forest' },
+    { title: 'Global Real Estate & Architecture', body: 'Touring premier luxury condos and private estates across Africa, North America, and Europe.', image: m('evening-porch') },
+    { title: 'The Psychology of Space', body: 'Unpacking how lighting, layout, and spatial balance elevate mental clarity, emotional peace, and restorative living.', image: m('evening-armchair-lamp') },
+    { title: 'Bespoke Interior Craftsmanship', body: 'Going behind the scenes to show how custom, artisan-crafted furnishings transform raw architecture into a living sanctuary.', image: m('evening-sofa-mirror') },
   ],
 };
 
-/* The four movements of an episode, in the order they play; each shows one of her films or photographs. */
+/* The four movements of an episode, in the order they play; each shows one of the Manor's own films (public/video/manor)
+   or stills from them. */
 export const manorExperience: ReadonlyArray<{ title: string; body: string; media: { video: string } | { image: string } }> = [
-  { title: 'The Global Estate Tour', body: 'Discovering exceptional architectural properties in prestigious international enclaves.', media: { video: 'staircase' } },
-  { title: 'The Spatial Narrative', body: 'Analyzing how the design, light, and proportions of the home impact the lifestyle and wellbeing of its inhabitants.', media: { video: 'marble-wall' } },
-  { title: 'The Craft & Curation', body: 'Showcasing the custom furniture production, textures, and bespoke finishes that define true luxury.', media: { image: 'curved-sofa-channel' } },
-  { title: 'The Sanctuary Reveal', body: 'Demonstrating the ultimate harmony between high-end luxury real estate and deep emotional comfort.', media: { image: 'curved-sofa-mink' } },
+  { title: 'The Global Estate Tour', body: 'Discovering exceptional architectural properties in prestigious international enclaves.', media: { video: 'porch' } },
+  { title: 'The Spatial Narrative', body: 'Analyzing how the design, light, and proportions of the home impact the lifestyle and wellbeing of its inhabitants.', media: { video: 'lamplight' } },
+  { title: 'The Craft & Curation', body: 'Showcasing the custom furniture production, textures, and bespoke finishes that define true luxury.', media: { image: m('evening-blue-chair') } },
+  { title: 'The Sanctuary Reveal', body: 'Demonstrating the ultimate harmony between high-end luxury real estate and deep emotional comfort.', media: { video: 'hearth' } },
 ];
 
 export const manorCredits = {

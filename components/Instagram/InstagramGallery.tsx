@@ -24,7 +24,7 @@ export async function InstagramGallery() {
       }));
 
   return (
-    <section id="instagram" data-nav-theme="light" className="relative bg-[#C99DC2] px-6 py-28 text-[#06122A]">
+    <section id="instagram" data-nav-theme="light" className="relative overflow-x-clip bg-[#E9E2D6] px-6 py-28 text-[#06122A]">
       <Reveal className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>

@@ -2,13 +2,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { collections, colours, pieces } from '@/content/furnishings';
+import { collections, pieces } from '@/content/furnishings';
 import { FurnHeader } from '@/components/Furnishings/FurnHeader';
 import { FurnFooter } from '@/components/Furnishings/FurnFooter';
 import { FurnitureDrawing } from '@/components/Furnishings/FurnitureDrawing';
 import { CommissionForm } from '@/components/Furnishings/CommissionForm';
 import { PieceGallery } from '@/components/Furnishings/PieceGallery';
 import { Wing } from '@/components/Furnishings/Wing';
+import { BuyBox } from '@/components/Furnishings/BuyBox';
 
 type Props = { params: { slug: string } };
 
@@ -19,10 +20,10 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const wing = collections.find((c) => c.id === params.slug);
-  if (wing) return { title: `${wing.name} · Gaze Furnishings`, description: `${wing.intro} Made to commission in Nairobi.` };
+  if (wing) return { title: `${wing.name} · Gaze Furnishings`, description: `${wing.intro} Made to order and delivered to your door.` };
   const piece = pieces.find((p) => p.slug === params.slug);
   if (!piece) return {};
-  return { title: `${piece.name} · Gaze Furnishings`, description: `${piece.line} Made to commission in Nairobi.` };
+  return { title: `${piece.name} · Gaze Furnishings`, description: `${piece.line} Made to order and delivered to your door.` };
 }
 
 /** A wing of the house, or a piece of the catalogue: its spread, then its commission. */
@@ -49,10 +50,10 @@ export default function PiecePage({ params }: Props) {
               <span className="text-furn-ink">{piece.name}</span>
             </nav>
             <div className="mt-10 grid items-start gap-12 md:grid-cols-12">
-              <div className="min-w-0 md:col-span-7">
+              <div className="min-w-0 md:sticky md:top-[96px] md:col-span-7">
                 <PieceGallery piece={piece} />
               </div>
-              <div className="md:col-span-5 md:sticky md:top-[96px] md:pl-6">
+              <div className="md:col-span-5 md:pl-6">
                 <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-furn-walnut">
                   No. {String(pieces.indexOf(piece) + 1).padStart(2, '0')} · {room.name}
                 </p>
@@ -62,38 +63,27 @@ export default function PiecePage({ params }: Props) {
                 </p>
                 <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
 
-                <div className="mt-10 max-w-md border-t border-[rgba(30,30,34,0.15)] pt-6">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#8A847A]">The house palette, or a colour of yours</p>
-                  <ul className="mt-4 flex flex-wrap gap-2.5">
-                    {colours.map((c) => (
-                      <li key={c.name} title={c.name} className="h-6 w-6 rounded-full ring-1 ring-inset ring-[rgba(30,30,34,0.15)]" style={{ background: c.hex }}>
-                        <span className="sr-only">{c.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
                 <dl className="mt-8 grid max-w-md grid-cols-2 border-t border-[rgba(30,30,34,0.15)]">
                   {[
                     ['Price', piece.price ?? 'On request'],
                     piece.imported ? ['Imported', '3 months'] : ['Made to order', '14–21 days'],
+                    ['Dimensions', piece.dims ?? 'Standard, or yours'],
+                    ['Design', piece.imported ? 'Corporate Collection' : 'Gaze atelier'],
                     ['Deposit', '75%, then 25%'],
-                    ['Delivery', 'Free in Nairobi'],
+                    ['Delivery', 'Free within Nairobi'],
                   ].map(([k, v], i) => (
                     <div key={k} className={`border-b border-[rgba(30,30,34,0.15)] py-5 ${i % 2 ? 'pl-6' : 'border-r pr-6'}`}>
                       <dt className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#8A847A]">{k}</dt>
-                      <dd className="mt-2 font-furn text-[26px] leading-none">{v}</dd>
+                      <dd className="mt-2 font-furn text-[24px] leading-none">{v}</dd>
                     </div>
                   ))}
                 </dl>
-                <div className="mt-10 flex flex-wrap items-center gap-6">
-                  <a href="#commission" data-no-transition className="rounded-full bg-furn-ink px-9 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-furn-linen transition-colors hover:bg-furn-walnut">
-                    Begin your commission
-                  </a>
-                  <Link href="/furnishings#consultation" data-no-transition className="text-[11px] font-medium uppercase tracking-[0.24em] underline decoration-[rgba(30,30,34,0.35)] underline-offset-[6px] hover:decoration-furn-ink">
-                    Book a private consultation
-                  </Link>
-                </div>
+
+                <BuyBox piece={piece} />
+
+                <a href="#commission" data-no-transition className="mt-8 inline-block text-[11px] font-medium uppercase tracking-[0.24em] underline decoration-[rgba(30,30,34,0.35)] underline-offset-[6px] hover:decoration-furn-ink">
+                  Have your own design? Commission it bespoke
+                </a>
               </div>
             </div>
           </div>
@@ -103,11 +93,11 @@ export default function PiecePage({ params }: Props) {
         <section id="commission" className="scroll-mt-[72px] bg-white px-5 py-20 md:px-[6vw] md:py-28">
           <div className="mx-auto max-w-[1600px]">
             <div className="mb-16 max-w-2xl">
-              <p className="text-[12px] text-[#6F6A62]">the commission</p>
-              <h2 className="mt-3 font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.96]">Make the {piece.name.split(' ')[0]} yours</h2>
+              <p className="text-[12px] text-[#6F6A62]">the bespoke commission</p>
+              <h2 className="mt-3 font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.96]">Your own design of the {piece.name.split(' ')[0]}</h2>
               <p className="mt-5 text-base font-light leading-relaxed text-[#4A4640]">
-                Six short steps: your measurements, your fabric, colour and finish in the Bespoke Atelier, your own design, a word to the atelier, and your
-                signature. A representative then confirms everything with you before a single cut is made.
+                For a sketch or a reference of your own: your measurements, the Bespoke Atelier, your design, a word to the atelier, and your
+                signature. A representative then confirms everything with you before a single cut is made. Buying the piece as shown? Use the bag above.
               </p>
             </div>
             <CommissionForm piece={piece} />

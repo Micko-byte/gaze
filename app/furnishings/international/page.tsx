@@ -29,7 +29,7 @@ export default function InternationalPage() {
               <span className="px-2">/</span>
               <span className="text-furn-linen">the worldwide atelier</span>
             </nav>
-            <p className={`mt-12 ${cap} text-furn-lilac`}>{w.eyebrow}</p>
+            <p className={`mt-12 ${cap} text-[rgba(238,231,223,0.6)]`}>{w.eyebrow}</p>
             <h1 className="mt-5 font-furn text-[clamp(56px,9vw,168px)] font-normal leading-[0.9]">{w.title}</h1>
             <div className="mt-14 grid gap-10 border-t border-[rgba(238,231,223,0.25)] pt-10 md:grid-cols-[1fr_1.2fr]">
               <div>
@@ -82,7 +82,7 @@ export default function InternationalPage() {
         </section>
 
         {/* ── initiate ── */}
-        <section className="bg-furn-lilac px-5 py-20 md:px-[6vw] md:py-24">
+        <section className="bg-[#E4DCD1] px-5 py-20 md:px-[6vw] md:py-24">
           <Reveal className="mx-auto flex max-w-[1600px] flex-col justify-between gap-10 lg:flex-row lg:items-end">
             <div>
               <h2 className="font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.98]">{w.closingTitle}</h2>

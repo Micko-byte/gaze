@@ -10,11 +10,10 @@ describe('ShopButton', () => {
     expect(container.textContent).toContain(shopConfig.longLabel);
   });
 
-  it('points at the Shopify storefront in a new tab', () => {
+  it('opens the Furnishings collection on this site', () => {
     render(<ShopButton />);
     const link = screen.getByRole('link', { name: shopConfig.ariaLabel });
-    expect(link).toHaveAttribute('href', `${shopConfig.storefrontUrl}${shopConfig.collectionPath}`);
-    expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(link).toHaveAttribute('href', '/furnishings#collection');
+    expect(link).not.toHaveAttribute('target');
   });
 });

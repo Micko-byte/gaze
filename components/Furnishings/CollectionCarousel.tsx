@@ -39,7 +39,7 @@ export function CollectionCarousel() {
                     />
                   )}
                   {signature && (
-                    <span className="absolute left-4 top-4 rounded-full bg-furn-lilac px-3 py-1 font-text text-[11px] text-furn-ink">{signature.name}</span>
+                    <span className="absolute left-4 top-4 rounded-full bg-furn-linen px-3 py-1 font-text text-[11px] text-furn-ink">{signature.name}</span>
                   )}
                 </div>
                 <p className="mt-4 font-text text-[15px]">{c.name}</p>

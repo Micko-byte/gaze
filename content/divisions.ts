@@ -10,7 +10,7 @@ export type Division = {
   href: string;
   external: boolean;
   image: string;
-  /** Optional Shopify storefront URL - when set, the card shows an inline 'Shop' chip. */
+  /** Optional shop link - when set, the card shows an inline 'Shop' chip. */
   shopHref?: string;
 };
 

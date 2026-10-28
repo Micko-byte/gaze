@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { furnRooms, pieces } from '@/content/furnishings';
 import { HouseLogo } from '@/components/Logo/HouseLogo';
 import { SoundToggle } from '@/components/Sound/SoundToggle';
+import { BagDrawer } from './BagDrawer';
 
 const Icon = ({ d }: { d: string }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
@@ -92,12 +93,10 @@ export function FurnHeader() {
             <a href="#search" data-no-transition aria-label="Search the collection" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
               <Icon d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Zm5.3-2.2L21 21" />
             </a>
-            <Link href="/furnishings#showroom" data-no-transition aria-label="Visit the showroom" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
-              <Icon d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-            </Link>
             <Link href="/furnishings#consultation" data-no-transition aria-label="Your account" className="hidden p-1 transition-colors hover:text-furn-walnut sm:block">
               <Icon d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm-8 9a8 8 0 0 1 16 0" />
             </Link>
+            <BagDrawer />
             <SoundToggle light />
             <Link href="/" className="hidden items-center gap-2 border-l border-[rgba(30,30,34,0.15)] pl-4 font-text text-[11px] uppercase tracking-[0.22em] md:flex">
               <HouseLogo id="holdings" tone="mono" className="h-4 w-auto" /> Gaze Holdings
@@ -139,7 +138,7 @@ export function FurnHeader() {
                   className="self-start font-text text-[13px] text-furn-ink"
                 >
                   <span className="block text-[11px] uppercase tracking-[0.22em] text-[#8A847A]">signature</span>
-                  <span className="mt-2 inline-block rounded-full bg-furn-lilac px-4 py-1.5 transition-colors hover:bg-furn-ink hover:text-furn-linen">{r.feature}</span>
+                  <span className="mt-2 inline-block rounded-full bg-[#EDE6DC] px-4 py-1.5 transition-colors hover:bg-furn-ink hover:text-furn-linen">{r.feature}</span>
                 </Link>
               )}
             </div>
@@ -151,7 +150,7 @@ export function FurnHeader() {
         <div className="fixed inset-0 z-50 flex flex-col bg-furn-ink px-6 py-6 text-furn-linen md:px-10" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="flex items-center justify-between">
             <HouseLogo id="furnishings" tone="mono" knock="#1E1E22" className="h-9 w-auto" />
-            <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="grid h-10 w-10 place-items-center rounded-full border border-[rgba(238,231,223,0.4)] transition-colors hover:bg-furn-lilac hover:text-furn-ink">
+            <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="grid h-10 w-10 place-items-center rounded-full border border-[rgba(238,231,223,0.4)] transition-colors hover:bg-furn-linen hover:text-furn-ink">
               <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
                 <line x1="2" y1="2" x2="12" y2="12" />
                 <line x1="12" y1="2" x2="2" y2="12" />
@@ -161,7 +160,7 @@ export function FurnHeader() {
           <ul className="mt-16 grid gap-x-16 gap-y-4 font-furn text-[clamp(36px,5vw,72px)] leading-[1.05] md:grid-cols-2">
             {furnRooms.map((r) => (
               <li key={r.label}>
-                <Link href={r.href} data-no-transition onClick={() => setOpen(false)} className="transition-colors hover:text-furn-lilac">
+                <Link href={r.href} data-no-transition onClick={() => setOpen(false)} className="transition-colors hover:text-[rgba(238,231,223,0.6)]">
                   {r.label}
                 </Link>
               </li>

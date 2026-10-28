@@ -45,7 +45,7 @@ export function FurnHero() {
 
       <div className="relative mx-auto flex h-full max-w-[1600px] flex-col justify-center px-5 pt-[72px] md:px-[6vw]">
         <div data-loader-target className="max-w-[1100px]">
-          <p className="font-text text-[12px] font-medium uppercase tracking-[0.36em] text-furn-lilac">{furnHero.eyebrow}</p>
+          <p className="font-text text-[12px] font-medium uppercase tracking-[0.36em] text-[rgba(238,231,223,0.8)]">{furnHero.eyebrow}</p>
           <h1 className="mt-5 max-w-[14ch] font-furn text-[clamp(56px,8.6vw,160px)] font-normal leading-[0.96] tracking-[-0.015em]">
             {furnHero.headline.map((line) => (
               <span key={line} className="block">{line}</span>
@@ -53,8 +53,8 @@ export function FurnHero() {
           </h1>
           <p className="mt-7 max-w-md font-text text-base font-light leading-relaxed text-[rgba(238,231,223,0.88)] md:text-lg">{furnHero.sub}</p>
           <div className="mt-9 flex flex-wrap gap-3 whitespace-nowrap font-text text-[13px]">
-            <a href="#collection" className="rounded-full bg-furn-linen px-7 py-3.5 text-furn-ink transition-colors hover:bg-furn-lilac">discover the collection</a>
-            <a href="#consultation" className="rounded-full border border-[rgba(238,231,223,0.7)] px-7 py-3.5 transition-colors hover:border-furn-lilac hover:text-furn-lilac">book a consultation</a>
+            <a href="#collection" className="rounded-full bg-furn-linen px-7 py-3.5 text-furn-ink transition-colors hover:bg-white">shop the collection</a>
+            <a href="/furnishings/projects" className="rounded-full border border-[rgba(238,231,223,0.7)] px-7 py-3.5 transition-colors hover:border-furn-linen hover:bg-[rgba(238,231,223,0.12)]">projects &amp; contract</a>
           </div>
         </div>
       </div>

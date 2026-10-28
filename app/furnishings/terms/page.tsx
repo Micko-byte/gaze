@@ -30,7 +30,7 @@ export default function FurnTermsPage() {
                 <p className="mt-8 max-w-sm text-base font-light leading-relaxed text-[#4A4640]">
                   By confirming an order or making any payment, you accept these terms. Questions about them go to{' '}
                   <a href={`mailto:${furnContact.email}`} className="underline underline-offset-4">{furnContact.email}</a> or{' '}
-                  <a href={`tel:${furnContact.tel}`} className="whitespace-nowrap underline underline-offset-4">{furnContact.phone}</a>.
+                  <a href={`tel:${furnContact.phones[0].tel}`} className="whitespace-nowrap underline underline-offset-4">{furnContact.phones[0].label}</a>.
                 </p>
                 <p className="mt-6 text-[13px] text-[#6F6A62]">
                   Commissioning from outside Kenya?{' '}

@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { collections, colours, pieces, textures, type Piece, type RoomId } from '@/content/furnishings';
+import { collections, colours, pieces, textures, type Drawing, type Piece, type RoomId } from '@/content/furnishings';
 import { FurnitureDrawing } from './FurnitureDrawing';
+import { WingFilter } from './WingFilter';
 import { Reveal } from '@/components/Reveal/Reveal';
 
 export const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
@@ -89,7 +90,7 @@ function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boole
       <p className="mt-4 max-w-md text-sm font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
       <span className={`mt-5 inline-flex items-center gap-3 ${cap}`}>
         <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
-          Commission this piece
+          Choose yours &amp; buy
         </span>
         <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1">→</span>
       </span>
@@ -137,19 +138,31 @@ export function CatalogueContents() {
   );
 }
 
-/** A wing's pieces, set in an asymmetric grid: the first large, the second tall and dropped beside it. */
+/* What each drawing is called in a wing's row of types. */
+const TYPE: Record<Drawing, string> = {
+  sofa: 'sofas',
+  outdoor: 'sofas',
+  armchair: 'chairs & armchairs',
+  table: 'tables',
+  dining: 'dining',
+  sideboard: 'sideboards',
+  bed: 'beds',
+  wardrobe: 'wardrobes',
+  kids: 'beds & daybeds',
+  bunk: 'bunk beds',
+  kitchen: 'kitchens',
+  stool: 'bars & stools',
+  lounger: 'loungers & daybeds',
+  desk: 'desks',
+  bookcase: 'bookcases',
+};
+
+/** A wing's pieces, set in an asymmetric grid (the first large, the second tall and dropped beside it), sortable by type. */
 export function WingPieces({ room }: { room: RoomId }) {
   const roomPieces = pieces.filter((p) => p.room === room);
   return (
-    <div className="grid gap-14 md:grid-cols-12 md:gap-x-10">
-      {roomPieces.map((p, j) => {
-        const span = j === 0 ? 'md:col-span-7' : j === 1 ? 'md:col-span-5 md:mt-32' : j % 2 === 0 ? 'md:col-span-6' : 'md:col-span-6 md:mt-24';
-        return (
-          <Reveal key={p.slug} delay={(j % 2) * 0.08} className={span}>
-            <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} />
-          </Reveal>
-        );
-      })}
-    </div>
+    <WingFilter
+      items={roomPieces.map((p, j) => ({ type: TYPE[p.drawing], node: <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} /> }))}
+    />
   );
 }

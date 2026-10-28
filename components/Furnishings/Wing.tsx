@@ -77,11 +77,11 @@ export function Wing({ room }: { room: (typeof collections)[number] }) {
                 <img src={signature.photos[0]} alt={`${signature.name}, the signature executive desk`} className="h-full w-full object-cover" />
               </Reveal>
               <Reveal delay={0.1}>
-                <p className={`${cap} text-furn-lilac`}>{copy.signature.eyebrow}</p>
+                <p className={`${cap} text-[rgba(238,231,223,0.6)]`}>{copy.signature.eyebrow}</p>
                 <h2 className="mt-5 font-furn text-[clamp(44px,5vw,88px)] leading-[0.95]">{copy.signature.headline}</h2>
                 <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-[rgba(238,231,223,0.82)]">{copy.signature.body}</p>
-                <Link href={`/furnishings/${signature.slug}`} data-no-transition className={`${pill} mt-10 bg-furn-lilac text-furn-ink hover:bg-furn-linen`}>
-                  Commission the {signature.name.replace(/^The /, '')}
+                <Link href={`/furnishings/${signature.slug}`} data-no-transition className={`${pill} mt-10 bg-furn-linen text-furn-ink hover:bg-white`}>
+                  Buy the {signature.name.replace(/^The /, '')}
                 </Link>
               </Reveal>
             </div>
@@ -132,7 +132,7 @@ export function Wing({ room }: { room: (typeof collections)[number] }) {
             </section>
 
             {/* ── her call to commission ── */}
-            <section className="bg-furn-lilac px-5 py-20 md:px-[6vw] md:py-24">
+            <section className="bg-[#E4DCD1] px-5 py-20 md:px-[6vw] md:py-24">
               <Reveal className="mx-auto flex max-w-[1600px] flex-col justify-between gap-10 lg:flex-row lg:items-end">
                 <div>
                   <h2 className="font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.98]">{copy.commission.title}</h2>

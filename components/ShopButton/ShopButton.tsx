@@ -28,8 +28,6 @@ export function ShopButton() {
   return (
     <a
       href={shopHref}
-      target="_blank"
-      rel="noopener noreferrer"
       aria-label={shopConfig.ariaLabel}
       data-cursor="hover"
       className={`fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 inline-flex items-center gap-2 px-5 py-3 bg-rose text-obsidian font-display text-[0.65rem] tracking-[0.3em] uppercase font-medium shadow-[0_8px_28px_-12px_rgba(222,186,120,0.55)] transition-all duration-500 ease-reveal hover:bg-champagne ${
