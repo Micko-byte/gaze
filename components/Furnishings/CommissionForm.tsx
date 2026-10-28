@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import Link from 'next/link';
 import {
   colours,
-  commissionTerms,
   defaultConfiguration,
   describeConfiguration,
   finishes,
@@ -19,6 +18,7 @@ import {
 import { BespokeAtelier } from './BespokeAtelier';
 import { baseHex, materialStyle } from './AtelierRender';
 import { SignaturePad } from '@/components/SignaturePad/SignaturePad';
+import { MasterTerms } from './MasterTerms';
 
 const field = 'w-full border-b border-[rgba(30,30,34,0.35)] bg-transparent py-2 text-base outline-none transition-colors placeholder:text-[#9A948A] focus:border-furn-ink';
 const label = 'text-[12px] text-[#6F6A62]';
@@ -228,18 +228,20 @@ export function CommissionForm({ piece }: { piece: Piece }) {
         </Step>
 
         <Step n={6} title="terms & signature" note="Please read the terms of your commission, then sign.">
-          <div className="max-h-72 overflow-y-auto border border-[rgba(30,30,34,0.2)] bg-white p-6" tabIndex={0} aria-label="Terms of commission">
-            <p className="font-furn text-xl">Terms of commission</p>
-            <ol className="mt-4 list-decimal space-y-3 pl-5 text-[13px] leading-relaxed text-[#4A4640]">
-              {commissionTerms.map((t) => (
-                <li key={t}>{t}</li>
-              ))}
-            </ol>
+          <div className="max-h-72 overflow-y-auto border border-[rgba(30,30,34,0.2)] bg-white p-6" tabIndex={0} aria-label="Master terms and conditions">
+            <p className="font-furn text-xl">Master Terms &amp; Conditions</p>
+            <p className="mb-5 mt-1 text-[12px] text-[#6F6A62]">
+              Gaze Furnishings Kenya Limited ·{' '}
+              <Link href="/furnishings/terms" target="_blank" className="underline underline-offset-4">
+                read them on their own page
+              </Link>
+            </p>
+            <MasterTerms compact />
           </div>
           <label className="mt-6 flex cursor-pointer items-start gap-3 text-[14px]">
             <input type="checkbox" name="agree" required className="mt-1 accent-[#1E1E22]" />
-            I have read and understood the terms of this commission, and agree that they are legally binding once my order is
-            confirmed.
+            I have read, understood, and agree to proceed under the Terms and Conditions of Gaze Furnishings Kenya Limited, and
+            understand that my 75% deposit makes this commission legally binding.
           </label>
           <div className="mt-8 grid gap-6 sm:grid-cols-[1fr_12rem]">
             <div>
@@ -295,10 +297,13 @@ export function CommissionForm({ piece }: { piece: Piece }) {
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-[#6F6A62]">deposit</dt>
-              <dd className="min-w-[96px] border-b border-dashed border-[rgba(30,30,34,0.35)] text-right">to follow</dd>
+              <dd className="min-w-[96px] border-b border-dashed border-[rgba(30,30,34,0.35)] text-right">75% · to follow</dd>
             </div>
           </dl>
-          <p className="mt-6 text-[12px] leading-relaxed text-[#6F6A62]">made to order in 14–21 days · delivered worldwide</p>
+          <p className="mt-6 text-[12px] leading-relaxed text-[#6F6A62]">
+            {piece.imported ? 'imported in 3 months' : 'made to order in 14–21 days'} · free delivery in Nairobi · prices exclude 16% VAT ·{' '}
+            <Link href="/furnishings/international" className="underline underline-offset-2">outside Kenya?</Link>
+          </p>
         </div>
       </aside>
     </div>

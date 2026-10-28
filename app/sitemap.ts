@@ -11,6 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     })),
     { url: 'https://gazeholdings.com/manor', lastModified: now, priority: 0.8 },
+    { url: 'https://gazeholdings.com/furnishings/international', lastModified: now, priority: 0.7 },
+    { url: 'https://gazeholdings.com/furnishings/terms', lastModified: now, priority: 0.3 },
     { url: 'https://gazeholdings.com/meet-the-director', lastModified: now, priority: 0.8 },
     { url: 'https://gazeholdings.com/legal/privacy', lastModified: now, priority: 0.3 },
     { url: 'https://gazeholdings.com/legal/terms', lastModified: now, priority: 0.3 },

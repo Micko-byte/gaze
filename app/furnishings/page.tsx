@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { orderingSteps, payments, textures } from '@/content/furnishings';
+import { furnContact, masterAtelier, payments, textures } from '@/content/furnishings';
 import { FurnHeader } from '@/components/Furnishings/FurnHeader';
 import { FurnHero } from '@/components/Furnishings/FurnHero';
 import { CollectionCarousel } from '@/components/Furnishings/CollectionCarousel';
@@ -41,26 +41,47 @@ export default function FurnishingsPage() {
               'repeating-linear-gradient(92deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 9px), repeating-linear-gradient(88deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 23px), linear-gradient(180deg, #7B5232, #5E3D24)',
           }}
         >
-          {/* the client's Maison Profile (5 Oct 2026) */}
+          {/* the client's Master Atelier write-up (27 Oct 2026) */}
           <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="text-[12px] text-furn-lilac">the maison · founded in Nairobi, 2017</p>
-            <p className="mt-8 font-furn text-[clamp(30px,3.6vw,60px)] leading-[1.15]">
-              We do not manufacture inventory; we materialize legacy.
+            <p className="text-[12px] text-furn-lilac">
+              {masterAtelier.company} · {masterAtelier.tagline}
             </p>
+            <p className="mt-8 text-[11px] font-medium uppercase tracking-[0.3em] text-[rgba(238,231,223,0.7)]">{masterAtelier.eyebrow}</p>
+            <p className="mt-5 font-furn text-[clamp(30px,3.6vw,60px)] leading-[1.15]">{masterAtelier.headline}</p>
             <div className="mx-auto mt-10 flex max-w-2xl flex-col gap-5 text-base font-light leading-relaxed text-[rgba(238,231,223,0.85)] md:text-lg">
-              <p>
-                Gaze Furnishings is an exclusive house of bespoke interior curation and rare furniture manufacturing. We exist for
-                a singular purpose: to craft the physical sanctuaries of those who shape the world.
-              </p>
-              <p>
-                Operating entirely outside the constraints of mass production, every silhouette is custom-commissioned,
-                structurally absolute, and finished by master artisans. For a decade, our ateliers have quietly defined the
-                standard for elite private residences and presidential boardrooms across the region.
-              </p>
-              <p>To inhabit a Gaze environment is to command absolute space, requiring no introduction and yielding to no equal.</p>
+              {masterAtelier.body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
             </div>
-            <a href="#craft" data-no-transition className={`${pill} mt-12 bg-furn-linen text-furn-ink hover:bg-furn-lilac`}>learn about our craft</a>
+            <a href="#pillars" data-no-transition className={`${pill} mt-12 bg-furn-linen text-furn-ink hover:bg-furn-lilac`}>the curated pillars</a>
           </Reveal>
+        </section>
+
+        {/* ── the curated pillars ── */}
+        <section id="pillars" className="scroll-mt-[72px] bg-white px-5 py-24 md:px-[6vw] md:py-32">
+          <div className="mx-auto max-w-[1600px]">
+            <Reveal className="text-center">
+              <h2 className="inline-block border-b border-furn-ink pb-1 font-furn text-[clamp(30px,3vw,48px)] leading-none">{masterAtelier.pillarsTitle}</h2>
+            </Reveal>
+            <ul className="mt-16 grid gap-12 md:grid-cols-3 md:gap-8">
+              {masterAtelier.pillars.map((p, i) => (
+                <li key={p.name} className={i === 1 ? 'md:mt-20' : ''}>
+                  <Reveal delay={i * 0.08}>
+                    <Link href={p.href} data-no-transition className="group block">
+                      <span className="block aspect-[4/5] overflow-hidden">
+                        <img src={p.image} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] ease-reveal group-hover:scale-[1.04]" />
+                      </span>
+                      <span className="mt-6 block font-furn text-[clamp(26px,2.2vw,36px)] leading-tight">{p.name}</span>
+                      <span className="mt-3 block text-[15px] font-light leading-relaxed text-[#4A4640]">{p.body}</span>
+                      <span className="mt-4 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.24em]">
+                        Enter <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+                      </span>
+                    </Link>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         <CatalogueContents />
@@ -123,9 +144,9 @@ export default function FurnishingsPage() {
               </p>
               <dl className="mt-12 grid max-w-md grid-cols-2 gap-y-8 border-t border-[rgba(30,30,34,0.15)] pt-8">
                 <div><dt className="text-[12px] text-[#6F6A62]">made to order</dt><dd className="mt-1 font-furn text-3xl">14–21 days</dd></div>
-                <div><dt className="text-[12px] text-[#6F6A62]">delivery</dt><dd className="mt-1 font-furn text-3xl">worldwide</dd></div>
+                <div><dt className="text-[12px] text-[#6F6A62]">delivery</dt><dd className="mt-1 font-furn text-3xl">free in Nairobi</dd></div>
                 <div><dt className="text-[12px] text-[#6F6A62]">rooms</dt><dd className="mt-1 font-furn text-3xl">seven</dd></div>
-                <div><dt className="text-[12px] text-[#6F6A62]">prices</dt><dd className="mt-1 font-furn text-3xl">your currency</dd></div>
+                <div><dt className="text-[12px] text-[#6F6A62]">deposit</dt><dd className="mt-1 font-furn text-3xl">75%</dd></div>
               </dl>
             </Reveal>
           </div>
@@ -149,28 +170,51 @@ export default function FurnishingsPage() {
           </div>
         </section>
 
-        {/* ── ordering ── */}
+        {/* ── her commissioning terms ── */}
         <section id="ordering" className="scroll-mt-[72px] px-5 py-24 md:px-[6vw] md:py-36">
           <div className="mx-auto max-w-[1600px]">
-            <Reveal className="text-center">
-              <h2 className="inline-block border-b border-furn-ink pb-1 font-furn text-[clamp(30px,3vw,48px)] leading-none">from your room to your door</h2>
+            <Reveal className="grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-end">
+              <h2 className="font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.98]">{masterAtelier.termsTitle}</h2>
+              <p className="max-w-lg text-base font-light leading-relaxed text-[#4A4640]">{masterAtelier.termsIntro}</p>
             </Reveal>
-            <ol className="mt-16 grid gap-10 md:grid-cols-4">
-              {orderingSteps.map((s, i) => (
-                <Reveal key={s.title} delay={i * 0.08}>
-                  <li className="border-t border-furn-ink pt-6">
-                    <span className="font-furn text-5xl text-furn-walnut">{i + 1}</span>
-                    <h3 className="mt-4 text-lg font-medium">{s.title}</h3>
-                    <p className="mt-2 text-sm font-light leading-relaxed text-[#4A4640]">{s.body}</p>
-                  </li>
-                </Reveal>
+            <dl className="mt-14 grid gap-px bg-[rgba(30,30,34,0.15)] md:grid-cols-2 lg:grid-cols-3">
+              {masterAtelier.terms.map((t) => (
+                <div key={t.label} className="bg-furn-linen py-8 md:p-8">
+                  <dt className="text-lg font-medium">{t.label}</dt>
+                  <dd className="mt-2 text-[15px] font-light leading-relaxed text-[#4A4640]">{t.body}</dd>
+                </div>
               ))}
-            </ol>
-            <Reveal className="mt-16 flex flex-wrap items-center justify-center gap-3">
+            </dl>
+
+            {/* pricing & invoicing transparency */}
+            <div className="mt-20 grid gap-10 bg-furn-ink p-8 text-furn-linen md:grid-cols-[1fr_1.4fr] md:p-14">
+              <h3 className="font-furn text-[clamp(32px,3.2vw,52px)] leading-[1.02]">{masterAtelier.invoicingTitle}</h3>
+              <div className="grid gap-4 text-base font-light leading-relaxed text-[rgba(238,231,223,0.85)]">
+                {masterAtelier.invoicing.map((p, i) => (
+                  <p key={p} className={i === 0 ? 'font-furn text-2xl text-furn-linen' : ''}>{p}</p>
+                ))}
+              </div>
+            </div>
+
+            <Reveal className="mt-12 flex flex-wrap items-center justify-center gap-3">
               {payments.map((p) => (
                 <span key={p} className="rounded-full border border-[rgba(30,30,34,0.2)] px-5 py-2 text-[13px]">{p}</span>
               ))}
-              <span className="px-3 text-[13px] text-[#6F6A62]">· a deposit today, the balance on delivery · prices follow your country</span>
+              <span className="px-3 text-[13px] text-[#6F6A62]">
+                · <Link href="/furnishings/terms" data-no-transition className="underline underline-offset-4">master terms &amp; conditions</Link> ·{' '}
+                <Link href="/furnishings/international" data-no-transition className="underline underline-offset-4">commissioning from abroad</Link>
+              </span>
+            </Reveal>
+
+            <Reveal className="mt-24 border-t border-furn-ink pt-10 text-center">
+              <h2 className="font-furn text-[clamp(40px,5vw,88px)] leading-[0.98]">{masterAtelier.commissionTitle}</h2>
+              <div className="mt-10 flex flex-wrap justify-center gap-3">
+                {masterAtelier.ctas.map((c, i) => (
+                  <Link key={c.label} href={c.href} data-no-transition className={`${pill} ${i === 2 ? 'border border-furn-ink hover:bg-furn-ink hover:text-furn-linen' : 'bg-furn-ink text-furn-linen hover:bg-furn-walnut'}`}>
+                    {c.label}
+                  </Link>
+                ))}
+              </div>
             </Reveal>
           </div>
         </section>
@@ -192,6 +236,11 @@ export default function FurnishingsPage() {
             <Reveal>
               <h2 className="font-furn text-[clamp(44px,5vw,88px)] leading-[0.98]">A unique experience, come visit us</h2>
               <p className="mt-6 max-w-sm text-base font-light leading-relaxed text-[#4A4640]">See the fabrics, sit in the pieces and meet the people who make them, in Nairobi.</p>
+              <address className="mt-8 grid gap-1 text-[15px] not-italic">
+                <span>{furnContact.address}</span>
+                <a href={`tel:${furnContact.tel}`} className="hover:text-furn-walnut">{furnContact.phone}</a>
+                <a href={`mailto:${furnContact.email}`} className="hover:text-furn-walnut">{furnContact.email}</a>
+              </address>
               <a href="/#contact" className={`${pill} mt-10 bg-furn-ink text-furn-linen hover:bg-furn-walnut`}>book a visit</a>
             </Reveal>
             <Reveal delay={0.1} className="aspect-[16/11] overflow-hidden">

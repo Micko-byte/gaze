@@ -58,7 +58,7 @@ export default function PiecePage({ params }: Props) {
                 </p>
                 <h1 className="mt-5 font-furn text-[clamp(56px,7vw,124px)] font-normal leading-[0.92]">{piece.name}</h1>
                 <p className="mt-4 font-furn text-[22px] italic text-[#6F6A62]">
-                  {piece.kind}, named for the {piece.animal}
+                  {piece.animal ? `${piece.kind}, named for the ${piece.animal}` : piece.kind}
                 </p>
                 <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
 
@@ -76,9 +76,9 @@ export default function PiecePage({ params }: Props) {
                 <dl className="mt-8 grid max-w-md grid-cols-2 border-t border-[rgba(30,30,34,0.15)]">
                   {[
                     ['Price', piece.price ?? 'On request'],
-                    ['Made to order', '14–21 days'],
-                    ['Size', 'To your room'],
-                    ['Delivery', 'Worldwide'],
+                    piece.imported ? ['Imported', '3 months'] : ['Made to order', '14–21 days'],
+                    ['Deposit', '75%, then 25%'],
+                    ['Delivery', 'Free in Nairobi'],
                   ].map(([k, v], i) => (
                     <div key={k} className={`border-b border-[rgba(30,30,34,0.15)] py-5 ${i % 2 ? 'pl-6' : 'border-r pr-6'}`}>
                       <dt className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#8A847A]">{k}</dt>

@@ -48,7 +48,7 @@ export const houses: ReadonlyArray<House> = [
     id: 'manor',
     logo: 'manor',
     name: 'The Gaze Manor',
-    line: 'An international series on luxury real estate, interior architecture, and the psychology of space.',
+    line: 'The sanctuary of structural elegance: estate living, architectural design, and media & spatial arts.',
     href: '/manor',
     /* its mark is black on white; the house is set on warm stone with a bronze accent */
     ground: '#EEEBE6',

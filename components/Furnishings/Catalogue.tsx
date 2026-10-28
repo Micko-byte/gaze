@@ -67,7 +67,7 @@ function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boole
           <p className={`${cap} text-furn-walnut`}>No. {String(no).padStart(2, '0')}</p>
           <h3 className="mt-3 font-furn text-[clamp(30px,2.6vw,44px)] leading-[0.95]">{piece.name}</h3>
           <p className="mt-2 font-furn text-[17px] italic text-[#6F6A62]">
-            {piece.kind}, named for the {piece.animal}
+            {piece.animal ? `${piece.kind}, named for the ${piece.animal}` : piece.kind}
           </p>
         </div>
         <p className="text-right">
@@ -83,7 +83,7 @@ function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boole
           ))}
           <span className="ml-1.5 text-[12px] text-[#6F6A62]">+{colours.length - 6} &amp; bespoke</span>
         </span>
-        <span className={`${cap} text-[#6F6A62]`}>Made to order · 14–21 days</span>
+        <span className={`${cap} text-[#6F6A62]`}>{piece.imported ? 'Imported · 3 months' : 'Made to order · 14–21 days'}</span>
       </div>
 
       <p className="mt-4 max-w-md text-sm font-light leading-relaxed text-[#4A4640]">{piece.line}</p>

@@ -173,7 +173,7 @@ export function BespokeAtelier({ piece, value, onChange, layout = 'wide' }: { pi
         <p className="mt-2 font-furn text-[clamp(20px,1.8vw,26px)] leading-snug">
           {piece.name} in {describeConfiguration(value)}
         </p>
-        <p className="mt-1 text-[12px] text-[rgba(238,231,223,0.65)]">Gaze Furnishings standard build · made to order in 14–21 days</p>
+        <p className="mt-1 text-[12px] text-[rgba(238,231,223,0.65)]">{piece.imported ? 'Gaze Furnishings Corporate Collection · imported in 3 months' : 'Gaze Furnishings standard build · made to order in 14–21 days'}</p>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export const collections: ReadonlyArray<{ id: RoomId; name: string; intro: strin
   { id: 'kids', name: 'Kids bedroom', intro: 'Pieces that grow with them: safe, sturdy, and made with the same care as the rest of the house.', drawing: 'kids', cover: f('kids-mountain-room') },
   { id: 'kitchen', name: 'Kitchen', intro: 'Where the day begins. Kitchens and bars built for daily use and finished to be looked at.', drawing: 'kitchen', cover: f('kitchen-oak-grey') },
   { id: 'outdoor', name: 'Outdoor', intro: 'Made for the light and the long evenings: weather-ready frames and fabrics that keep their colour.', drawing: 'outdoor', cover: f('outdoor-daybed-round-pool'), film: { src: '/video/furnishings/outdoor-garden.mp4', poster: '/video/furnishings/outdoor-garden.jpg' } },
-  { id: 'office', name: 'Office & study', intro: 'For the decisions that matter: desks of presence, reception pieces and storage that keeps the room composed.', drawing: 'desk', cover: f('reception-ring') },
+  { id: 'office', name: 'Office & study', intro: 'For the decisions that matter: executive desks, boardroom suites and private office seating, imported and placed with care.', drawing: 'desk', cover: f('office-boardroom-black') },
 ];
 
 export type Piece = {
@@ -40,8 +40,10 @@ export type Piece = {
   name: string;
   /** What the piece is, in a few lowercase words. */
   kind: string;
-  /** The animal it is named for. */
+  /** The animal it is named for; empty for the imported Corporate Collection, which carries her own names. */
   animal: string;
+  /** Imported on a dedicated production schedule (three months) rather than made in the Nairobi workshops. */
+  imported?: boolean;
   room: RoomId;
   line: string;
   drawing: Drawing;
@@ -117,9 +119,13 @@ export const pieces: ReadonlyArray<Piece> = [
   P('kasa-lounger', 'Kasa Lounger', 'upholstered sun lounger', 'sea turtle', 'outdoor', 'lounger', 'A deep, cushioned lounger with a reclining back, made in pairs and rows for the poolside.', ['outdoor-lounger-pool', 'outdoor-lounger-umbrellas', 'outdoor-lounger-swim', 'outdoor-lounger-above']),
   P('heroe-round-daybed', 'Heroe Round Daybed', 'round rope daybed', 'flamingo', 'outdoor', 'lounger', 'A round daybed held in a curved, rope-woven back, deep enough for two and an afternoon.', ['outdoor-daybed-round-pool', 'outdoor-daybed-round-pair', 'outdoor-daybed-round-sunset']),
   P('shakwe-daybed', 'Shakwe Daybed', 'low outdoor daybed', 'gull', 'outdoor', 'lounger', 'A low daybed on a timber plinth, soft-edged and made to sit right at the water.', ['outdoor-daybed-plinth', 'outdoor-daybed-rounded']),
-  /* office */
+  /* office: the Corporate Collection, imported (her write-up and photographs, 27 Oct) */
+  { ...P('sovereign-monolith-desk', 'The Sovereign Monolith', 'architectural executive desk', '', 'office', 'desk', 'Our signature executive desk: a cantilevered top that floats over a recessed, shadow-lined pedestal, in matte charcoal or brushed smoked oak, with all power and cables hidden behind touch-release leather panels.', ['office-desk-charcoal', 'office-desk-suite'], true), imported: true },
+  { ...P('executive-boardroom-suite', 'The Executive Boardroom Suite', 'conference tables & boardroom seating', '', 'office', 'table', 'Statement conference tables and ergonomic seating engineered for long-form strategic clarity.', ['office-boardroom-black', 'office-boardroom-long', 'office-boardroom-walnut', 'office-conference-white']), imported: true },
+  { ...P('private-office-seating', 'The Private Office Seating Line', 'executive leather & mesh seating', '', 'office', 'armchair', 'Executive leather and mesh upholstery balancing postural neuroscience with executive prestige.', ['office-chairs-leather', 'office-chair-mesh']), imported: true },
+  { ...P('reception-lounge-collection', 'The Reception & Lounge Collection', 'reception seating & lounge tables', '', 'office', 'table', 'Beam seating for reception and waiting rooms, with sculpted glass tables for the lounge.', ['office-waiting-beam', 'office-table-smoked', 'office-table-clear']), imported: true },
+  { ...P('breakout-meeting-set', 'The Breakout Meeting Set', 'round meeting table & chairs', '', 'office', 'table', 'A round table and light shell chairs for quick meetings and open-plan corners.', ['office-breakout-round']), imported: true },
   P('nyuki-reception-desk', 'Nyuki Reception Desk', 'curved reception desk', 'bee', 'office', 'desk', 'A ring of fluted timber that receives your guests from every side, made to your lobby.', ['reception-ring', 'reception-ring-side']),
-  P('tai-executive-desk', 'Tai Executive Desk', 'executive desk', 'eagle', 'office', 'desk', 'A desk of presence, with a leather-lined top and drawers that close without a sound.'),
   P('tandala-bookcase', 'Tandala Bookcase', 'bookcase', 'kudu', 'office', 'bookcase', 'Tall shelving with adjustable bays, made to the height of your ceiling.'),
 ];
 
@@ -136,7 +142,7 @@ export const furnRooms: ReadonlyArray<FurnRoom> = [
   { label: 'kids', href: '/furnishings/kids', columns: [['kids beds', 'study desks', 'storage'], ['reading corners', 'play furniture', 'kids furniture design']], feature: 'Kifaru Kids Set' },
   { label: 'kitchen', href: '/furnishings/kitchen', columns: [['kitchen islands', 'bar stools'], ['pantry storage', 'open shelving']] },
   { label: 'outdoor', href: '/furnishings/outdoor', columns: [['sun loungers & daybeds', 'outdoor sofas', 'rope armchairs'], ['outdoor dining', 'planters & accessories']] },
-  { label: 'office', href: '/furnishings/office', columns: [['desks', 'office chairs'], ['bookcases', 'filing & storage']] },
+  { label: 'office', href: '/furnishings/office', columns: [['executive desks', 'boardroom suites', 'office seating'], ['reception & lounge', 'bookcases']], feature: 'The Sovereign Monolith' },
   { label: 'atelier', href: '/furnishings/atelier', columns: [['velvet', 'bouclé', 'linen', 'chenille', 'leatherette'], ['colour families', 'finishes', 'swatch samples']] },
   { label: 'consultations', href: '/furnishings#consultation', columns: [['interior design services', 'private consultation'], ['book a showroom visit', 'made-to-measure pieces']] },
 ];
@@ -314,27 +320,138 @@ export function describeConfiguration(c: Configuration): string {
   return timber.id === 'lacquer' ? `${c.colour} Satin Lacquer with ${finish}` : `${timber.name} with ${finish}`;
 }
 
-/* ── the commission ── */
+/* ── the house: the client's write-ups of 27 Oct 2026 ── */
 
-/*
- * Commission terms. A DRAFT written for the build: Gaze Furnishings' legal counsel must review and replace this
- * before the site takes real orders.
- */
-export const commissionTerms = [
-  'Each piece is made to order, to the specifications in this commission: measurements, fabric, colour and any design you have shared.',
-  'This commission is a request. Nothing is charged by this form. A Gaze Furnishings representative will contact you to confirm the final price, specifications and delivery.',
-  'Production begins once you have confirmed the order with your representative and your deposit has been received. The balance is due on delivery.',
-  'Pieces are made in 14 to 21 days from confirmation. Delivery times depend on your destination and are confirmed with your order.',
-  'Because each piece is made for you, a confirmed commission cannot be cancelled or refunded once production has begun.',
-  'Natural materials vary. Small differences in grain, shade and texture from samples or screens are part of the craft, not defects.',
-  'Designs, drawings and images you share are used only to make your piece. Gaze Furnishings keeps the right to its own designs.',
-];
+/* From her letterhead (Gaze Forms, 27 Oct). */
+export const furnContact = {
+  phone: '+254 741 577 381',
+  tel: '+254741577381',
+  email: 'sales@gazefurnishings.co.ke',
+  address: '1st Floor, Nextgen Mall, Mombasa Road, Nairobi',
+};
 
-export const orderingSteps = [
-  { title: 'Choose and make it yours', body: 'Pick the piece, then the fabric, finish and measurements for your room.' },
-  { title: 'Place a deposit', body: 'Pay by M-Pesa, Visa, Mastercard or bank transfer, in your own currency.' },
-  { title: 'Made in Nairobi', body: 'Your piece is made to order in 14 to 21 days, and we keep you posted as it takes shape.' },
-  { title: 'Delivered to you', body: 'We deliver worldwide. The balance is settled on delivery.' },
-] as const;
+const catalogueRequest = (subject: string) => `mailto:${furnContact.email}?subject=${encodeURIComponent(subject)}`;
+
+export const masterAtelier = {
+  company: 'Gaze Furnishings Kenya Limited',
+  tagline: 'The Architecture of Interior Sovereignty',
+  eyebrow: 'The Master Atelier',
+  headline: 'Furniture is not merely placed; it is engineered to hold the room.',
+  body: [
+    'Gaze Furnishings Kenya Limited is the premier spatial and furniture design subsidiary of Gaze Holdings. Operating at the intersection of Scandinavian minimalist discipline, neuroscience-backed spatial psychology, and uncompromising craftsmanship, we shape environments that command authority and inspire quiet composure.',
+    'Whether through bespoke local artisan workshops or curated international executive collections, every piece is built with a singular philosophy: alignment over performance. We design for those who build institutions, lead with clarity, and demand spaces that endure.',
+  ],
+  pillarsTitle: 'The Curated Pillars of Gaze Furnishings',
+  pillars: [
+    { name: 'Executive Workspaces', body: 'Imported international executive collections, featuring our signature Sovereign Monolith desking systems, boardroom suites, and private office architecture.', href: '/furnishings/office', image: f('office-boardroom-black') },
+    { name: 'Outdoor Living & Patio Sanctuaries', body: 'Custom exterior furnishings crafted by local master artisans using weather-resilient materials, engineered specifically for open-air estate living.', href: '/furnishings/outdoor', image: f('outdoor-daybed-round-pool') },
+    { name: 'Interior Architecture & Bespoke Sourcing', body: 'Tailored spatial layout design and custom statement pieces engineered precisely for private residences and corporate enterprises.', href: '/furnishings#consultation', image: f('curved-sofa-mink') },
+  ],
+  termsTitle: 'Atelier Specifications & Commissioning Terms',
+  termsIntro: 'To maintain absolute institutional integrity across all commissions, our operational framework ensures complete transparency:',
+  terms: [
+    { label: 'Production Lead Time', body: '14 to 21 Days for custom local craftsmanship.' },
+    { label: 'Seamless Tracking', body: 'Once an order is initiated, clients receive real-time visibility through our dedicated Furniture Tracker, providing continuous updates from workshop production to placement.' },
+    { label: 'Delivery', body: 'Complimentary white-glove delivery and professional placement free anywhere around Nairobi.' },
+    { label: 'Financial Structure', body: 'A 75% initial deposit is required upon order confirmation. The remaining 25% balance is due upon completion (prior to dispatch/delivery).' },
+    { label: 'Binding Terms & Conditions', body: 'Submission of the initial 75% deposit serves as a legally binding agreement between Gaze Furnishings Kenya Limited and the client, confirming full acceptance of our operational terms and conditions.' },
+    { label: 'Tax Compliance', body: 'All listed enterprise pricing excludes VAT, which will be itemized transparently upon formal invoicing.' },
+  ],
+  invoicingTitle: 'Pricing & Invoicing Transparency',
+  invoicing: [
+    'All collection prices listed on our platform exclude 16% VAT.',
+    'To ensure seamless enterprise standards, all transactions are managed through our automated financial framework. Once your commission is confirmed and your legally binding 75% initial deposit is submitted, our integrated billing system instantly generates an official, itemized QuickBooks invoice detailing your base investment, exact VAT calculations, and the remaining 25% balance due upon completion.',
+    'Simultaneously, your secure access to the Gaze Furniture Tracker is activated, providing real-time visibility from our ateliers directly to your space.',
+  ],
+  commissionTitle: 'Commission an Environment',
+  ctas: [
+    { label: 'Explore the Executive Collection', href: '/furnishings/office' },
+    { label: 'Explore the Outdoor Atelier', href: '/furnishings/outdoor' },
+    { label: 'Request a Private Consultation', href: '/furnishings#consultation' },
+  ],
+};
+
+/** A wing's own write-up, where she has given one: its collection, terms, highlights and how to commission it. */
+export type WingCopy = {
+  eyebrow: string;
+  title: string;
+  headline: string;
+  body: string[];
+  signature?: { slug: string; eyebrow: string; headline: string; body: string };
+  termsTitle: string;
+  termsIntro: string;
+  terms: ReadonlyArray<{ label: string; body: string }>;
+  highlights: ReadonlyArray<{ name: string; body: string; slug: string }>;
+  commission: { title: string; body: string; ctas: ReadonlyArray<{ label: string; href: string }> };
+};
+
+export const wingCopy: Partial<Record<RoomId, WingCopy>> = {
+  office: {
+    eyebrow: 'Executive Workspaces',
+    title: 'The Corporate Collection',
+    headline: 'The Art of Executive Placement',
+    body: [
+      'True institutional leadership begins in the architecture of the office. Our curated collection of imported executive furniture bridges minimalist Scandinavian engineering with commanding professional presence.',
+      'Engineered for boardrooms, executive suites, and visionary enterprises, every piece is custom-sourced to reflect absolute authority, uncompromising comfort, and enduring corporate dignity.',
+    ],
+    signature: {
+      slug: 'sovereign-monolith-desk',
+      eyebrow: 'Signature Piece — The Sovereign Monolith Desk',
+      headline: 'The Commanding Centerpiece',
+      body: 'Inspired by the weight of decision-making, the Sovereign Monolith is our signature executive desk. Built in a deep, matte-charcoal or brushed smoked-oak finish, it features a cantilevered desktop that floats effortlessly over a recessed, shadow-lined pedestal. Designed completely free of visual clutter with flush, touch-release leather panels concealing all power and cable infrastructure, it projects absolute clarity, precision, and unshakeable structure before a single word is spoken.',
+    },
+    termsTitle: 'Atelier Specifications & Financial Terms',
+    termsIntro: 'To maintain our uncompromising standards of craftsmanship and secure international production, our executive collections operate under structured, transparent commissioning terms:',
+    terms: [
+      { label: 'Commission Structure', body: '75% Initial Deposit upon order confirmation; 25% Balance due upon arrival prior to final placement.' },
+      { label: 'Importation Lead Time', body: '3 Months (Custom international freight, maritime transit, and priority clearance).' },
+      { label: 'White-Glove Delivery', body: 'Complimentary door-to-door delivery and professional installation directly into your corporate suite or private estate.' },
+      { label: 'Tax Terms', body: 'All listed collection prices exclude VAT, which will be itemized upon formal enterprise invoicing.' },
+    ],
+    highlights: [
+      { name: 'The Sovereign Monolith', body: 'Architectural executive desk with integrated concealment and floating cantilever design.', slug: 'sovereign-monolith-desk' },
+      { name: 'The Executive Boardroom Suite', body: 'Statement conference tables and ergonomic seating engineered for long-form strategic clarity.', slug: 'executive-boardroom-suite' },
+      { name: 'The Private Office Seating Line', body: 'Executive leather and mesh upholstery balancing postural neuroscience with executive prestige.', slug: 'private-office-seating' },
+    ],
+    commission: {
+      title: 'Commission Your Workspace',
+      body: 'Because our pieces are imported on dedicated production schedules, private corporate viewings and catalog requests are managed directly through our team.',
+      ctas: [
+        { label: 'Request the Corporate Catalog', href: catalogueRequest('Corporate catalog request') },
+        { label: 'Inquire with an Interior Advisor', href: '/furnishings#consultation' },
+      ],
+    },
+  },
+  outdoor: {
+    eyebrow: 'Outdoor Living & Patio Atelier',
+    title: 'The Exterior Collection',
+    headline: 'The Art of Open-Air Sanctuaries',
+    body: [
+      'True luxury extends seamlessly into the open air. Our outdoor living collection bridges structural minimalism with organic resilience, custom-crafted by master local artisans to withstand the elements while maintaining uncompromising aesthetic elegance.',
+      'Designed for private terraces, courtyard sanctuaries, and estate gardens, every piece is custom-built to order, reflecting the quiet sophistication of modern architectural living.',
+    ],
+    termsTitle: 'Atelier Specifications & Financial Terms',
+    termsIntro: 'To maintain our rigorous standards of bespoke local craftsmanship, our outdoor collections operate under structured, transparent commissioning terms:',
+    terms: [
+      { label: 'Commission Structure', body: '75% Initial Deposit upon order confirmation; 25% Balance due upon completion prior to delivery.' },
+      { label: 'Production Lead Time', body: '14 to 21 Days (Handcrafted locally by our dedicated artisan workshops).' },
+      { label: 'Complimentary Delivery', body: 'Free white-glove delivery and professional placement anywhere within Nairobi.' },
+      { label: 'Tax Terms', body: 'All listed collection prices exclude VAT, which will be itemized upon formal invoicing.' },
+    ],
+    highlights: [
+      { name: 'The Estate Lounge Suite', body: 'Weather-resistant modular seating engineered for deep-comfort exterior lounging.', slug: 'taa-modular-lounge' },
+      { name: 'The Minimalist Dining Pavilion', body: 'Solid-form architectural dining tables and chairs crafted for open-air hosting and endurance.', slug: 'mwari-outdoor-dining' },
+      { name: 'The Crystalline Sunbed Series', body: 'Clean-lined loungers pairing tactile upholstery with treated, durable framing.', slug: 'kasa-lounger' },
+    ],
+    commission: {
+      title: 'Commission Your Outdoor Sanctuary',
+      body: 'Because every outdoor piece is custom-crafted to your precise spatial requirements, commissions are managed directly through our workshop atelier.',
+      ctas: [
+        { label: 'Request the Outdoor Catalog', href: catalogueRequest('Outdoor catalog request') },
+        { label: 'Inquire with an Interior Advisor', href: '/furnishings#consultation' },
+      ],
+    },
+  },
+};
 
 export const payments = ['M-Pesa', 'Visa', 'Mastercard', 'Bank transfer'] as const;
