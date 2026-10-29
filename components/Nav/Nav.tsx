@@ -65,8 +65,9 @@ export function Nav({ theme = 'auto' }: Props) {
             isLight
               ? 'bg-[rgba(243,239,230,0.92)] backdrop-blur-md border-b border-black/10 py-3'
               : scrolled
-                ? 'bg-obsidian/85 backdrop-blur-md border-b border-hairline py-3'
-                : 'bg-transparent py-5'
+                ? 'bg-[rgba(6,18,42,0.85)] backdrop-blur-md border-b border-hairline py-3'
+                : // over the hero's bright films: full ivory, held by a soft shadow
+                  'bg-transparent py-5 [text-shadow:0_1px_12px_rgba(0,0,0,0.6),0_1px_2px_rgba(0,0,0,0.5)] [&_svg]:drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]'
           }`}
         aria-label="Primary"
       >
@@ -96,7 +97,7 @@ export function Nav({ theme = 'auto' }: Props) {
                           : 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory font-medium border border-rose px-4 py-2 hover:bg-rose hover:text-obsidian transition-colors duration-500 ease-reveal'
                         : isLight
                           ? `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose-ink ${isActive ? 'text-rose-ink' : 'text-[rgba(6,18,42,0.7)]'}`
-                          : `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose ${isActive ? 'text-rose' : 'text-ivory/70'}`
+                          : `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose ${isActive ? 'text-rose' : scrolled ? 'text-[rgba(243,239,230,0.75)]' : 'text-ivory'}`
                     }
                   >
                     {link.label}

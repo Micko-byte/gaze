@@ -145,7 +145,7 @@ const TYPE: Record<Drawing, string> = {
   armchair: 'chairs & armchairs',
   table: 'tables',
   dining: 'dining',
-  sideboard: 'sideboards',
+  sideboard: 'sideboards & credenzas',
   bed: 'beds',
   wardrobe: 'wardrobes',
   kids: 'beds & daybeds',
@@ -162,7 +162,7 @@ export function WingPieces({ room }: { room: RoomId }) {
   const roomPieces = pieces.filter((p) => p.room === room);
   return (
     <WingFilter
-      items={roomPieces.map((p, j) => ({ type: TYPE[p.drawing], node: <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} /> }))}
+      items={roomPieces.map((p, j) => ({ type: p.room === 'kids' && p.drawing === 'kitchen' ? 'play kitchens' : TYPE[p.drawing], node: <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} /> }))}
     />
   );
 }

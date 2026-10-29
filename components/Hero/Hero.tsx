@@ -62,8 +62,8 @@ export function Hero() {
       <HeroVideo />
       {/* Light scrims, as on Natuzzi's landing: the films stay bright; a soft shade sits only under the nav, behind
           the headline and at the foot for the caption */}
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-obsidian/55 to-transparent pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-obsidian/65 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[rgba(6,18,42,0.7)] to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[rgba(6,18,42,0.65)] to-transparent pointer-events-none" />
       {/* the shade behind the words follows the films: HeroVideo measures how bright the frames behind the text are
           and sets --hero-shade, so bright skies and pools get a deeper shade than the city at night */}
       <div

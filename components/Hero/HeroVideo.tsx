@@ -180,7 +180,7 @@ export function HeroVideo() {
             <span key={c.house} className={`h-px w-6 transition-colors duration-700 ${i === chapter ? 'bg-ivory' : 'bg-[rgba(243,239,230,0.3)]'}`} />
           ))}
         </div>
-        <span key={chapter} className="font-display text-[0.62rem] uppercase tracking-[0.36em] text-ivory/80 animate-[stat-appear_0.9s_ease-out]">
+        <span key={chapter} className="font-display text-[0.62rem] uppercase tracking-[0.36em] text-ivory [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] animate-[stat-appear_0.9s_ease-out]">
           {montage[chapter].house}
         </span>
       </div>
