@@ -1,5 +1,6 @@
 import { Nav } from '@/components/Nav/Nav';
 import { Hero } from '@/components/Hero/Hero';
+import { AboutHoldings } from '@/components/About/AboutHoldings';
 import { Ethos } from '@/components/Ethos/Ethos';
 import { HouseShowcase } from '@/components/Houses/HouseShowcase';
 import { Leadership } from '@/components/Leadership/Leadership';
@@ -23,6 +24,7 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
+        <AboutHoldings />
         <HouseShowcase />
         <Ethos />
         <Leadership />

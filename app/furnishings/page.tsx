@@ -250,7 +250,7 @@ export default function FurnishingsPage() {
               <ol className="border-t border-furn-ink">
                 {[
                   ['Choose', 'Pick the piece, then its fabric, colour, finish and size, all on its page.'],
-                  ['Order', 'Add it to your bag and check out on one page. We reply on WhatsApp with your invoice.'],
+                  ['Order', 'Add it to your cart and check out on one page. We reply on WhatsApp with your invoice.'],
                   ['Confirm', 'Your 75% deposit, by M-Pesa, card or bank transfer, starts production.'],
                   ['Receive', `Made in 14–21 days (imported pieces in 3 months), then delivered and placed: free within Nairobi.`],
                 ].map(([t, b], i) => (

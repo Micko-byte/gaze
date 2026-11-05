@@ -6,13 +6,21 @@
   /* Site-wide roles, now on the Gaze Holdings brand kit (navy · antique gold · champagne · parchment).
      The old names are kept so every existing component re-themes without edits. */
   --obsidian: #06122A;
+  --obsidian-rgb: 6 18 42;
   --ink: #0A1631;
+  --ink-rgb: 10 22 49;
   --ivory: #F3EFE6;
+  --ivory-rgb: 243 239 230;
   --house-rose: #DEBA78;
+  --house-rose-rgb: 222 186 120;
   --rose-deep: #AE8448;
+  --rose-deep-rgb: 174 132 72;
   --rose-ink: #8A6A30; /* AA-safe gold for parchment backgrounds */
+  --rose-ink-rgb: 138 106 48;
   --champagne: #DEBA78;
+  --champagne-rgb: 222 186 120;
   --hairline: #1E2B48;
+  --hairline-rgb: 30 43 72;
   --bronze: #AE8448;
 
   /* Agreed faces behind the old font roles: labels/UI + body → Metropolis, accents → Thegralke */
@@ -22,41 +30,70 @@
 
   /* Brand system — Leadership Institute */
   --inst-midnight: #0B1A40;
+  --inst-midnight-rgb: 11 26 64;
   --inst-maroon: #7A1F2E;
+  --inst-maroon-rgb: 122 31 46;
   --inst-sky: #4C88F0;
+  --inst-sky-rgb: 76 136 240;
   --inst-paper: #F6F4EE;
+  --inst-paper-rgb: 246 244 238;
   /* The Gaze Manor: its black-and-white mark on warm stone, with bronze */
   --manor-stone: #EEEBE6;
+  --manor-stone-rgb: 238 235 230;
   --manor-ink: #111111;
+  --manor-ink-rgb: 17 17 17;
   --manor-bronze: #A38B67;
+  --manor-bronze-rgb: 163 139 103;
   --manor-umber: #5C5248;
+  --manor-umber-rgb: 92 82 72;
   /* The Institute's own site, from the GLI Brand Book V1: navy, signal red and white, with the crest's gold */
   --gli-navy: #000B3D;
+  --gli-navy-rgb: 0 11 61;
   --gli-ink: #08183C;
+  --gli-ink-rgb: 8 24 60;
   --gli-red: #DC0E20;
+  --gli-red-rgb: 220 14 32;
   --gli-gold: #C8992F;
+  --gli-gold-rgb: 200 153 47;
   --gli-mist: #F2F5FA;
+  --gli-mist-rgb: 242 245 250;
   /* Brand system — Her Gaze Global */
   --her-magenta: #C8186F;
+  --her-magenta-rgb: 200 24 111;
   --her-terracotta: #C25530;
+  --her-terracotta-rgb: 194 85 48;
   --her-blush: #F1E4D6;
+  --her-blush-rgb: 241 228 214;
   --her-noir: #1A1A1A;
+  --her-noir-rgb: 26 26 26;
   /* Brand system — Gaze Press Global */
   --press-ink: #111111;
+  --press-ink-rgb: 17 17 17;
   --press-paper: #ECE7DF;
+  --press-paper-rgb: 236 231 223;
   --press-rose: #B5776F;
+  --press-rose-rgb: 181 119 111;
 
   /* Brand system — Gaze Holdings */
   --gaze-navy: #06122A;
+  --gaze-navy-rgb: 6 18 42;
   --gaze-deep: #0A1631;
+  --gaze-deep-rgb: 10 22 49;
   --gaze-antique: #AE8448;
+  --gaze-antique-rgb: 174 132 72;
   --gaze-champagne: #DEBA78;
+  --gaze-champagne-rgb: 222 186 120;
   --gaze-parchment: #F3EFE6;
+  --gaze-parchment-rgb: 243 239 230;
   /* Brand system — Gaze Furnishings */
   --furn-lilac: #C99DC2;
+  --furn-lilac-rgb: 201 157 194;
   --furn-ink: #1E1E22;
+  --furn-ink-rgb: 30 30 34;
   --furn-linen: #EEE7DF;
+  --furn-linen-rgb: 238 231 223;
   --furn-walnut: #7B5232;
+  --furn-walnut-rgb: 123 82 50;
 
   --motion-fast: 200ms;
   --motion-base: 400ms;

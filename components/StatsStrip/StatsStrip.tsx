@@ -3,14 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { prefersReducedMotion } from '@/lib/motion';
 
-/* Each figure sits on a colour from the brand kit, so the group's houses show on the Holdings page. */
-const stats = [
-  { value: 12, suffix: '+', label: 'Years Experience', bg: '#06122A', ink: '#DEBA78' },
-  { value: 5000, suffix: '+', label: 'Furnitures Delivered', bg: '#7B5232', ink: '#EEE7DF' },
-  { value: 3, suffix: '', label: 'Countries Served', bg: '#C8186F', ink: '#FFFFFF' },
-  { value: 500, suffix: '+', label: 'Leaders Trained', bg: '#4C88F0', ink: '#06122A' },
-];
-
 function CountUp({ value, suffix = '' }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   // Must not depend on a media query: the server cannot read one, so seeding
@@ -44,28 +36,27 @@ function CountUp({ value, suffix = '' }: { value: number; suffix?: string }) {
     return () => { cleanup?.(); };
   }, [value]);
 
-  return <span ref={ref}>{display.toLocaleString()}{suffix}</span>;
+  return <span ref={ref} className="tabular-nums text-gaze-champagne">{display.toLocaleString('en-KE')}{suffix}</span>;
 }
 
 /**
- * Full-width stats strip, between Leadership and Recognition: four blocks in the colours of the brand kit (Holdings navy,
- * Furnishings earth, Her Gaze magenta, Institute cobalt), each figure counting up as it scrolls in.
+ * The group's record, told as one sentence rather than a row of tiles, as ESR Bespoke tells its figures. Set in the
+ * "anchor institutions" capitals, with each figure counting up as it scrolls in.
  */
 export function StatsStrip() {
   return (
-    <div className="grid w-full grid-cols-2 md:grid-cols-4">
-      {stats.map((stat) => (
-        <div
-          key={stat.label}
-          className="flex min-h-[220px] flex-col justify-between px-6 py-8 md:min-h-[280px] md:px-8 md:py-10"
-          style={{ background: stat.bg, color: stat.ink }}
+    <section aria-label="The record of Gaze Holdings" className="bg-gaze-navy px-6 py-24 text-[#F3EFE6] md:px-10 md:py-36">
+      <div className="mx-auto max-w-[1280px]">
+        <p className="font-text text-[11px] font-semibold uppercase tracking-[0.36em] text-gaze-champagne">The record</p>
+        <p
+          role="img"
+          aria-label="More than 9 years. More than 5,000 pieces delivered. More than 5,500 leaders trained. Kenya, Uganda, Tanzania and the DRC."
+          className="mt-8 font-text text-[clamp(32px,5.8vw,92px)] font-semibold uppercase leading-[1.02] tracking-[-0.05em]"
         >
-          <div className="font-display text-[11px] uppercase leading-relaxed tracking-[0.32em]">{stat.label}</div>
-          <div className="font-headline text-[clamp(56px,7vw,112px)] leading-none tabular-nums">
-            <CountUp value={stat.value} suffix={stat.suffix} />
-          </div>
-        </div>
-      ))}
-    </div>
+          <CountUp value={9} suffix="+" /> years. <CountUp value={5000} suffix="+" /> pieces delivered. <CountUp value={5500} suffix="+" /> leaders trained.{' '}
+          <span className="text-[rgba(243,239,230,0.55)]">Kenya, Uganda, Tanzania and the DRC.</span>
+        </p>
+      </div>
+    </section>
   );
 }

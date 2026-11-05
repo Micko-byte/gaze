@@ -11,8 +11,11 @@ export function Hero() {
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || !hasFinePointer()) return;
+    const grid = section?.querySelector<HTMLElement>('[data-hero-grid]');
+    if (!section || !grid || !hasFinePointer()) return;
 
+    // Moves only the film grid, and only while the pointer is settling: the films must not share a frame with a
+    // style recalculation of the whole hero.
     let raf = 0;
     let x = 0;
     let y = 0;
@@ -22,9 +25,11 @@ export function Hero() {
     const update = () => {
       x += (targetX - x) * 0.08;
       y += (targetY - y) * 0.08;
-      section.style.setProperty('--hero-x', `${x}`);
-      section.style.setProperty('--hero-y', `${y}`);
-      raf = requestAnimationFrame(update);
+      grid.style.transform = `translate3d(${(x * 10).toFixed(2)}px, ${(y * 8).toFixed(2)}px, 0) scale(1.04)`;
+      raf = Math.abs(targetX - x) + Math.abs(targetY - y) > 0.002 ? requestAnimationFrame(update) : 0;
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(update);
     };
 
     const onMove = (event: MouseEvent) => {
@@ -33,23 +38,22 @@ export function Hero() {
       const ny = (event.clientY - rect.top) / rect.height - 0.5;
       targetX = Math.max(-1, Math.min(1, nx * 2));
       targetY = Math.max(-1, Math.min(1, ny * 2));
+      wake();
     };
 
     const onLeave = () => {
       targetX = 0;
       targetY = 0;
+      wake();
     };
 
     section.addEventListener('mousemove', onMove);
     section.addEventListener('mouseleave', onLeave);
-    raf = requestAnimationFrame(update);
 
     return () => {
       cancelAnimationFrame(raf);
       section.removeEventListener('mousemove', onMove);
       section.removeEventListener('mouseleave', onLeave);
-      section.style.removeProperty('--hero-x');
-      section.style.removeProperty('--hero-y');
     };
   }, []);
 

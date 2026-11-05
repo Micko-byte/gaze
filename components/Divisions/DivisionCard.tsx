@@ -60,7 +60,7 @@ export function DivisionCard({ division, index, className = '' }: Props) {
           <p className="text-[0.85rem] leading-relaxed text-ivory/76">
             {division.tagline}
           </p>
-          <p className="text-[0.72rem] leading-relaxed text-ivory/52">
+          <p className="text-[0.72rem] leading-relaxed text-ivory/70">
             {division.detail}
           </p>
         </div>

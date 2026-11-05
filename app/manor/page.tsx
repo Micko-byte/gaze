@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 const house = houses.find((h) => h.id === 'manor')!;
 const nav = [
   { label: 'About', href: '#about' },
-  { label: 'Atelier', href: '#atelier' },
+  { label: 'Architecture', href: '#atelier' },
   { label: 'Landscape', href: '#landscape' },
   { label: 'Media', href: '#media' },
   { label: 'Commissions', href: '#commission' },

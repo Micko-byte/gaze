@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { agreement } from '@/content/pressAgreement';
 import { SignaturePad } from '@/components/SignaturePad/SignaturePad';
@@ -60,9 +60,11 @@ export function AgreementForm() {
     if (png) setSignError(false);
   }, []);
 
-  const now = new Date();
-  const month = now.toLocaleDateString('en-GB', { month: 'long' });
-  const today = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  // set after load: this page is pre-built, so a date in its first render would be the day it was built
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
+  const month = now?.toLocaleDateString('en-GB', { month: 'long' }) ?? '';
+  const today = now?.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) ?? '';
 
   if (done) {
     return (
@@ -144,8 +146,8 @@ export function AgreementForm() {
           <h2 className="mt-3 text-center font-press-head text-[clamp(28px,3vw,44px)] leading-tight">{agreement.title}</h2>
           <div className="mx-auto mt-10 flex max-w-3xl flex-col gap-5 text-[15px] leading-[1.75]">
             <p>
-              THIS AGREEMENT is entered into on this <Blank value={ordinal(now.getDate())} /> day of <Blank value={month} />,{' '}
-              {now.getFullYear()} (the &ldquo;Effective Date&rdquo;), by and between:
+              THIS AGREEMENT is entered into on this <Blank value={now ? ordinal(now.getDate()) : ''} /> day of <Blank value={month} />,{' '}
+              {now?.getFullYear()} (the &ldquo;Effective Date&rdquo;), by and between:
             </p>
             <p>{agreement.publisher}, and</p>
             <p>

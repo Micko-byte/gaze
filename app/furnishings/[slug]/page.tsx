@@ -61,29 +61,22 @@ export default function PiecePage({ params }: Props) {
                 <p className="mt-4 font-furn text-[22px] italic text-[#6F6A62]">
                   {piece.animal ? `${piece.kind}, named for the ${piece.animal}` : piece.kind}
                 </p>
-                <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
-
-                <dl className="mt-8 grid max-w-md grid-cols-2 border-t border-[rgba(30,30,34,0.15)]">
-                  {[
-                    ['Price', piece.price ?? 'On request'],
-                    piece.imported ? ['Imported', '3 months'] : ['Made to order', '14–21 days'],
-                    ['Dimensions', piece.dims ?? 'Standard, or yours'],
-                    ['Design', piece.imported ? 'Corporate Collection' : 'Gaze atelier'],
-                    ['Deposit', '75%, then 25%'],
-                    ['Delivery', 'Free within Nairobi'],
-                  ].map(([k, v], i) => (
-                    <div key={k} className={`border-b border-[rgba(30,30,34,0.15)] py-5 ${i % 2 ? 'pl-6' : 'border-r pr-6'}`}>
-                      <dt className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#8A847A]">{k}</dt>
-                      <dd className="mt-2 font-furn text-[24px] leading-none">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
+                <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-[#4A4640]">{piece.line}</p>
 
                 <BuyBox piece={piece} />
 
-                <a href="#commission" data-no-transition className="mt-8 inline-block text-[11px] font-medium uppercase tracking-[0.24em] underline decoration-[rgba(30,30,34,0.35)] underline-offset-[6px] hover:decoration-furn-ink">
-                  Have your own design? Commission it bespoke
-                </a>
+                <dl className="mt-8 grid max-w-md grid-cols-3 border-t border-[rgba(30,30,34,0.15)]">
+                  {[
+                    piece.imported ? ['Imported', '3 months'] : ['Made to order', '14–21 days'],
+                    ['Deposit', '75%, then 25%'],
+                    ['Delivery', 'Free in Nairobi'],
+                  ].map(([k, v], i) => (
+                    <div key={k} className={`border-b border-[rgba(30,30,34,0.15)] py-4 ${i ? 'pl-4' : ''} ${i < 2 ? 'border-r pr-4' : ''}`}>
+                      <dt className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#8A847A]">{k}</dt>
+                      <dd className="mt-2 font-furn text-[19px] leading-tight">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
           </div>
@@ -97,7 +90,7 @@ export default function PiecePage({ params }: Props) {
               <h2 className="mt-3 font-furn text-[clamp(40px,4.6vw,80px)] leading-[0.96]">Your own design of the {piece.name.split(' ')[0]}</h2>
               <p className="mt-5 text-base font-light leading-relaxed text-[#4A4640]">
                 For a sketch or a reference of your own: your measurements, the Bespoke Atelier, your design, a word to the atelier, and your
-                signature. A representative then confirms everything with you before a single cut is made. Buying the piece as shown? Use the bag above.
+                signature. A representative then confirms everything with you before a single cut is made. Buying the piece as shown? Use the cart above.
               </p>
             </div>
             <CommissionForm piece={piece} />
@@ -115,7 +108,7 @@ export default function PiecePage({ params }: Props) {
                     <Link href={`/furnishings/${p.slug}`} data-no-transition className="group block">
                       <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#F6F1EA] transition-colors duration-700 group-hover:bg-[#EADFD2]">
                         {p.photos ? (
-                          <img src={p.photos[0]} alt={p.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                          <img src={p.photos[0]} alt={p.name} loading="lazy" className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]" />
                         ) : (
                           <FurnitureDrawing kind={p.drawing} className="w-[70%] text-furn-ink" />
                         )}

@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "extraStepFt": 2,
+    "extraStepKes": 3500,
+    "twoSeaterPct": 75,
+    "oneSeaterPct": 50
+  },
+  "pieces": {}
+}

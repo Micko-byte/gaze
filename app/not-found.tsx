@@ -48,7 +48,7 @@ export default function NotFound() {
       </div>
 
       <div className="absolute bottom-8 left-0 right-0 text-center">
-        <p className="font-serif italic text-ivory/30 text-sm">
+        <p className="font-serif italic text-ivory/65 text-sm">
           Nairobi, Kenya. Global scale.
         </p>
       </div>

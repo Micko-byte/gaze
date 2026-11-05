@@ -8,6 +8,7 @@ import {
   defaultConfiguration,
   describeConfiguration,
   finishes,
+  offersFinish,
   studioForm,
   textures,
   timbers,
@@ -80,8 +81,10 @@ export function CommissionForm({ piece }: { piece: Piece }) {
   }, []);
 
   const swatch = materialStyle(config.material, baseHex(config, colours.find((c) => c.name === config.colour)?.hex));
-  const described = describeConfiguration(config);
-  const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const described = describeConfiguration(config, offersFinish(piece));
+  // set after load: this page is pre-built, so a date in its first render would be the day it was built
+  const [today, setToday] = useState('');
+  useEffect(() => setToday(new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })), []);
 
   if (done) {
     return (
@@ -292,7 +295,7 @@ export function CommissionForm({ piece }: { piece: Piece }) {
             ))}
             <div className="flex justify-between gap-4 pt-2">
               <dt className="text-[#6F6A62]">price</dt>
-              <dd className="min-w-[96px] border-b border-dashed border-[rgba(30,30,34,0.35)] text-right">{piece.price ?? 'on request'}</dd>
+              <dd className="min-w-[96px] border-b border-dashed border-[rgba(30,30,34,0.35)] text-right">quoted for your design</dd>
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-[#6F6A62]">deposit</dt>

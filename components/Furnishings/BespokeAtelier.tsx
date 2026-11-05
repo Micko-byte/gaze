@@ -5,6 +5,7 @@ import {
   colours,
   describeConfiguration,
   finishes,
+  offersFinish,
   palette,
   studioForm,
   textureColours,
@@ -45,7 +46,8 @@ export function BespokeAtelier({ piece, value, onChange, layout = 'wide' }: { pi
   const timber = timbers.find((t) => t.id === value.material);
   const offered = isCase ? (value.material === 'lacquer' ? colours.map((c) => c.name) : []) : textureColours[value.material as TextureId] ?? [];
 
-  const tag = [texture?.short ?? timber?.name, value.colour || null, finishes.find((f) => f.id === value.finish)!.name].filter(Boolean).join(' / ');
+  const showFinish = offersFinish(piece);
+  const tag = [texture?.short ?? timber?.name, value.colour || null, showFinish ? finishes.find((f) => f.id === value.finish)!.name : null].filter(Boolean).join(' / ');
 
   const preview = (
     <div>
@@ -146,32 +148,34 @@ export function BespokeAtelier({ piece, value, onChange, layout = 'wide' }: { pi
         </Phase>
       )}
 
-      <Phase n={offered.length > 0 ? 3 : 2} title="The finishing touch">
-        <p className="-mt-2 mb-4 text-[13px] font-light text-[#6F6A62]">{isCase ? 'For the handles, trim and feet.' : 'For the legs and trim.'}</p>
-        <div role="radiogroup" aria-label="Finish" className="flex flex-wrap gap-3">
-          {finishes.map((f) => {
-            const on = value.finish === f.id;
-            return (
-              <button
-                key={f.id}
-                type="button"
-                role="radio"
-                aria-checked={on}
-                onClick={() => onChange({ ...value, finish: f.id })}
-                className={`flex items-center gap-3 rounded-full py-2 pl-2 pr-5 text-[13px] transition-colors ${on ? 'bg-furn-ink text-furn-linen' : 'ring-1 ring-[rgba(30,30,34,0.3)] hover:ring-furn-ink'}`}
-              >
-                <span className="h-7 w-7 rounded-full" style={{ background: `linear-gradient(135deg, ${f.hex}, ${f.id === 'brass' ? '#E6CB91' : f.id === 'black' ? '#3A3A3D' : '#9A6A43'} 50%, ${f.hex})` }} />
-                {f.name}
-              </button>
-            );
-          })}
-        </div>
-      </Phase>
+      {showFinish && (
+        <Phase n={offered.length > 0 ? 3 : 2} title="The finishing touch">
+          <p className="-mt-2 mb-4 text-[13px] font-light text-[#6F6A62]">{isCase ? 'For the handles, trim and feet.' : 'For the legs and trim.'}</p>
+          <div role="radiogroup" aria-label="Finish" className="flex flex-wrap gap-3">
+            {finishes.map((f) => {
+              const on = value.finish === f.id;
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => onChange({ ...value, finish: f.id })}
+                  className={`flex items-center gap-3 rounded-full py-2 pl-2 pr-5 text-[13px] transition-colors ${on ? 'bg-furn-ink text-furn-linen' : 'ring-1 ring-[rgba(30,30,34,0.3)] hover:ring-furn-ink'}`}
+                >
+                  <span className="h-7 w-7 rounded-full" style={{ background: `linear-gradient(135deg, ${f.hex}, ${f.id === 'brass' ? '#E6CB91' : f.id === 'black' ? '#3A3A3D' : '#9A6A43'} 50%, ${f.hex})` }} />
+                  {f.name}
+                </button>
+              );
+            })}
+          </div>
+        </Phase>
+      )}
 
       <div className="bg-furn-ink px-6 py-5 text-furn-linen">
         <p className={`${cap} text-[rgba(238,231,223,0.6)]`}>Selected</p>
         <p className="mt-2 font-furn text-[clamp(20px,1.8vw,26px)] leading-snug">
-          {piece.name} in {describeConfiguration(value)}
+          {piece.name} in {describeConfiguration(value, showFinish)}
         </p>
         <p className="mt-1 text-[12px] text-[rgba(238,231,223,0.65)]">{piece.imported ? 'Gaze Furnishings Corporate Collection · imported in 3 months' : 'Gaze Furnishings standard build · made to order in 14–21 days'}</p>
       </div>

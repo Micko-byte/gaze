@@ -34,7 +34,7 @@ export function Press() {
           <div className="font-display text-[11px] tracking-[0.4em] uppercase mb-6">
             {award.tag}
           </div>
-          <div className="font-headline text-4xl md:text-6xl text-[#F3EFE6] leading-tight mb-5">
+          <div className="font-headline text-4xl md:text-6xl text-[#06122A] leading-tight mb-5">
             {award.title}
           </div>
           <div className="font-light text-sm md:text-base mb-2 text-[rgba(6,18,42,0.85)]">{award.detail}</div>

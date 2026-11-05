@@ -156,7 +156,8 @@ export function Ethos() {
         <div className="relative mt-24 grid gap-12 py-16 before:absolute before:inset-y-0 before:left-1/2 before:-z-[1] before:w-screen before:-translate-x-1/2 before:bg-[#DEBA78] before:content-[''] md:mt-32 md:grid-cols-[1fr_1.4fr] md:py-24">
           <p className="font-text text-[15px] italic">(The ecosystem)</p>
           <ol className="grid gap-10">
-            {ethosContent.manifesto.map((sentence, i) => (
+            {/* the first and third sentences now open the page, in About Gaze Holdings */}
+            {[ethosContent.manifesto[1], ethosContent.manifesto[3]].map((sentence, i) => (
               <li key={i} className="grid grid-cols-[3.5rem_1fr] gap-x-4">
                 <span className="pt-1 font-text text-[15px] italic">({String(i + 1).padStart(2, '0')})</span>
                 <RevealedSentence text={sentence} />

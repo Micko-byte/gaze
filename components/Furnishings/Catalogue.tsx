@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { collections, colours, pieces, textures, type Drawing, type Piece, type RoomId } from '@/content/furnishings';
+import { collections, colours, pieces, pieceType, textures, type Piece, type RoomId } from '@/content/furnishings';
+import { pieceSpec } from '@/content/pricing';
+import { kes } from '@/lib/pricing';
 import { FurnitureDrawing } from './FurnitureDrawing';
 import { WingFilter } from './WingFilter';
 import { Reveal } from '@/components/Reveal/Reveal';
@@ -10,35 +12,30 @@ export const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
 const cap = 'text-[10px] font-medium uppercase tracking-[0.28em]';
 
 /**
- * One plate of the catalogue, after Natuzzi's product listings: the photograph held in a linen mount, the second
- * plate fading in on hover with a quiet call to view; then the plate number, the name, the palette it comes in, and
- * the price, which reads "on request" until the client sets it.
+ * One plate of the catalogue, after Natuzzi's product listings: the whole photograph held in a linen mount (she asked
+ * that no bed be cut off), the second plate fading in on hover with a quiet call to view; then the plate number, the
+ * name, the palette it comes in, and the price.
  */
-function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boolean }) {
+function PieceCard({ piece, no }: { piece: Piece; no: number }) {
   const plates = piece.photos?.length ?? 0;
   return (
     <Link href={`/furnishings/${piece.slug}`} data-no-transition className="group block">
       <div className="bg-[#F3EDE4] p-3 transition-colors duration-700 group-hover:bg-[#EADFD2] md:p-4">
-        <div className={`relative flex items-center justify-center overflow-hidden bg-[#F6F1EA] ${tall ? 'aspect-[4/5]' : 'aspect-[4/3]'}`}>
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-[#F6F1EA]">
           {piece.photos ? (
             <>
               <img
                 src={piece.photos[0]}
                 alt={`${piece.name}, made by Gaze Furnishings`}
                 loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover object-[50%_70%] transition-transform duration-[1600ms] ease-reveal group-hover:scale-[1.06]"
+                className="absolute inset-0 h-full w-full object-contain transition-[transform,opacity] duration-[1200ms] ease-reveal group-hover:scale-[1.03]"
               />
               {/* the second photograph fades in on hover, as on Natuzzi's product plates */}
               {piece.photos[1] && (
-                <img
-                  src={piece.photos[1]}
-                  alt=""
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full scale-[1.04] object-cover object-[50%_70%] opacity-0 transition-[opacity,transform] duration-[1200ms] ease-reveal group-hover:scale-100 group-hover:opacity-100"
-                />
+                <span className="absolute inset-0 bg-[#F6F1EA] opacity-0 transition-opacity duration-[1200ms] ease-reveal group-hover:opacity-100">
+                  <img src={piece.photos[1]} alt="" loading="lazy" className="h-full w-full object-contain" />
+                </span>
               )}
-              {/* a soft floor of shade so the labels always read */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(0deg,rgba(30,30,34,0.38),transparent)]" />
             </>
           ) : (
             <FurnitureDrawing kind={piece.drawing} className="w-[70%] text-furn-ink transition-transform duration-[900ms] ease-reveal group-hover:scale-[1.05]" />
@@ -51,7 +48,7 @@ function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boole
           {plates > 1 && (
             <span aria-hidden="true" className="absolute bottom-4 left-4 flex gap-1.5">
               {Array.from({ length: plates }, (_, i) => (
-                <span key={i} className={`h-px w-5 transition-colors duration-700 ${i === 0 ? 'bg-white group-hover:bg-[rgba(255,255,255,0.45)]' : i === 1 ? 'bg-[rgba(255,255,255,0.45)] group-hover:bg-white' : 'bg-[rgba(255,255,255,0.45)]'}`} />
+                <span key={i} className={`h-px w-5 transition-colors duration-700 ${i === 0 ? 'bg-furn-ink group-hover:bg-[rgba(30,30,34,0.3)]' : i === 1 ? 'bg-[rgba(30,30,34,0.3)] group-hover:bg-furn-ink' : 'bg-[rgba(30,30,34,0.3)]'}`} />
               ))}
             </span>
           )}
@@ -72,8 +69,8 @@ function PieceCard({ piece, no, tall }: { piece: Piece; no: number; tall?: boole
           </p>
         </div>
         <p className="text-right">
-          <span className={`block ${cap} text-[#8A847A]`}>Price</span>
-          <span className="mt-1.5 block font-furn text-[20px] leading-none">{piece.price ?? 'On request'}</span>
+          <span className={`block ${cap} text-[#8A847A]`}>Excl. VAT</span>
+          <span className="mt-1.5 block whitespace-nowrap font-furn text-[20px] leading-none tabular-nums">{piece.price ?? kes(pieceSpec(piece).price)}</span>
         </p>
       </div>
 
@@ -138,31 +135,8 @@ export function CatalogueContents() {
   );
 }
 
-/* What each drawing is called in a wing's row of types. */
-const TYPE: Record<Drawing, string> = {
-  sofa: 'sofas',
-  outdoor: 'sofas',
-  armchair: 'chairs & armchairs',
-  table: 'tables',
-  dining: 'dining',
-  sideboard: 'sideboards & credenzas',
-  bed: 'beds',
-  wardrobe: 'wardrobes',
-  kids: 'beds & daybeds',
-  bunk: 'bunk beds',
-  kitchen: 'kitchens',
-  stool: 'bars & stools',
-  lounger: 'loungers & daybeds',
-  desk: 'desks',
-  bookcase: 'bookcases',
-};
-
-/** A wing's pieces, set in an asymmetric grid (the first large, the second tall and dropped beside it), sortable by type. */
+/** A wing's pieces, set in an asymmetric grid, sortable by type. */
 export function WingPieces({ room }: { room: RoomId }) {
   const roomPieces = pieces.filter((p) => p.room === room);
-  return (
-    <WingFilter
-      items={roomPieces.map((p, j) => ({ type: p.room === 'kids' && p.drawing === 'kitchen' ? 'play kitchens' : TYPE[p.drawing], node: <PieceCard piece={p} no={pieces.indexOf(p) + 1} tall={j === 1} /> }))}
-    />
-  );
+  return <WingFilter items={roomPieces.map((p) => ({ type: pieceType(p), node: <PieceCard piece={p} no={pieces.indexOf(p) + 1} /> }))} />;
 }

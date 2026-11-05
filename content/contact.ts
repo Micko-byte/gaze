@@ -23,6 +23,4 @@ export const contactContent = {
     message: 'Message',
   },
   submit: 'Send enquiry',
-  thanks: 'Thank you. We will respond within two working days.',
-  backdrop: '/images/contact-backdrop.jpg',
 } as const;

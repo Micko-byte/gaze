@@ -19,7 +19,6 @@ describe('Ethos', () => {
   it('renders the eyebrow and manifesto sentences', () => {
     const { container } = render(<Ethos />);
     expect(container.textContent).toMatch(/The Architecture of Influence/);
-    expect(container.textContent).toContain('apex parent enterprise rooted in Nairobi');
     expect(container.textContent).toContain('anchor institutions of enduring power');
     expect(container.textContent).toContain('the ultimate ecosystem');
   });

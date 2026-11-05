@@ -3,6 +3,7 @@ import './globals.css';
 import { fontVariables } from './fonts';
 import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
 import { ShopButton } from '@/components/ShopButton/ShopButton';
+import { WhatsAppButton } from '@/components/WhatsAppButton/WhatsAppButton';
 import { CookieBanner } from '@/components/CookieBanner/CookieBanner';
 import { PageTransition } from '@/components/PageTransition/PageTransition';
 import { SoundLayer } from '@/components/Sound/SoundLayer';
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-obsidian text-ivory">
         <SmoothScroll>
           {children}
+          <WhatsAppButton />
           <ShopButton />
           <CookieBanner />
         </SmoothScroll>

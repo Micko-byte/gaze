@@ -1,10 +1,8 @@
 export const footerContent = {
   tagline: 'Nairobi, Kenya. Global scale.',
   newsletter: {
-    label: 'Newsletter',
     placeholder: 'Email address',
     byline: 'Quarterly. No noise.',
-    thanks: 'Subscribed. Thank you.',
   },
   legal: {
     label: 'Legal',

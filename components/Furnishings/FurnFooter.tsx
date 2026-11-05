@@ -70,7 +70,8 @@ export function FurnFooter() {
             <p className="text-sm font-medium">Service</p>
             <ul className="mt-4 grid gap-2 text-[13px] text-[#4A4640]">
               <li><Link href="/furnishings#shop-online" data-no-transition className="hover:text-furn-walnut">how buying works</Link></li>
-              <li><Link href="/furnishings/checkout" data-no-transition className="hover:text-furn-walnut">your bag &amp; checkout</Link></li>
+              <li><Link href="/furnishings/checkout" data-no-transition className="hover:text-furn-walnut">your cart &amp; checkout</Link></li>
+              <li><Link href="/furnishings/bespoke" data-no-transition className="hover:text-furn-walnut">your own design</Link></li>
               <li><Link href="/furnishings#ordering" data-no-transition className="hover:text-furn-walnut">ordering &amp; delivery</Link></li>
               <li><Link href="/furnishings#consultation" data-no-transition className="hover:text-furn-walnut">consultations</Link></li>
               {furnContact.phones.map((p) => (

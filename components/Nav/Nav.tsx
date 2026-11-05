@@ -93,11 +93,11 @@ export function Nav({ theme = 'auto' }: Props) {
                     className={
                       isAccent
                         ? isLight
-                          ? 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-obsidian font-medium border border-rose-ink px-4 py-2 hover:bg-rose-ink hover:text-ivory transition-colors duration-500 ease-reveal'
-                          : 'font-display text-[0.65rem] tracking-[0.3em] uppercase text-ivory font-medium border border-rose px-4 py-2 hover:bg-rose hover:text-obsidian transition-colors duration-500 ease-reveal'
+                          ? 'font-display text-[0.75rem] tracking-[0.24em] uppercase text-obsidian font-medium border border-rose-ink px-4 py-2 hover:bg-rose-ink hover:text-ivory transition-colors duration-500 ease-reveal'
+                          : 'font-display text-[0.75rem] tracking-[0.24em] uppercase text-ivory font-medium border border-rose px-4 py-2 hover:bg-rose hover:text-obsidian transition-colors duration-500 ease-reveal'
                         : isLight
-                          ? `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose-ink ${isActive ? 'text-rose-ink' : 'text-[rgba(6,18,42,0.7)]'}`
-                          : `font-display text-[0.65rem] tracking-[0.3em] uppercase transition-colors hover:text-rose ${isActive ? 'text-rose' : scrolled ? 'text-[rgba(243,239,230,0.75)]' : 'text-ivory'}`
+                          ? `font-display text-[0.75rem] tracking-[0.24em] uppercase transition-colors hover:text-rose-ink ${isActive ? 'text-rose-ink' : 'text-[rgba(6,18,42,0.7)]'}`
+                          : `font-display text-[0.75rem] tracking-[0.24em] uppercase transition-colors hover:text-rose ${isActive ? 'text-rose' : scrolled ? 'text-[rgba(243,239,230,0.75)]' : 'text-ivory'}`
                     }
                   >
                     {link.label}

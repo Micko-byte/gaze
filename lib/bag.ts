@@ -12,12 +12,15 @@ export type BagItem = {
   config: Configuration;
   /** What the configuration reads as: "Midnight Navy Bouclé with Brass Accents". */
   described: string;
-  size: 'standard' | 'custom';
+  /** The size as chosen: "standard: 10 ft W × 3 ft D" or "made to 14 ft". */
+  spec: string;
+  /** The base price of one, excluding VAT. */
+  unit: number;
   qty: number;
   imported?: boolean;
 };
 
-const KEY = 'gaze.furn.bag.v1';
+const KEY = 'gaze.furn.bag.v2';
 const EMPTY: BagItem[] = [];
 let items: BagItem[] = EMPTY;
 let loaded = false;
@@ -56,7 +59,7 @@ export const bag = {
   },
   add(item: Omit<BagItem, 'key'>) {
     load();
-    const key = `${item.slug}|${item.described}|${item.size}`;
+    const key = `${item.slug}|${item.described}|${item.spec}`;
     const same = items.find((i) => i.key === key);
     commit(same ? items.map((i) => (i === same ? { ...i, qty: i.qty + item.qty } : i)) : [...items, { ...item, key }]);
   },
@@ -70,6 +73,9 @@ export const bag = {
     commit(EMPTY);
   },
 };
+
+/** The base price of everything in the cart, excluding VAT. */
+export const bagSubtotal = (items: ReadonlyArray<BagItem>) => items.reduce((sum, i) => sum + i.unit * i.qty, 0);
 
 export function useBag(): BagItem[] {
   return useSyncExternalStore(bag.subscribe, bag.get, () => EMPTY);

@@ -2,35 +2,46 @@
 
 import { useState } from 'react';
 import { footerContent } from '@/content/footer';
+import { furnContact } from '@/content/furnishings';
 
+const whatsapp = (text: string) => `https://wa.me/${furnContact.whatsapp}?text=${encodeURIComponent(text)}`;
+
+/** One underlined line. With no mailing service yet, the request goes out on WhatsApp rather than being lost. */
 export function NewsletterForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [request, setRequest] = useState<string | null>(null);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const email = new FormData(e.currentTarget).get('newsletter_email');
-    // Real Klaviyo webhook wired in a follow-up session.
-    // eslint-disable-next-line no-console
-    console.log('[Gaze Holdings] newsletter subscribe:', email);
-    setSubmitted(true);
+    const email = String(new FormData(e.currentTarget).get('newsletter_email') ?? '').trim();
+    const text = `Hello Gaze Holdings, please add ${email} to The Quarterly.`;
+    setRequest(text);
+    window.open(whatsapp(text), '_blank', 'noopener,noreferrer');
   }
 
-  if (submitted) {
+  if (request) {
     return (
-      <p className="font-serif italic text-rose text-sm">{footerContent.newsletter.thanks}</p>
+      <p role="status" className="font-text text-[15px] font-light leading-relaxed">
+        One last step:{' '}
+        <a href={whatsapp(request)} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-rose-ink">send your request on WhatsApp</a>{' '}
+        and we will add you.
+      </p>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex items-center gap-3 border-b border-hairline pb-2 focus-within:border-rose transition-colors">
+    <form onSubmit={onSubmit} className="flex items-center gap-3 border-b border-gaze-deep pb-1 transition-colors focus-within:border-rose-ink">
       <input
         name="newsletter_email"
         type="email"
         required
+        autoComplete="email"
+        aria-label={footerContent.newsletter.placeholder}
         placeholder={footerContent.newsletter.placeholder}
-        className="flex-1 bg-transparent border-0 focus:outline-none py-2 font-display text-[0.75rem] tracking-[0.2em] uppercase text-ivory placeholder:text-ivory/40"
+        className="min-w-0 flex-1 border-0 bg-transparent py-3 font-text text-base font-light placeholder:text-[rgba(10,22,49,0.6)] focus:outline-none"
       />
-      <button type="submit" aria-label="Subscribe" className="text-rose hover:text-champagne transition-colors text-lg">→</button>
+      <button type="submit" className="shrink-0 font-text text-[11px] font-semibold uppercase tracking-[0.24em] transition-colors hover:text-rose-ink">
+        Subscribe
+      </button>
     </form>
   );
 }

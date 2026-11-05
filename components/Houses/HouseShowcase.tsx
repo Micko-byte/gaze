@@ -132,7 +132,7 @@ export function HouseShowcase() {
       <ScrollPattern variant="showcase" />
       {/* screen one: the sentence, alone */}
       <div className="flex min-h-[100svh] flex-col items-center justify-center px-4 text-center">
-        <p className="font-text text-[11px] font-medium uppercase tracking-[0.42em] text-gaze-antique">Gaze Holdings Ltd. · Nairobi</p>
+        <p className="font-text text-[11px] font-medium uppercase tracking-[0.42em] text-rose-ink">Gaze Holdings Ltd. · Nairobi</p>
         <h2 className="mx-auto mt-6 max-w-[20ch] font-headline text-[clamp(40px,6vw,104px)] leading-[1.14] [text-wrap:balance]">
           {WORDS.map((word, i) => {
             const at = LOGO_AFTER.indexOf(i);
@@ -176,7 +176,7 @@ export function HouseShowcase() {
                   <div data-ground className="absolute inset-0 rounded-[4px] opacity-0" style={{ background: house.ground }} />
                 </div>
                 <Link href={house.href} data-meta className="group block pt-4 text-[#E8E1D0] opacity-0">
-                  <span className="font-text text-[11px] tracking-[0.3em]" style={{ color: house.accent }}>0{i + 1}</span>
+                  <span className="font-text text-[11px] tracking-[0.3em] text-gaze-champagne">0{i + 1}</span>
                   <h3 className="mt-1 font-headline text-[clamp(20px,2vw,32px)] leading-tight">{house.name}</h3>
                   <p className="mt-1 hidden font-text text-[13px] leading-relaxed text-[#9AA3BA] md:block">{house.line}</p>
                   <span className="mt-2 inline-block font-text text-[11px] uppercase tracking-[0.26em] text-gaze-champagne transition-transform duration-500 ease-reveal group-hover:translate-x-1">

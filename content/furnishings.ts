@@ -47,14 +47,12 @@ export type Piece = {
   room: RoomId;
   line: string;
   drawing: Drawing;
-  /** Prices are set by the client; until then the price slot reads "on request". */
+  /** Her final price once she sets it; until then the indicative figure in content/pricing.ts shows. */
   price: string | null;
   /** The client's decided pieces; the rest are named proposals for her to confirm. */
   decided?: boolean;
   /** Her photographs of the piece, the cover first; further photographs are other angles or colourways. */
   photos?: string[];
-  /** Standard size, as "W 240 × D 100 × H 80 cm", once she sends it; until then the page offers her standard or yours. */
-  dims?: string;
 };
 
 const P = (slug: string, name: string, kind: string, animal: string, room: RoomId, drawing: Drawing, line: string, photos?: string[], decided?: boolean): Piece => ({
@@ -178,19 +176,74 @@ export const pieces: ReadonlyArray<Piece> = [
  * Lowercase room links in the bar, as Natuzzi sets them, each with the two columns its dropdown shows.
  * Each opens its own wing; the sub-categories are a proposal until the client's product list arrives.
  */
-export type FurnRoom = { label: string; href: string; columns: [string[], string[]]; feature?: string };
+export type FurnLink = { label: string; href: string };
+export type FurnRoom = { label: string; href: string; columns: [FurnLink[], FurnLink[]]; feature?: string };
+
+/** The kind of thing a piece is within its wing: what the wing's filter and the menu call it. */
+export function pieceType(p: Piece): string {
+  const k = p.kind.toLowerCase();
+  switch (p.room) {
+    case 'living':
+      if (p.drawing === 'sofa') return 'sofas & sectionals';
+      if (p.drawing === 'armchair') return 'armchairs';
+      if (p.drawing === 'sideboard') return 'consoles & credenzas';
+      return k.includes('side table') ? 'side tables' : 'coffee tables';
+    case 'dining':
+      return p.drawing === 'sideboard' ? 'sideboards' : 'dining tables';
+    case 'bedroom':
+      if (p.drawing === 'wardrobe') return 'wardrobes';
+      return p.drawing === 'table' ? 'dressing tables' : 'beds';
+    case 'kids':
+      if (k.includes('montessori')) return 'Montessori beds';
+      if (p.drawing === 'bunk') return 'bunk beds';
+      if (p.drawing === 'kitchen') return 'play kitchens';
+      return k === 'cot' ? 'cots' : 'beds & daybeds';
+    case 'kitchen':
+      return p.drawing === 'stool' ? 'bars & stools' : 'kitchens';
+    case 'outdoor':
+      if (p.drawing === 'armchair') return 'rope armchairs';
+      if (p.drawing === 'dining') return 'outdoor dining';
+      return p.drawing === 'lounger' ? 'loungers & daybeds' : 'outdoor sofas';
+    case 'office':
+      if (p.drawing === 'desk') return 'desks';
+      if (p.drawing === 'bookcase') return 'bookcases';
+      if (p.drawing === 'armchair') return 'office seating';
+      return k.includes('boardroom') ? 'boardroom suites' : 'reception & meeting';
+  }
+}
+
+export const typeSlug = (type: string) => type.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+/* A wing's menu lists only what the wing really holds, each link opening that type: no option leads nowhere. */
+function roomColumns(room: RoomId): [FurnLink[], FurnLink[]] {
+  const types = Array.from(new Set(pieces.filter((p) => p.room === room).map(pieceType)));
+  const links = types.map((t) => ({ label: t, href: `/furnishings/${room}?type=${typeSlug(t)}` }));
+  const half = Math.ceil(links.length / 2);
+  return [links.slice(0, half), links.slice(half)];
+}
+
+const atelierLink = (label: string): FurnLink => ({ label, href: '/furnishings/atelier' });
+const projectLink = (label: string, id: string): FurnLink => ({ label, href: `/furnishings/projects#${id}` });
 
 export const furnRooms: ReadonlyArray<FurnRoom> = [
-  { label: 'living', href: '/furnishings/living', columns: [['sofas & sectionals', 'armchairs', 'coffee tables', 'side tables'], ['consoles & credenzas', 'media units', 'shelving & bookcases', 'cushions & throws']] },
-  { label: 'dining', href: '/furnishings/dining', columns: [['dining tables', 'dining chairs', 'sideboards & storage'], ['bar stools', 'lighting', 'table linen']], feature: 'Duma Dining Set' },
-  { label: 'bedrooms', href: '/furnishings/bedroom', columns: [['beds', 'bedside tables', 'wardrobes'], ['dressers & chests', 'benches', 'bed linen']] },
-  { label: 'kids', href: '/furnishings/kids', columns: [['kids beds', 'Montessori beds', 'study desks', 'storage'], ['reading corners', 'play kitchens', 'kids furniture design']], feature: 'Kifaru Kids Set' },
-  { label: 'kitchen', href: '/furnishings/kitchen', columns: [['kitchen islands', 'bar stools'], ['pantry storage', 'open shelving']] },
-  { label: 'outdoor', href: '/furnishings/outdoor', columns: [['sun loungers & daybeds', 'outdoor sofas', 'rope armchairs'], ['outdoor dining', 'planters & accessories']] },
-  { label: 'office', href: '/furnishings/office', columns: [['executive desks', 'boardroom suites', 'office seating'], ['reception & lounge', 'bookcases']], feature: 'The Sovereign Monolith' },
-  { label: 'atelier', href: '/furnishings/atelier', columns: [['velvet', 'bouclé', 'linen', 'chenille', 'leatherette'], ['colour families', 'finishes', 'swatch samples']] },
-  { label: 'projects & contract', href: '/furnishings/projects', columns: [['residences', 'hospitality', 'corporate', 'estates & gardens'], ['interior design services', 'private consultation', 'trade enquiries']] },
+  { label: 'living', href: '/furnishings/living', columns: roomColumns('living') },
+  { label: 'dining', href: '/furnishings/dining', columns: roomColumns('dining'), feature: 'Duma Dining Set' },
+  { label: 'bedrooms', href: '/furnishings/bedroom', columns: roomColumns('bedroom') },
+  { label: 'kids', href: '/furnishings/kids', columns: roomColumns('kids'), feature: 'Kifaru Kids Set' },
+  { label: 'kitchen', href: '/furnishings/kitchen', columns: roomColumns('kitchen') },
+  { label: 'outdoor', href: '/furnishings/outdoor', columns: roomColumns('outdoor') },
+  { label: 'office', href: '/furnishings/office', columns: roomColumns('office'), feature: 'The Sovereign Monolith' },
+  { label: 'atelier', href: '/furnishings/atelier', columns: [['velvet', 'bouclé', 'linen', 'chenille', 'leatherette'].map(atelierLink), [{ label: 'your own design', href: '/furnishings/bespoke' }, atelierLink('colour families')]] },
+  { label: 'projects & contract', href: '/furnishings/projects', columns: [[projectLink('residences', 'residences'), projectLink('corporate', 'corporate'), projectLink('hospitality', 'hospitality')], [projectLink('lobbies & reception', 'reception'), projectLink('estates & gardens', 'estates'), projectLink('trade enquiries', 'contract')]] },
 ];
+
+/* Couches she sells in parts (3-2-1): a buyer chooses how many of each. A one-piece sofa never shows this. */
+const SOLD_IN_SEATERS = new Set(['kanga-velvet-sofa', 'ndovu-sofa', 'bweha-channel-sofa', 'hondohondo-sofa', 'kiboko-outdoor-sofa']);
+export const soldInSeaters = (p: Piece) => SOLD_IN_SEATERS.has(p.slug);
+
+/* Pieces made one way, with no fabric, timber or colour to choose. */
+const AS_SHOWN = new Set(['milia-credenza', 'sokwe-play-kitchen', 'ndege-play-kitchen']);
+export const madeAsShown = (p: Piece) => AS_SHOWN.has(p.slug);
 
 /* ── the bespoke atelier: the client's fabric studio brief ── */
 
@@ -211,6 +264,7 @@ export const textures = [
     detail: 'A rich, light-catching nap, soft to the touch, that adds instant depth and regal warmth to a room. Made for statement sofas and accent chairs.',
     photo: a('velvet'),
     cloth: a('velvet-cloth'),
+    grain: a('velvet-grain'),
     shown: 'Terracotta',
   },
   {
@@ -222,6 +276,7 @@ export const textures = [
     detail: 'A heavy loop texture, highly tactile and contemporary: the fabric of quiet luxury, adding physical depth to minimalist spaces.',
     photo: a('boucle'),
     cloth: a('boucle-cloth'),
+    grain: a('boucle-grain'),
     shown: 'Alabaster White',
   },
   {
@@ -233,6 +288,7 @@ export const textures = [
     detail: 'An organic texture with a matte finish and a casual elegance that softens gracefully with the years. Made for relaxed, sophisticated living.',
     photo: a('linen'),
     cloth: a('linen-cloth'),
+    grain: a('linen-grain'),
     shown: 'Warm Linen',
   },
   {
@@ -244,6 +300,7 @@ export const textures = [
     detail: 'A tufted yarn woven into a soft, gently napped cloth: warm to sit in, hard-wearing, and forgiving of daily life. Made for the family sofa and the armchair everyone reaches for.',
     photo: a('chenille'),
     cloth: a('chenille-cloth'),
+    grain: a('chenille-grain'),
     shown: 'Olive',
   },
   {
@@ -255,6 +312,7 @@ export const textures = [
     detail: 'A fine-grained faux leather with a soft hand that wipes clean, resists wear and keeps its colour. Made for dining chairs, offices and busy homes.',
     photo: a('leatherette'),
     cloth: a('leatherette-cloth'),
+    grain: a('leatherette-grain'),
     shown: 'Cognac',
   },
 ] as const;
@@ -357,13 +415,16 @@ export const defaultConfiguration = (form: StudioForm): Configuration =>
   form === 'case' ? { material: 'walnut', colour: '', finish: 'brass' } : { material: 'boucle', colour: 'Alabaster White', finish: 'brass' };
 
 /** "Midnight Navy Bouclé with Brass Accents", as the summary reads it. */
-export function describeConfiguration(c: Configuration): string {
-  const finish = finishes.find((x) => x.id === c.finish)!.accent;
+export function describeConfiguration(c: Configuration, withFinish = true): string {
+  const finish = withFinish ? ` with ${finishes.find((x) => x.id === c.finish)!.accent}` : '';
   const texture = textures.find((t) => t.id === c.material);
-  if (texture) return `${c.colour} ${texture.short} with ${finish}`;
+  if (texture) return `${c.colour} ${texture.short}${finish}`;
   const timber = timbers.find((t) => t.id === c.material)!;
-  return timber.id === 'lacquer' ? `${c.colour} Satin Lacquer with ${finish}` : `${timber.name} with ${finish}`;
+  return timber.id === 'lacquer' ? `${c.colour} Satin Lacquer${finish}` : `${timber.name}${finish}`;
 }
+
+/* Brass or matte black legs mean nothing on an upholstered sofa or bed: only tables, dining and case pieces offer it. */
+export const offersFinish = (p: Piece) => p.room === 'dining' || studioForm(p) === 'case';
 
 /* ── the house: the client's write-ups of 27 Oct 2026 ── */
 

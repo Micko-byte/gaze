@@ -121,9 +121,9 @@ export function FurnHeader() {
               {r.columns.map((col, i) => (
                 <ul key={i} className="grid content-start gap-3 font-text text-[15px] text-[#8A847A]">
                   {col.map((item) => (
-                    <li key={item}>
-                      <Link href={r.href} data-no-transition tabIndex={room === r.label ? 0 : -1} onClick={() => setRoom(null)} className="transition-colors hover:text-furn-ink">
-                        {item}
+                    <li key={item.label}>
+                      <Link href={item.href} data-no-transition tabIndex={room === r.label ? 0 : -1} onClick={() => setRoom(null)} className="transition-colors hover:text-furn-ink">
+                        {item.label}
                       </Link>
                     </li>
                   ))}
