@@ -2,16 +2,20 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useMemo, useState } from 'react';
-import { collections, pieces, soldInSeaters } from '@/content/furnishings';
+import { collections, pieces, soldInSeaters, type Piece } from '@/content/furnishings';
 import { priceSheet, testSpec } from '@/content/pricing';
-import { invoiceFor, kes } from '@/lib/pricing';
+import { invoiceFor, kes, lengthCharge } from '@/lib/pricing';
 import { cleanSheet, type PriceSheet as Sheet, type PriceSettings } from '@/lib/priceSheet';
 
 const DRAFT_KEY = 'gaze.price-sheet.draft.v1';
 const slugs = new Set(pieces.map((p) => p.slug));
-const cap = 'text-[10px] font-medium uppercase tracking-[0.2em] text-[#6F6A62]';
-const line = 'border-b border-[rgba(30,30,34,0.35)] bg-transparent py-2 text-base outline-none transition-colors placeholder:text-[#9A948A] focus:border-furn-ink';
-const field = `w-full ${line}`;
+const muted = 'text-[#6F6A62]';
+const cap = 'text-[11px] font-medium uppercase tracking-[0.18em] text-[#6F6A62]';
+// 17px and up, so a phone doesn't zoom in when a box is tapped
+const underline = 'border-b border-[rgba(30,30,34,0.3)] bg-transparent outline-none transition-colors placeholder:text-[#A39D93] focus:border-furn-ink';
+const box = `w-full ${underline} py-2.5 text-[17px]`;
+const small = `${underline} py-1 text-center text-[17px] font-medium tabular-nums`;
+const red = 'text-[#9B2C2C]';
 
 type Row = { price: string; size: string; ft: string };
 type Rows = Record<string, Row>;
@@ -19,7 +23,18 @@ type Settings = Record<keyof PriceSettings, string>;
 type Status = { kind: 'idle' | 'busy' | 'done' | 'error' | 'setup'; message?: string };
 
 const digits = (s: string) => s.replace(/[^\d]/g, '');
+const decimal = (s: string) => s.replace(/[^\d.]/g, '');
 const group = (s: string) => (s ? Number(s).toLocaleString('en-KE') : '');
+const share = (price: number, pct: number) => Math.round((price * pct) / 100 / 100) * 100;
+// a tap selects the whole number, so typing replaces it rather than adding to it
+const selectAll = (e: React.FocusEvent<HTMLInputElement>) => {
+  const el = e.currentTarget;
+  const before = el.value;
+  // a frame later, as phones reset a selection made during focus; skipped if she has already started typing
+  requestAnimationFrame(() => {
+    if (document.activeElement === el && el.value === before) el.select();
+  });
+};
 
 const toRows = (s: Sheet): Rows =>
   Object.fromEntries(
@@ -59,9 +74,10 @@ function build(rows: Rows, settings: Settings) {
 }
 
 /**
- * The price list the client fills in, as agreed on the review call: every piece with its photograph, so nobody has to
- * send screenshots. Her draft stays in this browser until she publishes. Empty boxes keep the test figure, which the
- * site labels indicative. Costs and margins must never be entered here: they belong in QuickBooks.
+ * The price list the client fills in on her phone, as agreed on the review call: every piece with a large photograph,
+ * so nobody has to send screenshots. Her work stays on her phone until she saves it to the site. Empty boxes keep the
+ * sample figure, which the site labels indicative. Costs and margins must never be entered here: they belong in
+ * QuickBooks, and this repository is public.
  */
 export function PriceSheet() {
   const [rows, setRows] = useState<Rows>(() => toRows(priceSheet));
@@ -69,17 +85,18 @@ export function PriceSheet() {
   const [query, setQuery] = useState('');
   const [onlyUnpriced, setOnlyUnpriced] = useState(false);
   const [password, setPassword] = useState('');
+  const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const [loaded, setLoaded] = useState(false);
 
-  // the draft is read after load, because this page is pre-built
+  // her draft is read after load, because this page is pre-built
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? 'null');
       if (saved?.rows) setRows((r) => ({ ...r, ...saved.rows }));
       if (saved?.settings) setSettings((s) => ({ ...s, ...saved.settings }));
     } catch {
-      /* a private window, or nothing saved */
+      /* a private window, or nothing kept yet */
     }
     setLoaded(true);
   }, []);
@@ -89,16 +106,13 @@ export function PriceSheet() {
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify({ rows, settings }));
     } catch {
-      /* storage unavailable: she can still publish or download */
+      /* storage unavailable: she can still save to the site or download */
     }
   }, [rows, settings, loaded]);
 
   const priced = pieces.filter((p) => rows[p.slug]?.price).length;
   const result = useMemo(() => build(rows, settings), [rows, settings]);
-  const unpublished = useMemo(() => {
-    if (!result.ok) return true;
-    return JSON.stringify(result.sheet) !== JSON.stringify(cleanOrSelf(priceSheet));
-  }, [result]);
+  const changed = useMemo(() => !result.ok || JSON.stringify(result.sheet) !== JSON.stringify(cleanOrSelf(priceSheet)), [result]);
 
   const set = (slug: string, patch: Partial<Row>) => {
     setRows((r) => ({ ...r, [slug]: { ...r[slug], ...patch } }));
@@ -119,7 +133,7 @@ export function PriceSheet() {
     URL.revokeObjectURL(url);
   };
 
-  const publish = async () => {
+  const save = async () => {
     if (!result.ok) return setStatus({ kind: 'error', message: result.error });
     setStatus({ kind: 'busy' });
     try {
@@ -127,158 +141,275 @@ export function PriceSheet() {
       const body = await res.json().catch(() => ({}));
       if (res.ok) {
         setPassword('');
-        setStatus({ kind: 'done', message: `Published. Your prices will be live on the site in about two minutes.` });
+        setSaving(false);
+        setStatus({ kind: 'done', message: 'Saved. Clients will see your prices on the website in a few minutes.' });
       } else if (body.error === 'not-configured') {
         setStatus({ kind: 'setup' });
       } else if (body.error === 'wrong-password') {
-        setStatus({ kind: 'error', message: 'That password is not right. Nothing was changed.' });
+        setStatus({ kind: 'error', message: 'That password isn’t right. Nothing was changed.' });
       } else {
-        setStatus({ kind: 'error', message: body.error ?? 'Publishing failed. Nothing was changed. Please try again.' });
+        setStatus({ kind: 'error', message: body.error ?? 'Saving didn’t work. Nothing was changed, so please try again.' });
       }
     } catch {
-      setStatus({ kind: 'error', message: 'The connection dropped. Nothing was changed. Please try again.' });
+      setStatus({ kind: 'error', message: 'The connection dropped. Nothing was changed, so please try again.' });
     }
   };
 
   const q = query.trim().toLowerCase();
-  const matches = (slug: string, name: string, kind: string) => (!onlyUnpriced || !rows[slug]?.price) && (!q || `${name} ${kind}`.toLowerCase().includes(q));
+  const shows = (p: Piece) => (!onlyUnpriced || !rows[p.slug]?.price) && (!q || `${p.name} ${p.kind}`.toLowerCase().includes(q));
+  const rooms = collections.map((room) => {
+    const all = pieces.filter((p) => p.room === room.id);
+    return { room, all, shown: all.filter(shows), done: all.filter((p) => rows[p.slug]?.price).length };
+  });
+
+  // worked examples, so each rule reads in shillings
+  const stepFt = Number(settings.extraStepFt);
+  const stepKes = Number(settings.extraStepKes);
+  const madeExample = stepFt > 0 ? lengthCharge(10, 14, stepFt, stepKes) : null;
+  const two = Number(settings.twoSeaterPct);
+  const one = Number(settings.oneSeaterPct);
 
   return (
-    <div className="pb-48">
-      <header className="max-w-3xl">
-        <p className="text-[12px] text-[#6F6A62]">Gaze Furnishings · for the team only</p>
-        <h1 className="mt-3 font-furn text-[clamp(44px,6vw,96px)] font-normal leading-[0.96]">Price list</h1>
-        <p className="mt-5 text-lg font-light leading-relaxed text-[#4A4640]">
-          Type the selling price for each piece, excluding VAT. Your work saves on this device as you go, so you can do a few at a time. Nothing changes on the site until you publish.
-        </p>
-        <p className="mt-4 border-l-2 border-furn-walnut pl-4 text-[15px] leading-relaxed">
-          <strong className="font-medium">Selling prices only.</strong> Everything here appears on the public website, so never enter what a piece costs to make or your margin. Those stay in QuickBooks.
+    <div className="pb-56">
+      <header className="max-w-2xl">
+        <p className={cap}>Gaze Furnishings · private page</p>
+        <h1 className="mt-4 font-furn text-[clamp(48px,9vw,104px)] font-normal leading-[0.92]">Your price list</h1>
+        <p className="mt-5 text-[18px] font-light leading-relaxed">Set the price clients see for each piece. It takes three steps:</p>
+        <ol className="mt-5 grid gap-3 text-[17px] leading-snug">
+          {[
+            'Type the price for each piece, before VAT. The site adds the 16% VAT for the client.',
+            'Leave a box empty to keep the sample price for now. Your work is kept on this phone as you go.',
+            'When you’re ready, tap “Save to the website”. You can do a few pieces at a time.',
+          ].map((t, i) => (
+            <li key={t} className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline">
+              <span className="font-furn text-[22px] text-furn-walnut">{i + 1}</span>
+              {t}
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 border-l-2 border-furn-walnut pl-4 text-[15px] leading-relaxed">
+          <strong className="font-medium">Selling prices only.</strong> Everything here appears on the website, so never type what a piece costs to make. That stays in QuickBooks.
         </p>
       </header>
 
-      <section aria-label="Rules for every piece" className="mt-12 border-t border-furn-ink pt-6">
-        <h2 className="font-furn text-[28px] leading-none">Rules for every piece</h2>
-        <div className="mt-6 grid gap-8 md:grid-cols-2">
-          <fieldset>
-            <legend className={cap}>Made to measure</legend>
-            <p className="mt-3 flex flex-wrap items-center gap-2 text-[15px]">
-              Every
-              <input aria-label="Length of each step, in feet" inputMode="decimal" value={settings.extraStepFt} onChange={(e) => setSetting('extraStepFt', e.target.value)} className={`${line} w-14 text-center`} />
-              ft added costs KES
-              <input aria-label="Charge for each step, in shillings" inputMode="numeric" value={group(settings.extraStepKes)} onChange={(e) => setSetting('extraStepKes', digits(e.target.value))} className={`${line} w-24 text-center`} />
+      <section aria-labelledby="rules-title" className="mt-14 bg-[#F7F2EA] p-6 md:p-10">
+        <h2 id="rules-title" className="font-furn text-[32px] leading-none">Two rules for every piece</h2>
+        <p className={`mt-3 text-[15px] ${muted}`}>These already work on the website. Change a number only if your pricing changes.</p>
+        <div className="mt-8 grid gap-10 md:grid-cols-2">
+          <div>
+            <h3 className={cap}>Made to measure</h3>
+            <p className="mt-3 text-[18px] leading-[2.1]">
+              When a client wants a piece longer than standard, add KES{' '}
+              <input aria-label="Amount to add, in shillings" inputMode="numeric" value={group(settings.extraStepKes)} onChange={(e) => setSetting('extraStepKes', digits(e.target.value))} onFocus={selectAll} className={`${small} w-24`} />{' '}
+              for every{' '}
+              <input aria-label="Extra length that adds that amount, in feet" inputMode="decimal" value={settings.extraStepFt} onChange={(e) => setSetting('extraStepFt', decimal(e.target.value))} onFocus={selectAll} className={`${small} w-12`} /> ft extra.
             </p>
-          </fieldset>
-          <fieldset>
-            <legend className={cap}>Couches sold as a 3-2-1 set</legend>
-            <p className="mt-3 flex flex-wrap items-center gap-2 text-[15px]">
-              A 2-seater is
-              <input aria-label="2-seater, as a percentage of the 3-seater" inputMode="numeric" value={settings.twoSeaterPct} onChange={(e) => setSetting('twoSeaterPct', digits(e.target.value))} className={`${line} w-14 text-center`} />
-              % of the 3-seater, a 1-seater is
-              <input aria-label="1-seater, as a percentage of the 3-seater" inputMode="numeric" value={settings.oneSeaterPct} onChange={(e) => setSetting('oneSeaterPct', digits(e.target.value))} className={`${line} w-14 text-center`} />
-              %
+            {madeExample !== null && (
+              <p className={`mt-3 text-[15px] leading-relaxed ${muted}`}>
+                For example, a 10 ft sofa made 14 ft costs <strong className="font-medium text-furn-ink">{kes(madeExample)}</strong> more. The client sees this as they type their size.
+              </p>
+            )}
+            {stepKes > 50000 && <p role="alert" className={`mt-2 text-[14px] ${red}`}>That looks high for each {settings.extraStepFt} ft. Please check the amount.</p>}
+          </div>
+          <div>
+            <h3 className={cap}>Couches sold as 3-2-1</h3>
+            <p className="mt-3 text-[18px] leading-[2.1]">
+              You price the 3-seater. A 2-seater costs{' '}
+              <input aria-label="2-seater, as a percentage of the 3-seater" inputMode="numeric" value={settings.twoSeaterPct} onChange={(e) => setSetting('twoSeaterPct', digits(e.target.value))} onFocus={selectAll} className={`${small} w-12`} />% of it, and a 1-seater{' '}
+              <input aria-label="1-seater, as a percentage of the 3-seater" inputMode="numeric" value={settings.oneSeaterPct} onChange={(e) => setSetting('oneSeaterPct', digits(e.target.value))} onFocus={selectAll} className={`${small} w-12`} />%.
             </p>
-          </fieldset>
-        </div>
-      </section>
-
-      <div className="mt-12 flex flex-wrap items-end gap-6 border-t border-furn-ink pt-6">
-        <label className="flex min-w-[220px] flex-1 flex-col gap-1">
-          <span className={cap}>Find a piece</span>
-          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. sofa, Duma, bunk" className={field} />
-        </label>
-        <label className="flex cursor-pointer items-center gap-2 pb-2 text-[14px]">
-          <input type="checkbox" checked={onlyUnpriced} onChange={(e) => setOnlyUnpriced(e.target.checked)} className="accent-[#1E1E22]" />
-          Show only pieces without a price
-        </label>
-      </div>
-
-      {collections.map((room) => {
-        const inRoom = pieces.filter((p) => p.room === room.id);
-        const shown = inRoom.filter((p) => matches(p.slug, p.name, p.kind));
-        if (!shown.length) return null;
-        return (
-          <section key={room.id} className="mt-14">
-            <h2 className="flex items-baseline justify-between gap-4 border-b border-furn-ink pb-3 font-furn text-[32px] leading-none">
-              {room.name}
-              <span className="font-text text-[13px] text-[#6F6A62]">{inRoom.filter((p) => rows[p.slug]?.price).length} of {inRoom.length} priced</span>
-            </h2>
-            <ul>
-              {shown.map((p) => {
-                const row = rows[p.slug] ?? { price: '', size: '', ft: '' };
-                const test = testSpec(p);
-                const price = Number(row.price);
-                const inv = row.price ? invoiceFor(price) : null;
-                return (
-                  <li key={p.slug} className="grid grid-cols-[72px_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-[rgba(30,30,34,0.12)] py-5 md:grid-cols-[72px_minmax(0,1.3fr)_minmax(0,0.9fr)_minmax(0,1.3fr)_5rem] md:items-start md:gap-x-6">
-                    <span className="block aspect-square overflow-hidden bg-[#F3EDE4]">
-                      {p.photos?.[0] && <img src={p.photos[0]} alt="" loading="lazy" className="h-full w-full object-contain" />}
-                    </span>
-                    <div className="min-w-0">
-                      <a href={`/furnishings/${p.slug}`} target="_blank" rel="noopener noreferrer" className="font-furn text-[21px] leading-tight underline-offset-4 hover:underline">{p.name}</a>
-                      <p className="text-[13px] leading-snug text-[#6F6A62]">{p.kind}</p>
-                      {soldInSeaters(p) && <p className="mt-1 text-[12px] text-furn-walnut">Sold as a set: price the 3-seater</p>}
-                    </div>
-                    <label className="col-span-2 flex flex-col gap-1 md:col-span-1">
-                      <span className={cap}>Price, KES, excl. VAT</span>
-                      <input
-                        inputMode="numeric"
-                        value={group(row.price)}
-                        onChange={(e) => set(p.slug, { price: digits(e.target.value) })}
-                        placeholder={`${test.price.toLocaleString('en-KE')} test`}
-                        className={`${field} tabular-nums`}
-                      />
-                      {inv && <span className="text-[12px] leading-snug text-[#6F6A62]">With VAT {kes(inv.total)} · deposit {kes(inv.deposit)}</span>}
-                      {inv && price < 1000 && <span role="alert" className="text-[12px] text-[#9B2C2C]">That looks low. Is a digit missing?</span>}
-                    </label>
-                    <label className="col-span-2 flex flex-col gap-1 md:col-span-1">
-                      <span className={cap}>Standard size shown</span>
-                      <input value={row.size} onChange={(e) => set(p.slug, { size: e.target.value })} placeholder={test.size} maxLength={120} className={field} />
-                    </label>
-                    <label className="col-span-2 flex flex-col gap-1 md:col-span-1">
-                      <span className={cap}>Length, ft</span>
-                      <input inputMode="decimal" value={row.ft} onChange={(e) => set(p.slug, { ft: e.target.value.replace(/[^\d.]/g, '') })} placeholder={test.ft === null ? 'n/a' : String(test.ft)} className={`${field} tabular-nums`} />
-                    </label>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        );
-      })}
-
-      {/* always in reach */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-furn-ink bg-furn-linen px-5 py-4 md:px-[6vw]">
-        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-x-8 gap-y-3">
-          <div className="min-w-0">
-            <p className="text-[15px] tabular-nums">
-              <strong className="font-medium">{priced} of {pieces.length}</strong> pieces priced
-              {unpublished && status.kind !== 'done' && <span className="text-[#6F6A62]"> · changes not published yet</span>}
-            </p>
-            {!result.ok && <p role="alert" className="text-[13px] text-[#9B2C2C]">{result.error}</p>}
-            {status.kind === 'error' && <p role="alert" className="text-[13px] text-[#9B2C2C]">{status.message}</p>}
-            {status.kind === 'done' && <p role="status" className="text-[13px] text-[#2F6B45]">{status.message}</p>}
-            {status.kind === 'setup' && (
-              <p role="status" className="max-w-xl text-[13px] text-[#9B2C2C]">
-                Publishing isn&apos;t switched on yet. Download your prices and send the file to the web team on WhatsApp.
+            {two > 0 && one > 0 && (
+              <p className={`mt-3 text-[15px] leading-relaxed ${muted}`}>
+                For example, a 3-seater at {kes(200000)} makes the 2-seater <strong className="font-medium text-furn-ink">{kes(share(200000, two))}</strong> and the 1-seater <strong className="font-medium text-furn-ink">{kes(share(200000, one))}</strong>.
               </p>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <button type="button" onClick={download} className="text-[13px] underline underline-offset-4 hover:text-furn-walnut">Download a copy</button>
-            <label className="sr-only" htmlFor="sheet-password">Publishing password</label>
-            <input id="sheet-password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className={`${line} w-36`} />
-            <button
-              type="button"
-              disabled={!result.ok || !password || status.kind === 'busy'}
-              onClick={publish}
-              className="rounded-full bg-furn-ink px-6 py-3 text-[11px] font-medium uppercase tracking-[0.2em] text-furn-linen transition-colors hover:bg-furn-walnut disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              {status.kind === 'busy' ? 'Publishing…' : 'Publish to the site'}
-            </button>
+        </div>
+      </section>
+
+      {/* find a piece, and jump between rooms */}
+      <div className="sticky top-0 z-20 -mx-5 mt-14 border-b border-[rgba(30,30,34,0.12)] bg-furn-linen/95 px-5 pb-3 pt-4 backdrop-blur md:-mx-[6vw] md:px-[6vw]">
+        <div className="flex items-center gap-3">
+          <input type="search" aria-label="Find a piece" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Find a piece, e.g. sofa or Duma" className={`${box} min-w-0 flex-1`} />
+          <button
+            type="button"
+            aria-pressed={onlyUnpriced}
+            onClick={() => setOnlyUnpriced((v) => !v)}
+            className={`shrink-0 rounded-full border px-4 py-2 text-[14px] transition-colors ${onlyUnpriced ? 'border-furn-ink bg-furn-ink text-furn-linen' : 'border-[rgba(30,30,34,0.3)]'}`}
+          >
+            Not priced yet
+          </button>
+        </div>
+        <nav aria-label="Rooms" className="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:px-0">
+          {rooms.map(({ room, all, done }) => (
+            <a key={room.id} href={`#price-${room.id}`} className="shrink-0 rounded-full bg-[#F7F2EA] px-4 py-2 text-[14px] transition-colors hover:bg-[#EDE5D8]">
+              {room.name} <span className={`tabular-nums ${muted}`}>{done}/{all.length}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      {rooms.map(({ room, all, shown, done }) =>
+        shown.length ? (
+          <section key={room.id} id={`price-${room.id}`} aria-labelledby={`price-${room.id}-title`} className="scroll-mt-36 pt-14">
+            <h2 id={`price-${room.id}-title`} className="flex items-baseline justify-between gap-4 font-furn text-[clamp(34px,5vw,48px)] leading-none">
+              {room.name}
+              <span className={`font-text text-[14px] tabular-nums ${muted}`}>{done} of {all.length} priced</span>
+            </h2>
+            <ul className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {shown.map((p) => (
+                <PieceCard key={p.slug} piece={p} row={rows[p.slug] ?? { price: '', size: '', ft: '' }} onChange={(patch) => set(p.slug, patch)} />
+              ))}
+            </ul>
+          </section>
+        ) : null,
+      )}
+      {rooms.every((r) => !r.shown.length) && <p className={`pt-14 text-[17px] ${muted}`}>{onlyUnpriced && !q ? 'Every piece has a price.' : 'No piece matches that search.'}</p>}
+
+      {/* always in reach, with room for the phone's home bar */}
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-[rgba(30,30,34,0.15)] bg-furn-linen px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-12px_30px_-20px_rgba(30,30,34,0.4)] md:px-[6vw]">
+        <div className="mx-auto max-w-[1500px]">
+          <div aria-hidden="true" className="h-[3px] w-full bg-[rgba(30,30,34,0.08)]">
+            <div className="h-full bg-furn-walnut transition-[width] duration-500" style={{ width: `${(priced / pieces.length) * 100}%` }} />
           </div>
+
+          {saving ? (
+            <form
+              className="mt-3 grid gap-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                save();
+              }}
+            >
+              <p className="text-[16px]">
+                Save <strong className="font-medium">{priced} {priced === 1 ? 'price' : 'prices'}</strong> to the website?
+              </p>
+              <div className="flex items-center gap-3">
+                <label htmlFor="sheet-password" className="sr-only">Your saving password</label>
+                <input id="sheet-password" type="password" autoComplete="current-password" autoFocus value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Your saving password" className={`${box} min-w-0 flex-1`} />
+                <button type="submit" disabled={!password || status.kind === 'busy'} className="shrink-0 rounded-full bg-furn-ink px-6 py-3.5 text-[13px] font-medium uppercase tracking-[0.16em] text-furn-linen transition-colors hover:bg-furn-walnut disabled:opacity-40">
+                  {status.kind === 'busy' ? 'Saving…' : 'Save'}
+                </button>
+              </div>
+              <Message status={status} />
+              <div className="flex gap-5 text-[14px]">
+                <button type="button" onClick={() => { setSaving(false); setStatus({ kind: 'idle' }); }} className="underline underline-offset-4">Not yet</button>
+                <button type="button" onClick={download} className={`underline underline-offset-4 ${muted}`}>Download a copy instead</button>
+              </div>
+            </form>
+          ) : (
+            <div className="mt-3 flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <p className="text-[16px] tabular-nums">
+                  <strong className="font-medium">{priced}</strong> of {pieces.length} priced
+                </p>
+                <p className={`text-[13px] ${status.kind === 'done' ? 'text-[#2F6B45]' : muted}`} role="status">
+                  {status.kind === 'done' ? status.message : changed ? 'Kept on this phone. Not on the website yet.' : 'Everything here is on the website.'}
+                </p>
+                {!result.ok && <p role="alert" className={`text-[13px] ${red}`}>{result.error}</p>}
+              </div>
+              <button
+                type="button"
+                disabled={!result.ok || !changed}
+                onClick={() => { setSaving(true); setStatus({ kind: 'idle' }); }}
+                className="shrink-0 rounded-full bg-furn-ink px-6 py-3.5 text-[13px] font-medium uppercase tracking-[0.16em] text-furn-linen transition-colors hover:bg-furn-walnut disabled:opacity-40"
+              >
+                Save to the website
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
+  );
+}
+
+function Message({ status }: { status: Status }) {
+  if (status.kind === 'error') return <p role="alert" className={`text-[14px] ${red}`}>{status.message}</p>;
+  if (status.kind === 'setup')
+    return (
+      <p role="alert" className={`text-[14px] leading-snug ${red}`}>
+        Saving to the website isn’t switched on yet. Tap “Download a copy instead” and send the file to the web team on WhatsApp.
+      </p>
+    );
+  return null;
+}
+
+/** One piece: a large photograph, the price box, and what the client will pay. */
+function PieceCard({ piece: p, row, onChange }: { piece: Piece; row: Row; onChange: (patch: Partial<Row>) => void }) {
+  const test = testSpec(p);
+  const price = Number(row.price);
+  const inv = row.price ? invoiceFor(price) : null;
+  const sizeShown = row.size.trim() || test.size;
+  const id = `price-${p.slug}`;
+
+  return (
+    <li className="flex flex-col bg-[#FBF8F3] shadow-[0_1px_0_rgba(30,30,34,0.06),0_18px_40px_-30px_rgba(30,30,34,0.35)]">
+      <a href={`/furnishings/${p.slug}`} target="_blank" rel="noopener noreferrer" aria-label={`See ${p.name} on the website`} className="relative block aspect-[4/3] overflow-hidden bg-[#F1EBE1]">
+        {p.photos?.[0] && <img src={p.photos[0]} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain p-4" />}
+        <span className={`absolute left-4 top-4 rounded-full px-3 py-1.5 text-[12px] font-medium ${inv ? 'bg-furn-ink text-furn-linen' : 'bg-[rgba(251,248,243,0.92)] text-[#6F6A62]'}`}>
+          {inv ? '✓ Your price' : 'Sample price'}
+        </span>
+      </a>
+
+      <div className="flex flex-1 flex-col gap-5 p-5 md:p-6">
+        <div>
+          <h3 className="font-furn text-[26px] leading-tight">{p.name}</h3>
+          <p className={`mt-1 text-[15px] ${muted}`}>{p.kind}</p>
+          {soldInSeaters(p) && <p className="mt-2 text-[14px] text-furn-walnut">Sold as 3-2-1: type the 3-seater price.</p>}
+        </div>
+
+        <div>
+          <label htmlFor={id} className={cap}>Price before VAT</label>
+          <div className="mt-1 flex items-baseline gap-2 border-b-2 border-furn-ink">
+            <span className="text-[20px] font-light">KES</span>
+            <input
+              id={id}
+              inputMode="numeric"
+              enterKeyHint="next"
+              value={group(row.price)}
+              onChange={(e) => onChange({ price: digits(e.target.value) })}
+              onFocus={selectAll}
+              placeholder={test.price.toLocaleString('en-KE')}
+              className="w-0 min-w-0 flex-1 bg-transparent py-2 font-furn text-[30px] tabular-nums outline-none placeholder:text-[#B8B1A6]"
+            />
+          </div>
+          <p className={`mt-2 text-[14px] leading-snug ${muted}`} aria-live="polite">
+            {inv ? (
+              <>
+                The client pays <strong className="font-medium text-furn-ink">{kes(inv.total)}</strong> with VAT: a deposit of {kes(inv.deposit)}, then {kes(inv.balance)}.
+              </>
+            ) : (
+              <>Empty, so the site shows the sample price of {kes(test.price)}.</>
+            )}
+          </p>
+          {inv && price < 1000 && <p role="alert" className={`mt-1 text-[14px] ${red}`}>That looks low. Is a digit missing?</p>}
+        </div>
+
+        <details className="group mt-auto border-t border-[rgba(30,30,34,0.1)] pt-4">
+          <summary className="flex cursor-pointer list-none items-baseline justify-between gap-3 text-[15px] [&::-webkit-details-marker]:hidden">
+            <span className="min-w-0">
+              <span className={cap}>Size</span>
+              <span className="mt-1 block">{sizeShown}{row.size.trim() ? '' : ' (sample)'}</span>
+            </span>
+            <span className="shrink-0 text-[14px] underline underline-offset-4 group-open:hidden">Change</span>
+          </summary>
+          <div className="mt-4 grid gap-4">
+            <label className="grid gap-1">
+              <span className={cap}>Size shown to clients</span>
+              <input value={row.size} onChange={(e) => onChange({ size: e.target.value })} placeholder={test.size} maxLength={120} className={box} />
+            </label>
+            {test.ft !== null && (
+              <label className="grid gap-1">
+                <span className={cap}>Standard length in feet</span>
+                <input inputMode="decimal" value={row.ft} onChange={(e) => onChange({ ft: decimal(e.target.value) })} placeholder={`${test.ft}`} className={`${box} tabular-nums`} />
+                <span className={`text-[13px] ${muted}`}>Made to measure adds to the price from this length.</span>
+              </label>
+            )}
+          </div>
+        </details>
+      </div>
+    </li>
   );
 }
 
