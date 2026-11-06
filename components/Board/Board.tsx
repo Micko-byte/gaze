@@ -3,7 +3,7 @@ import { board } from '@/content/board';
 import { Reveal } from '@/components/Reveal/Reveal';
 
 /**
- * The Board of Gaze Holdings Limited, after the Chairperson: each director's portrait, office and overview, with the
+ * The Board of Gaze Holdings Limited, after the Founder & President: each director's portrait, office and overview, with the
  * full profile folding out beneath. Portraits turn from monochrome to colour as they are approached.
  */
 export function Board() {
@@ -16,7 +16,7 @@ export function Board() {
             <h2 className="mt-4 font-headline text-[clamp(44px,5vw,80px)] leading-none">Directors of Gaze Holdings Limited</h2>
           </div>
           <p className="max-w-sm font-text text-[15px] font-light leading-relaxed text-[rgba(6,18,42,0.72)]">
-            Governance across faith, technology, industry and wealth, alongside the Chairperson.
+            Governance across faith, technology, industry and wealth, alongside the Founder & President.
           </p>
         </Reveal>
 

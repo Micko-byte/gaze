@@ -9,7 +9,7 @@ const label = 'font-text text-[11px] uppercase tracking-[0.26em] text-[rgba(6,18
 
 /**
  * A booking request to the executive desk. Like the other Gaze forms it confirms on the page for now; delivery to
- * the Chairperson's inbox is wired in with the back end.
+ * her office inbox is wired in with the back end.
  */
 export function BookingForm() {
   const [sent, setSent] = useState<string | null>(null);

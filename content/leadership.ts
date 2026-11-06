@@ -3,13 +3,13 @@ export const leadershipContent = {
     first: 'Muthoni',
     last: 'Ngugi',
   },
-  /* from her Office of the Director & Chairperson page (22 Oct 2026) */
-  office: 'Office of the Director & Chairperson',
-  role: 'Founder & Chairperson, Gaze Holdings Ltd.',
+  /* from her director page (22 Oct 2026); her title is Founder & President, not Chairperson (6 Nov 2026) */
+  office: 'Office of the Founder & President',
+  role: 'Founder & President, Gaze Holdings',
   titles: 'Author | Serial Entrepreneur | Global Keynote Speaker & Panel Chair',
   maxim: 'Order is the sanctuary of excellence; alignment is the foundation of peace.',
   bio: [
-    'Muthoni Ngugi is a Pan-African business executive, author, and thought leader serving as the Founder and Chairperson of Gaze Holdings Ltd. Operating at the intersection of cognitive sovereignty, developmental psychology, and spatial architecture, she leads an asset-light luxury ecosystem comprising The Gaze Manor & Bespoke Furnishings, Gaze Press, and the Gaze Leadership Institute.',
+    'Muthoni Ngugi is a Pan-African business executive, author, and thought leader serving as the Founder and President of Gaze Holdings Ltd. Operating at the intersection of cognitive sovereignty, developmental psychology, and spatial architecture, she leads an asset-light luxury ecosystem comprising The Gaze Manor & Bespoke Furnishings, Gaze Press, and the Gaze Leadership Institute.',
     'She has authored eight seminal works, and was named Businesswoman of the Year at the She Millionaire Limpopo Awards in 2024 and 2025.',
   ],
   stats: [

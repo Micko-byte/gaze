@@ -95,21 +95,35 @@ export const board: ReadonlyArray<Director> = [
   {
     slug: 'mandy-sigauke',
     name: 'Dr. Mandy Sigauke',
-    role: 'Member of the Board / Advisory Director',
+    /* her new write-up, 6 Nov 2026 */
+    role: 'Advisory Director — International Leadership & Governance',
     portrait: '/images/board/mandy-sigauke.jpg',
     overview:
-      'Dr. Mandy Sigauke is an internationally acclaimed wealth coach, global speaker, author, and visionary enterprise strategist. Serving as a key member of the Advisory Board at Gaze Holdings Ltd, Dr. Sigauke brings formidable expertise in executive protocol, capital alignment, and international brand positioning.',
+      'Dr. Mandy Sigauke is a visionary entrepreneur, global speaker, wealth coach, author, and Christian leader dedicated to transforming mindsets, strengthening confidence, and helping leaders build sustainable wealth and meaningful legacies.',
     sections: [
       {
-        heading: '',
+        heading: 'Executive Bio',
         points: [
           {
             title: '',
-            body: 'She is the Founder and Chief Executive Officer of SheMillionaire and ManSig Holdings, as well as the Founder of the Limpopo School of Etiquette, where executive presence, corporate poise, and leadership distinction are cultivated. Operating from Limpopo, South Africa, her global reach spans key economic and cultural corridors across Paris, Dubai, Singapore, and China.',
+            body: 'She is the Founder and CEO of SheMillionaire, CEO of Mansig Holdings, and Founder of the Limpopo School of Etiquette—an institution where executive presence, confidence, and professional excellence find practical expression. As an Advisory Director for Gaze Holdings Ltd, Dr. Sigauke brings extensive continental governance, economic empowerment strategies, and institutional poise to the board.',
           },
+        ],
+      },
+      {
+        heading: 'Strategic Mandate & Board Focus',
+        points: [
+          { title: 'Continental Leadership & Governance', body: 'Advising the executive committee on cross-border expansion, institutional standards, and executive growth across Gaze Leadership Institute (GLI) and Her Gaze Global.' },
+          { title: 'Wealth Architecture & Mindset', body: 'Bringing a proven framework in wealth creation, entrepreneurship, and brand positioning to empower regional leaders and corporate cohorts.' },
+          { title: 'Global Visibility & Advocacy', body: 'Leveraging international platforms—from Paris and Dubai to China and Singapore—to connect African leaders with global opportunities and rooms of greater influence.' },
+        ],
+      },
+      {
+        heading: 'Key Quote',
+        points: [
           {
             title: '',
-            body: 'A passionate advocate for intellectual governance and transformational leadership, Dr. Sigauke champions executive frameworks that bridge internal alignment with commercial mastery—frequently endorsing foundational literature across the ecosystem, including Stay by Design by Muthoni Ngugi. As the host of the Africa Wealth & Legacy Summit & Honours, she plays a pivotal role in shaping continental wealth creation, institutional governance, and generational legacy.',
+            body: '“You do not need permission to become powerful. You are allowed to build wealth, become the face of your brand, enter global rooms, and create a legacy worthy of your vision.” — Dr. Mandy Sigauke',
           },
         ],
       },

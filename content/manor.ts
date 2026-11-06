@@ -127,7 +127,7 @@ export const manorCommitment = {
   quote:
     'Architecture is not about surface performance—it is about structural alignment. Whether through the steel of a blueprint, the soil of a living garden, or the lens of a broadcast, Gaze Manor builds spaces that endure.',
   name: 'Muthoni Ngugi',
-  role: 'Founder & Executive Chairperson, Gaze Holdings Limited',
+  role: 'Founder & President, Gaze Holdings',
 };
 
 export const manorCommission = {

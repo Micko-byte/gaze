@@ -20,9 +20,10 @@ describe('Leadership', () => {
     const { container } = render(<Leadership />);
     expect(container.textContent).toContain('Muthoni');
     expect(container.textContent).toContain('Ngugi');
-    expect(container.textContent).toContain('Founder & Chairperson');
+    expect(container.textContent).toContain('Founder & President, Gaze Holdings');
+    expect(container.textContent).not.toMatch(/Chairperson/);
     // the label animates letter by letter, with non-breaking spaces between words
-    expect(container.textContent?.replace(/ /g, ' ')).toContain('Office of the Director & Chairperson');
+    expect(container.textContent?.replace(/ /g, ' ')).toContain('Office of the Founder & President');
     expect(container.querySelector('a[href="/meet-the-director"]')).not.toBeNull();
     expect(container.textContent).toContain('Businesswoman of the Year');
     expect(container.textContent).toContain('Years Experience');

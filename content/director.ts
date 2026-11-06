@@ -1,16 +1,16 @@
 /*
- * Office of the Director & Chairperson (/meet-the-director): the client's page copy, 22 Oct 2026. muthoningugi.com is
+ * Office of the Founder & President (/meet-the-director): the client's page copy, 22 Oct 2026. muthoningugi.com is
  * to redirect here.
  */
 
 export const director = {
-  office: 'Office of the Director & Chairperson',
+  office: 'Office of the Founder & President',
   name: 'Muthoni Ngugi',
   titles: ['Author', 'Serial Entrepreneur', 'Global Keynote Speaker & Panel Chair'],
   maxim: 'Order is the sanctuary of excellence; alignment is the foundation of peace.',
   overviewHeading: 'The Architecture of Purpose & Enterprise',
   overview: [
-    'Muthoni Ngugi is a Pan-African business executive, author, and thought leader serving as the Founder and Chairperson of Gaze Holdings Ltd. Operating at the intersection of cognitive sovereignty, developmental psychology, and spatial architecture, she leads an asset-light luxury ecosystem comprising The Gaze Manor & Bespoke Furnishings, Gaze Press, and the Gaze Leadership Institute.',
+    'Muthoni Ngugi is a Pan-African business executive, author, and thought leader serving as the Founder and President of Gaze Holdings Ltd. Operating at the intersection of cognitive sovereignty, developmental psychology, and spatial architecture, she leads an asset-light luxury ecosystem comprising The Gaze Manor & Bespoke Furnishings, Gaze Press, and the Gaze Leadership Institute.',
     'A recognized authority on relational accountability, generational healing, and Kingdom enterprise, Muthoni has authored eight seminal works designed to equip visionaries, industrial leaders, and institutions to build enduring assets grounded in peace, order, and divine alignment.',
     'As an active global speaker, podcast guest, and panel chair, she brings precision, rich vocabulary, and deep philosophical command to high-stakes dialogues on African economic architecture, cognitive sovereignty, and institutional governance.',
   ],
