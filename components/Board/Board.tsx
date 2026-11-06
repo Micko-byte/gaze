@@ -16,7 +16,7 @@ export function Board() {
             <h2 className="mt-4 font-headline text-[clamp(44px,5vw,80px)] leading-none">Directors of Gaze Holdings Limited</h2>
           </div>
           <p className="max-w-sm font-text text-[15px] font-light leading-relaxed text-[rgba(6,18,42,0.72)]">
-            Governance across faith, enterprise and technology, alongside the Chairperson.
+            Governance across faith, technology, industry and wealth, alongside the Chairperson.
           </p>
         </Reveal>
 
@@ -42,10 +42,10 @@ export function Board() {
                     <span aria-hidden="true" className="text-lg transition-transform duration-300 group-open/d:rotate-45">+</span>
                   </summary>
                   <div className="mt-6 grid gap-8">
-                    {d.sections.map((s) => (
-                      <div key={s.heading}>
-                        <p className="font-headline text-[22px] leading-tight">{s.heading}</p>
-                        <ul className="mt-4 grid gap-4">
+                    {d.sections.map((s, si) => (
+                      <div key={s.heading || si}>
+                        {s.heading && <p className="mb-4 font-headline text-[22px] leading-tight">{s.heading}</p>}
+                        <ul className="grid gap-4">
                           {s.points.map((p) => (
                             <li key={p.title || p.body.slice(0, 24)} className="font-text text-[15px] font-light leading-relaxed text-[rgba(6,18,42,0.82)]">
                               {p.title && <span className="block font-medium text-gaze-deep">{p.title}</span>}

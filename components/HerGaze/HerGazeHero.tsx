@@ -22,8 +22,8 @@ export function HerGazeHero() {
     <section id="top" data-loader-target className="relative h-[calc(100svh-118px)] min-h-[380px] overflow-hidden bg-her-noir">
       <video
         ref={video}
-        src="/video/hergaze-hero.mp4"
-        poster="/images/hergaze/hero-poster.jpg"
+        src="/video/hergaze/hero-convening.mp4"
+        poster="/images/hergaze/hero-convening-poster.jpg"
         muted
         loop
         playsInline

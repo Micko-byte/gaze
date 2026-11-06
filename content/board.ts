@@ -6,6 +6,7 @@ export type Director = {
   role: string;
   portrait: string;
   overview: string;
+  /** A section's heading may be empty where her draft gives the text without one. */
   sections: { heading: string; points: { title: string; body: string }[] }[];
 };
 
@@ -51,6 +52,65 @@ export const board: ReadonlyArray<Director> = [
           { title: 'Architectural Excellence', body: 'Specializes in leading high-caliber software engineering teams and delivering scalable, bespoke digital platforms across international markets.' },
           { title: 'Cross-Industry Mastery', body: 'Broad technical footprint spanning financial services, telecommunications, insurance, digital health, and high-security information management.' },
           /* the draft breaks off at "Data & Process Transformation: Expert in business process automat…"; the rest is to follow */
+        ],
+      },
+    ],
+  },
+  /* the two below are from her profiles of 6 Nov 2026 */
+  {
+    slug: 'lungisa-lutshaba',
+    name: 'Lungisa Jason Lutshaba',
+    role: 'Director — Industrial Strategy & Enterprise Scaling',
+    portrait: '/images/board/lungisa-lutshaba.jpg',
+    overview:
+      'Lungisa Jason Lutshaba is a distinguished business executive, industrial visionary, and product development specialist with over 18 years of pioneering expertise spanning FMCG manufacturing, brand architecture, hospitality innovation, and international trade. As the Founding President and Chief Executive Officer of Analit Africa (Pty) Ltd—established in 2012—he has spearheaded the creation and scaling of elite consumer brands and diversified manufacturing enterprises across global and African markets.',
+    sections: [
+      {
+        heading: 'Core Expertise & Strategic Focus',
+        points: [
+          { title: 'Industrial & Brand Stewardship', body: 'Architect behind an elite portfolio of household and personal care brands—including Sunpheka Foods, Ticklecare Skin, and Ambush Hygiene—with an expansive commercial footprint reaching Kenya, Ghana, Namibia, Nigeria, Kuwait, and the UAE.' },
+          { title: 'Hospitality & Market Diversification', body: 'Proven mastery in developing bespoke hospitality products and luxury resort investments, serving prestigious groups such as Sun International, Tsogo Sun, and City Lodge Group.' },
+          { title: 'Operational Excellence', body: 'Deep technical grounding in food science, quality assurance frameworks (ISO 9001:2015, FSSC 22000, HACCP), chemical engineering fundamentals, and industrial calibration.' },
+        ],
+      },
+      {
+        heading: 'Academic & Professional Credentials',
+        points: [
+          { title: 'Gordon Institute of Business Science (GIBS), University of Pretoria', body: 'Executive training in Business Administration, Entrepreneurship, Leadership, and Supply Chain Compliance.' },
+          { title: 'Nelson Mandela University', body: 'Advanced studies in Marketing, Sales, Human Resource Management, and Financial Management Principles.' },
+          { title: 'International Certifications', body: 'Specialized qualifications in Science, Mathematics, and Technological Education (SMATE) spanning web development, e-commerce, and technical programming, alongside formal certifications in Quality Management Systems and Industrial Supply Chain Governance.' },
+        ],
+      },
+      {
+        heading: 'Board Contribution',
+        points: [
+          {
+            title: '',
+            body: 'As a board member guiding industrial strategy and enterprise scaling, Lungisa brings exceptional acumen in scaling production operations, expanding cross-border trade channels, and securing high-value commercial and luxury hospitality partnerships. His strategic oversight anchors Gaze Holdings in uncompromising operational standards and visionary global expansion.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'mandy-sigauke',
+    name: 'Dr. Mandy Sigauke',
+    role: 'Member of the Board / Advisory Director',
+    portrait: '/images/board/mandy-sigauke.jpg',
+    overview:
+      'Dr. Mandy Sigauke is an internationally acclaimed wealth coach, global speaker, author, and visionary enterprise strategist. Serving as a key member of the Advisory Board at Gaze Holdings Ltd, Dr. Sigauke brings formidable expertise in executive protocol, capital alignment, and international brand positioning.',
+    sections: [
+      {
+        heading: '',
+        points: [
+          {
+            title: '',
+            body: 'She is the Founder and Chief Executive Officer of SheMillionaire and ManSig Holdings, as well as the Founder of the Limpopo School of Etiquette, where executive presence, corporate poise, and leadership distinction are cultivated. Operating from Limpopo, South Africa, her global reach spans key economic and cultural corridors across Paris, Dubai, Singapore, and China.',
+          },
+          {
+            title: '',
+            body: 'A passionate advocate for intellectual governance and transformational leadership, Dr. Sigauke champions executive frameworks that bridge internal alignment with commercial mastery—frequently endorsing foundational literature across the ecosystem, including Stay by Design by Muthoni Ngugi. As the host of the Africa Wealth & Legacy Summit & Honours, she plays a pivotal role in shaping continental wealth creation, institutional governance, and generational legacy.',
+          },
         ],
       },
     ],
