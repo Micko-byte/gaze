@@ -12,6 +12,11 @@ const slugs = new Set(pieces.map((p) => p.slug));
 const digest = (s: string) => createHash('sha256').update(s).digest();
 const reply = (body: object, status: number) => NextResponse.json(body, { status });
 
+/** Tells the price list whether it can save straight to the site, or should send her prices on WhatsApp instead. */
+export async function GET() {
+  return reply({ configured: Boolean(process.env.PRICE_SHEET_PASSWORD && process.env.GITHUB_TOKEN) }, 200);
+}
+
 /**
  * Publishes the price sheet: saves content/prices.json to the repository, which redeploys the site with her prices.
  * No database is involved. It runs only with PRICE_SHEET_PASSWORD and GITHUB_TOKEN set on the host, and the token

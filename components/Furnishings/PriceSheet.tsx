@@ -6,6 +6,7 @@ import { collections, pieces, soldInSeaters, type Piece } from '@/content/furnis
 import { priceSheet, testSpec } from '@/content/pricing';
 import { invoiceFor, kes, lengthCharge } from '@/lib/pricing';
 import { cleanSheet, type PriceSheet as Sheet, type PriceSettings } from '@/lib/priceSheet';
+import { encodePriceSheet } from '@/lib/priceCode';
 
 const DRAFT_KEY = 'gaze.price-sheet.draft.v1';
 const slugs = new Set(pieces.map((p) => p.slug));
@@ -20,7 +21,7 @@ const red = 'text-[#9B2C2C]';
 type Row = { price: string; size: string; ft: string };
 type Rows = Record<string, Row>;
 type Settings = Record<keyof PriceSettings, string>;
-type Status = { kind: 'idle' | 'busy' | 'done' | 'error' | 'setup'; message?: string };
+type Status = { kind: 'idle' | 'busy' | 'done' | 'error' | 'sent' | 'copied'; message?: string };
 
 const digits = (s: string) => s.replace(/[^\d]/g, '');
 const decimal = (s: string) => s.replace(/[^\d.]/g, '');
@@ -85,9 +86,19 @@ export function PriceSheet() {
   const [query, setQuery] = useState('');
   const [onlyUnpriced, setOnlyUnpriced] = useState(false);
   const [password, setPassword] = useState('');
-  const [saving, setSaving] = useState(false);
+  // 'save' straight to the site when it is switched on, otherwise 'send' her prices to the web team on WhatsApp
+  const [panel, setPanel] = useState<null | 'save' | 'send'>(null);
+  const [canSave, setCanSave] = useState<boolean | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/price-sheet', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((b) => setCanSave(Boolean(b.configured)))
+      .catch(() => setCanSave(false));
+  }, []);
 
   // her draft is read after load, because this page is pre-built
   useEffect(() => {
@@ -123,14 +134,40 @@ export function PriceSheet() {
     setStatus({ kind: 'idle' });
   };
 
-  const download = () => {
-    if (!result.ok) return setStatus({ kind: 'error', message: result.error });
-    const url = URL.createObjectURL(new Blob([`${JSON.stringify(result.sheet, null, 2)}\n`], { type: 'application/json' }));
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'gaze-prices.json';
-    a.click();
-    URL.revokeObjectURL(url);
+  // the message is ready before she taps, because phones only open the share menu straight from a tap
+  useEffect(() => {
+    if (panel !== 'send' || !result.ok) return setMessage(null);
+    let live = true;
+    encodePriceSheet(result.sheet).then((code) => {
+      if (live) setMessage(`Hello, here are my Gaze Furnishings prices: ${priced} of ${pieces.length} pieces priced.\n\nFor the web team: ${code}`);
+    });
+    return () => {
+      live = false;
+    };
+  }, [panel, result, priced]);
+
+  const send = async () => {
+    if (!message) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({ text: message });
+        return setStatus({ kind: 'sent' });
+      } catch (e) {
+        if (e instanceof DOMException && e.name === 'AbortError') return; // she closed the share menu
+      }
+    }
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    setStatus({ kind: 'sent' });
+  };
+
+  const copy = async () => {
+    if (!message) return;
+    try {
+      await navigator.clipboard.writeText(message);
+      setStatus({ kind: 'copied' });
+    } catch {
+      setStatus({ kind: 'error', message: 'Copying didn’t work here. Tap “Send on WhatsApp” instead.' });
+    }
   };
 
   const save = async () => {
@@ -141,10 +178,12 @@ export function PriceSheet() {
       const body = await res.json().catch(() => ({}));
       if (res.ok) {
         setPassword('');
-        setSaving(false);
+        setPanel(null);
         setStatus({ kind: 'done', message: 'Saved. Clients will see your prices on the website in a few minutes.' });
       } else if (body.error === 'not-configured') {
-        setStatus({ kind: 'setup' });
+        setCanSave(false);
+        setPanel('send');
+        setStatus({ kind: 'idle' });
       } else if (body.error === 'wrong-password') {
         setStatus({ kind: 'error', message: 'That password isn’t right. Nothing was changed.' });
       } else {
@@ -179,7 +218,7 @@ export function PriceSheet() {
           {[
             'Type the price for each piece, before VAT. The site adds the 16% VAT for the client.',
             'Leave a box empty to keep the sample price for now. Your work is kept on this phone as you go.',
-            'When you’re ready, tap “Save to the website”. You can do a few pieces at a time.',
+            'When you’re ready, tap the dark button at the bottom of the screen. You can do a few pieces at a time.',
           ].map((t, i) => (
             <li key={t} className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline">
               <span className="font-furn text-[22px] text-furn-walnut">{i + 1}</span>
@@ -273,7 +312,23 @@ export function PriceSheet() {
             <div className="h-full bg-furn-walnut transition-[width] duration-500" style={{ width: `${(priced / pieces.length) * 100}%` }} />
           </div>
 
-          {saving ? (
+          {panel === 'send' ? (
+            <div className="mt-3 grid gap-3">
+              <p className="text-[16px] leading-snug">
+                Send <strong className="font-medium">{priced} {priced === 1 ? 'price' : 'prices'}</strong> to the web team. They’ll put them on the website, usually the same day.
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <button type="button" disabled={!message} onClick={send} className="rounded-full bg-furn-ink px-6 py-3.5 text-[13px] font-medium uppercase tracking-[0.16em] text-furn-linen transition-colors hover:bg-furn-walnut disabled:opacity-40">
+                  Send on WhatsApp
+                </button>
+                <button type="button" disabled={!message} onClick={copy} className="rounded-full border border-furn-ink px-5 py-3 text-[13px] font-medium uppercase tracking-[0.16em] disabled:opacity-40">
+                  Copy instead
+                </button>
+              </div>
+              <Message status={status} />
+              <button type="button" onClick={() => { setPanel(null); setStatus({ kind: 'idle' }); }} className="justify-self-start text-[14px] underline underline-offset-4">Not yet</button>
+            </div>
+          ) : panel === 'save' ? (
             <form
               className="mt-3 grid gap-3"
               onSubmit={(e) => {
@@ -293,8 +348,8 @@ export function PriceSheet() {
               </div>
               <Message status={status} />
               <div className="flex gap-5 text-[14px]">
-                <button type="button" onClick={() => { setSaving(false); setStatus({ kind: 'idle' }); }} className="underline underline-offset-4">Not yet</button>
-                <button type="button" onClick={download} className={`underline underline-offset-4 ${muted}`}>Download a copy instead</button>
+                <button type="button" onClick={() => { setPanel(null); setStatus({ kind: 'idle' }); }} className="underline underline-offset-4">Not yet</button>
+                <button type="button" onClick={() => { setPanel('send'); setStatus({ kind: 'idle' }); }} className={`underline underline-offset-4 ${muted}`}>Send on WhatsApp instead</button>
               </div>
             </form>
           ) : (
@@ -310,11 +365,11 @@ export function PriceSheet() {
               </div>
               <button
                 type="button"
-                disabled={!result.ok || !changed}
-                onClick={() => { setSaving(true); setStatus({ kind: 'idle' }); }}
+                disabled={!result.ok || !changed || canSave === null}
+                onClick={() => { setPanel(canSave ? 'save' : 'send'); setStatus({ kind: 'idle' }); }}
                 className="shrink-0 rounded-full bg-furn-ink px-6 py-3.5 text-[13px] font-medium uppercase tracking-[0.16em] text-furn-linen transition-colors hover:bg-furn-walnut disabled:opacity-40"
               >
-                Save to the website
+                {canSave ? 'Save to the website' : 'Send my prices'}
               </button>
             </div>
           )}
@@ -326,10 +381,12 @@ export function PriceSheet() {
 
 function Message({ status }: { status: Status }) {
   if (status.kind === 'error') return <p role="alert" className={`text-[14px] ${red}`}>{status.message}</p>;
-  if (status.kind === 'setup')
+  if (status.kind === 'sent' || status.kind === 'copied')
     return (
-      <p role="alert" className={`text-[14px] leading-snug ${red}`}>
-        Saving to the website isn’t switched on yet. Tap “Download a copy instead” and send the file to the web team on WhatsApp.
+      <p role="status" className="text-[14px] leading-snug text-[#2F6B45]">
+        {status.kind === 'sent'
+          ? 'If you haven’t yet, send that message to the web team. They’ll put your prices on the website and tell you when they’re live.'
+          : 'Copied. Paste it into a WhatsApp message to the web team.'}
       </p>
     );
   return null;

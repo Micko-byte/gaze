@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { POST } from './route';
+import { GET, POST } from './route';
 
 const sheet = { settings: { extraStepFt: 2, extraStepKes: 3500, twoSeaterPct: 75, oneSeaterPct: 50 }, pieces: { 'simba-sofa': { price: 185000 } } };
 const post = (body: unknown) => POST(new Request('http://x/api/price-sheet', { method: 'POST', body: typeof body === 'string' ? body : JSON.stringify(body) }));
@@ -15,6 +15,12 @@ describe('POST /api/price-sheet', () => {
   afterEach(() => {
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
+  });
+
+  it('tells the page whether saving is switched on, and nothing else', async () => {
+    expect(await (await GET()).json()).toEqual({ configured: true });
+    vi.stubEnv('GITHUB_TOKEN', '');
+    expect(await (await GET()).json()).toEqual({ configured: false });
   });
 
   it('says so when publishing has not been set up', async () => {
