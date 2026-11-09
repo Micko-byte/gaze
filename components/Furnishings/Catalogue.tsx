@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { collections, colours, pieces, pieceType, textures, type Piece, type RoomId } from '@/content/furnishings';
 import { pieceSpec } from '@/content/pricing';
+import { chairs } from '@/content/executiveSeating';
 import { kes } from '@/lib/pricing';
 import { FurnitureDrawing } from './FurnitureDrawing';
 import { WingFilter } from './WingFilter';
@@ -121,6 +122,13 @@ export function CatalogueContents() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/furnishings/executive-seating" data-no-transition className="group grid grid-cols-[3.5rem_1fr_auto] items-baseline gap-4 border-b border-[rgba(30,30,34,0.15)] py-5 transition-colors hover:text-furn-walnut">
+                <span className="font-furn text-xl text-furn-walnut">&amp;</span>
+                <span className="font-furn text-[clamp(26px,2.4vw,40px)] leading-none transition-transform duration-500 group-hover:translate-x-1">Executive Seating</span>
+                <span className="text-[12px] text-[#6F6A62]">{chairs.length} chairs</span>
+              </Link>
+            </li>
             <li>
               <Link href="/furnishings/atelier" data-no-transition className="group grid grid-cols-[3.5rem_1fr_auto] items-baseline gap-4 border-b border-[rgba(30,30,34,0.15)] py-5 transition-colors hover:text-furn-walnut">
                 <span className="font-furn text-xl text-furn-walnut">&amp;</span>

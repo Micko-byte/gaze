@@ -218,6 +218,53 @@ function noiseBuffer(ac: AudioContext, seconds: number): AudioBuffer {
   return buf;
 }
 
+/** The chair turning a step: a padded thud, low and short, like leather settling. */
+export function turn(): void {
+  const ac = ready();
+  if (!ac || !master) return;
+  const t = ac.currentTime;
+  const src = ac.createBufferSource();
+  src.buffer = noiseBuffer(ac, 0.16);
+  const lp = ac.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.setValueAtTime(1100, t);
+  lp.frequency.exponentialRampToValueAtTime(220, t + 0.14);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.5, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+  src.connect(lp).connect(g).connect(master);
+  src.start(t);
+  const osc = ac.createOscillator();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(150, t);
+  osc.frequency.exponentialRampToValueAtTime(68, t + 0.16);
+  const og = ac.createGain();
+  og.gain.setValueAtTime(0.42, t);
+  og.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  osc.connect(og).connect(master);
+  osc.start(t);
+  osc.stop(t + 0.22);
+}
+
+/** The close-up opening: two soft low notes, a fifth apart, that swell and fade. */
+export function reveal(): void {
+  const ac = ready();
+  if (!ac || !master) return;
+  const t = ac.currentTime;
+  [196, 293.66].forEach((hz, i) => {
+    const osc = ac.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = hz;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(i ? 0.09 : 0.14, t + 0.12);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+    osc.connect(g).connect(master!);
+    osc.start(t);
+    osc.stop(t + 0.95);
+  });
+}
+
 /** A soft wooden tap for links and buttons. */
 export function click(): void {
   const ac = ready();

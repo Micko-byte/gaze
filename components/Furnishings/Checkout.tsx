@@ -252,7 +252,7 @@ export function Checkout() {
                   <span className="block font-furn text-[20px] leading-tight">{i.qty > 1 ? `${i.qty} × ` : ''}{i.name}</span>
                   <span className="mt-1 block text-[12px] text-[#6F6A62]">{i.described}</span>
                   <span className="block text-[12px] text-[#6F6A62]">{i.spec}</span>
-                  <span className="block text-[12px] text-[#6F6A62]">{i.imported ? 'imported in 3 months' : 'made in 14–21 days'}</span>
+                  <span className="block text-[12px] text-[#6F6A62]">{i.readyMade ? 'ready-made, delivery confirmed with you' : i.imported ? 'imported in 3 months' : 'made in 14–21 days'}</span>
                   <span className="mt-1 block text-[14px] tabular-nums">{kes(i.unit * i.qty)}</span>
                 </span>
               </li>
@@ -262,7 +262,7 @@ export function Checkout() {
             <Totals invoice={invoice} />
           </div>
           <p className="mt-4 text-[12px] leading-relaxed text-[#6F6A62]">
-            Includes white-glove delivery and installation within Nairobi.{items.every((i) => priceIsSet(i.slug)) ? '' : ' Indicative prices, confirmed on your invoice.'}
+            Includes white-glove delivery and installation within Nairobi.{items.every((i) => i.readyMade || priceIsSet(i.slug)) ? '' : ' Indicative prices, confirmed on your invoice.'}
           </p>
         </div>
       </aside>

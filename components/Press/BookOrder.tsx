@@ -1,19 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { Book } from '@/content/library';
+import { BOOK_BASE_KES, usd, type Book } from '@/content/library';
 import { activeLenis } from '@/lib/lenis';
+import { invoiceFor, kes } from '@/lib/pricing';
 
 const field = 'w-full border-b border-[rgba(17,17,17,0.35)] bg-transparent py-2 text-[17px] tracking-[-0.02em] outline-none placeholder:text-[#8A847A] focus:border-press-ink';
 const label = 'text-[15px] tracking-[-0.02em] text-[#5A5550]';
 
 /**
- * Buying a book: an order for delivery in Kenya, or Amazon everywhere else. Prices and the Amazon links are set by the
- * client; until then each reads "to follow". There is no order backend yet: an order is thanked, not sent.
+ * Buying a book: an order for delivery in Kenya, or Amazon everywhere else. The Amazon links are set by the client; until
+ * then each reads "to follow". There is no order backend yet: an order is thanked, not sent.
  */
 export function BookOrder({ book }: { book: Book }) {
   const [qty, setQty] = useState(1);
   const [done, setDone] = useState<string | null>(null);
+  const total = invoiceFor(BOOK_BASE_KES * qty).total;
 
   // the page arrives from an opened section: start at the top, whatever the smooth scroller remembers
   useEffect(() => {
@@ -45,7 +47,8 @@ export function BookOrder({ book }: { book: Book }) {
         <div className="flex items-end justify-between gap-6 border-b border-[rgba(17,17,17,0.15)] pb-6">
           <div>
             <p className={label}>price</p>
-            <p className="mt-1 min-w-[120px] border-b border-dashed border-[rgba(17,17,17,0.35)] font-press-head text-3xl">to follow</p>
+            <p className="mt-1 font-press-head text-3xl tabular-nums">{kes(total)}</p>
+            <p className="mt-1 text-[13px] text-[#5A5550]">{usd(total)} · with 16% VAT</p>
           </div>
           <div className="flex items-center gap-3">
             <span className={label}>copies</span>

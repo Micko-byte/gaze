@@ -88,6 +88,22 @@ export function Wing({ room }: { room: (typeof collections)[number] }) {
           </section>
         )}
 
+        {/* ── the chairs have a wing of their own ── */}
+        {room.id === 'office' && (
+          <section className="bg-[#15100C] px-5 py-14 text-furn-linen md:px-[6vw] md:py-20">
+            <Link href="/furnishings/executive-seating" data-no-transition className="group mx-auto flex max-w-[1600px] flex-col justify-between gap-6 md:flex-row md:items-end">
+              <span>
+                <span className={`${cap} text-[rgba(238,231,223,0.6)]`}>Twenty chairs, three collections</span>
+                <span className="mt-4 block font-furn text-[clamp(44px,6vw,104px)] leading-[0.95]">The Executive Seating Wing</span>
+              </span>
+              <span className={`inline-flex items-center gap-3 ${cap}`}>
+                Enter the wing
+                <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+              </span>
+            </Link>
+          </section>
+        )}
+
         {/* ── every piece in the wing ── */}
         <section className="bg-white px-5 py-20 md:px-[6vw] md:py-28">
           <div className="mx-auto max-w-[1600px]">

@@ -1,6 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import type { CSSProperties, ReactNode } from 'react';
-import type { Book } from '@/content/library';
+import { BOOK_BASE_KES, usd, type Book } from '@/content/library';
+import { invoiceFor, kes } from '@/lib/pricing';
+import { Book3D } from './Book3D';
+
+const PRICE = invoiceFor(BOOK_BASE_KES).total;
 
 /*
  * The ground each book is set on, after the stone in Natuzzi's catalogue spread: the book's own tone, a fine grain,
@@ -40,9 +44,11 @@ function TitlePage({ book }: { book: Book }) {
  */
 export function BookHero({ book, full, action, index }: { book: Book; full?: boolean; action: ReactNode; index?: number }) {
   const Title = full ? 'h1' : 'h2';
-  return (
+  // the books with a print cover stay on screen while the scroll turns them
+  const turning = !full && Boolean(book.faces);
+  const spread = (
     <div
-      className={`relative flex items-center overflow-hidden px-5 md:px-10 ${full ? 'min-h-[100svh] pb-16 pt-28' : 'min-h-[86svh] py-24'}`}
+      className={`relative flex items-center overflow-hidden px-5 md:px-10 ${full ? 'min-h-[100svh] pb-16 pt-28' : turning ? 'book-pin min-h-[100svh] py-20' : 'min-h-[86svh] py-24'}`}
       style={{ ...bookGround(book.tone), color: book.ink }}
     >
       <div className="mx-auto grid w-full max-w-[1440px] items-center gap-14 md:grid-cols-[1fr_1.25fr]">
@@ -55,23 +61,31 @@ export function BookHero({ book, full, action, index }: { book: Book; full?: boo
           </p>
           <Title data-rise={full ? undefined : ''} className="mt-5 font-press-head text-[clamp(44px,5.4vw,96px)] font-normal leading-[0.98] tracking-[-0.01em]">{book.title}</Title>
           <p className="mt-6 max-w-md text-lg font-light leading-relaxed opacity-85">{book.sub}</p>
-          <div className="mt-10">{action}</div>
+          <p className="mt-8 text-[17px] tracking-[-0.01em]">
+            {kes(PRICE)} <span className="opacity-70">· {usd(PRICE)} · with VAT</span>
+          </p>
+          <div className="mt-6">{action}</div>
         </div>
-        <div className="relative flex items-center justify-center gap-[3%]">
-          <div className="w-[38%] -rotate-[1.5deg]">
-            <TitlePage book={book} />
+        {book.faces ? (
+          <Book3D book={book} still={full} />
+        ) : (
+          <div className="relative flex items-center justify-center gap-[3%]">
+            <div className="w-[38%] -rotate-[1.5deg]">
+              <TitlePage book={book} />
+            </div>
+            {book.poster ? (
+              <div className="w-[58%] rotate-[1deg] overflow-hidden bg-[#F4F1EB] shadow-[0_50px_70px_-35px_rgba(0,0,0,0.6)]">
+                <img src={book.poster} alt={`${book.title}, cover artwork`} className="w-full" />
+              </div>
+            ) : (
+              <div className="flex aspect-[3/4] w-[46%] rotate-[1deg] items-center justify-center bg-press-ink p-[6%] text-center text-press-paper shadow-[0_50px_70px_-35px_rgba(0,0,0,0.6)]">
+                <p className="font-press-head text-[clamp(20px,2.4vw,40px)] leading-[1.05]">{book.title}</p>
+              </div>
+            )}
           </div>
-          {book.poster ? (
-            <div className="w-[58%] rotate-[1deg] overflow-hidden bg-[#F4F1EB] shadow-[0_50px_70px_-35px_rgba(0,0,0,0.6)]">
-              <img src={book.poster} alt={`${book.title}, cover artwork`} className="w-full" />
-            </div>
-          ) : (
-            <div className="flex aspect-[3/4] w-[46%] rotate-[1deg] items-center justify-center bg-press-ink p-[6%] text-center text-press-paper shadow-[0_50px_70px_-35px_rgba(0,0,0,0.6)]">
-              <p className="font-press-head text-[clamp(20px,2.4vw,40px)] leading-[1.05]">{book.title}</p>
-            </div>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );
+  return turning ? <div data-book-scroll className="book-scroll">{spread}</div> : spread;
 }

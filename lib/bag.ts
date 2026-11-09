@@ -9,7 +9,8 @@ export type BagItem = {
   slug: string;
   name: string;
   photo?: string;
-  config: Configuration;
+  /** Left out for ready-made pieces, which have no fabric or finish to choose. */
+  config?: Configuration;
   /** What the configuration reads as: "Midnight Navy Bouclé with Brass Accents". */
   described: string;
   /** The size as chosen: "standard: 10 ft W × 3 ft D" or "made to 14 ft". */
@@ -18,6 +19,8 @@ export type BagItem = {
   unit: number;
   qty: number;
   imported?: boolean;
+  /** A ready-made piece: its timing is confirmed with the client rather than made to order. */
+  readyMade?: boolean;
 };
 
 const KEY = 'gaze.furn.bag.v2';

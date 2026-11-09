@@ -378,3 +378,11 @@ h1.font-display.type-strong {
 @media (prefers-reduced-motion: reduce) {
   :root:not([data-motion='full']) .project-pan { animation: none; transform: scale(1.04); }
 }
+
+/* Gaze Press: a book with a print cover stays on screen while the scroll turns it */
+.book-scroll { height: 280svh; }
+.book-pin { position: sticky; top: 0; }
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) .book-scroll { height: auto; }
+  :root:not([data-motion='full']) .book-pin { position: relative; }
+}
